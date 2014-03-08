@@ -17,22 +17,11 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Que
 	int correctAnswer = 0;
 	boolean isSubmit=true;
 	private Question currentQuestion;
-	
+	private boolean isInitial=true;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.questions_fragment_layout, container, false);
-		
-//		Button nextQuestionButton = (Button) view.findViewById(R.id.next_question_button);
-//		nextQuestionButton.setOnClickListener(new View.OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
-//
-//
-//			}
-//		});
-
-//		nextQuestionButton.setEnabled(false);
 
 		return view;
 
@@ -70,34 +59,38 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Que
 		super.onViewCreated(view, savedInstanceState);
 		
 		QuestionController.getInstance(view.getContext()).getNextQuestion(this);
+		isInitial=true;
 	}
 
 	protected void changeQuestion(View v) {
 		RadioGroup answers = (RadioGroup) getView().findViewById(R.id.answers);
 		if (answers.getCheckedRadioButtonId() != -1) {
-//			TextView question = (TextView) getView().findViewById(R.id.question);
-//
-//			question.setText("What's next?");
-//
-//			answers.clearCheck();
-//
-//			for (int i = 0; i < answers.getChildCount(); i++) {
-//				View obj = answers.getChildAt(i);
-//				if (obj instanceof RadioButton) {
-//					RadioButton button = (RadioButton) obj;
-//					button.setText("yay " + i);
-//					button.setEnabled(true);
-//					button.setTextColor(Color.WHITE);
-//				}
-//			}
-
-//			Button nextQuestion = (Button) getView().findViewById(R.id.next_question_button);
-//			nextQuestion.setEnabled(false);
-
-			Button submitAnswerButton = (Button) getView().findViewById(R.id.submit_answer_button);
-			submitAnswerButton.setText("Submit");
-
+			initializeQuestion(v);
 		}
+	}
+	private void initializeQuestion(View v){
+		RadioGroup answers = (RadioGroup) getView().findViewById(R.id.answers);
+		TextView question = (TextView) getView().findViewById(R.id.question);
+		question.setText(currentQuestion.question);
+
+		answers.clearCheck();
+		
+		for (int i = 0; i < answers.getChildCount(); i++) {
+			View obj = answers.getChildAt(i);
+			if (obj instanceof RadioButton) {
+				RadioButton button = (RadioButton) obj;
+				((RadioButton)answers.getChildAt(i)).setText(currentQuestion.answers.get(i));
+				button.setEnabled(true);
+				button.setTextColor(Color.WHITE);
+			}
+		}
+
+//		Button nextQuestion = (Button) getView().findViewById(R.id.next_question_button);
+//		nextQuestion.setEnabled(false);
+
+		Button submitAnswerButton = (Button) getView().findViewById(R.id.submit_answer_button);
+		submitAnswerButton.setText("Submit");
+		isSubmit=true;
 	}
 
 	@Override
@@ -105,15 +98,13 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Que
 		Button submitAnswerButton = (Button) getView().findViewById(R.id.submit_answer_button);
 		submitAnswerButton.setEnabled(true);
 		
-		TextView question = (TextView) getView().findViewById(R.id.question);
-		question.setText(object.question);
-		
-		RadioGroup answers = (RadioGroup) getView().findViewById(R.id.answers);
-		for(int i=0;i<object.answers.size();i++){
-			((RadioButton)answers.getChildAt(i)).setText(object.answers.get(i));
-		}
 		currentQuestion=object;
+		RadioGroup answers = (RadioGroup) getView().findViewById(R.id.answers);
 		correctAnswer=((RadioButton)answers.getChildAt(object.correctAnswerIndex)).getId();
+		if(isInitial){
+			initializeQuestion(getView());
+			isInitial=false;
+		}
 	}
 	private void submitAnswer(View v){
 		RadioGroup answers = (RadioGroup) getView().findViewById(R.id.answers);

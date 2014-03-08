@@ -38,11 +38,11 @@
     <string name="drawer_close">Close navigation drawer</string>
     <string name="action_websearch">Web search</string>
     <string name="app_not_available">Sorry, there\'s no web browser available</string>
-    <string name="question_text">Who is the real foobar?</string>
-    <string name="answer_one_text">foo1</string>
-    <string name="answer_two_text">foo2</string>
-    <string name="answer_three_text">foo3</string>
-    <string name="answer_four_text">foo4</string>
+    <string name="question_text">What is the answer to life, the universe and everything?</string>
+    <string name="answer_one_text">1</string>
+    <string name="answer_two_text">1000000</string>
+    <string name="answer_three_text">40</string>
+    <string name="answer_four_text">42</string>
     <string name="submit_answer_button_text">Submit</string>
     <string name="next_question_button_text">Next</string>
     <string name="experience_bar_title_text">Experience</string>

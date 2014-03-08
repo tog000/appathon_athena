@@ -21,7 +21,7 @@
 	      <LinearLayout
         android:layout_height="0dp"
         android:layout_width="fill_parent"
-        android:layout_weight="2"        
+        android:layout_weight="1"        
         >
     <TextView
         android:id="@+id/question"
@@ -29,7 +29,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:gravity="center_horizontal"
-         android:text="hello world"
+        android:textSize="20sp"
+         android:text="@string/question_text" 
+         android:textColor="#fff"
  />
 	</LinearLayout>
     
@@ -51,21 +53,29 @@
             android:id="@+id/answer_one"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="aserlser" 
+                     android:textColor="#fff"
+            android:text="@string/answer_one_text" 
+                    android:textSize="20sp"
              />
 
         <RadioButton
             android:id="@+id/answer_two"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/answer_four_text" 
+            android:text="@string/answer_two_text" 
+                     android:textColor="#fff"
+                    android:textSize="20sp"
+           
             />
 
         <RadioButton
             android:id="@+id/answer_three"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/answer_four_text" 
+            android:text="@string/answer_three_text" 
+                     android:textColor="#fff"
+            android:textSize="20sp"
+           
              />
 
         <RadioButton
@@ -73,6 +83,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/answer_four_text" 
+              android:textColor="#fff"
+     
+            android:textSize="20sp"
             />
     </RadioGroup>
 	</LinearLayout>
