@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.android.navigationdrawerexample;
+package com.athena.broncobattle;
 
 import java.util.Locale;
 
