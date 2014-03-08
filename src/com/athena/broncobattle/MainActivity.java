@@ -36,7 +36,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 
 /**
@@ -98,6 +97,10 @@ public class MainActivity extends Activity {
 //		mPlanetTitles = getResources().getStringArray(R.array.planets_array);
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mDrawerList = (ListView) findViewById(R.id.left_drawer);
+		
+		View header = View.inflate(this, R.layout.dialog_header_layout, null);
+		mDrawerList.addHeaderView(header);
+		
 
 		fragments = new Fragment[NUM_FRAGMENTS];
 
@@ -106,9 +109,8 @@ public class MainActivity extends Activity {
 		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 		// set up the drawer's list view with items and click listener
 		mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, mDrawerButtonTitles));
-//		ImageView imageView = (ImageView) getView().findViewById(R.id.user_avatar);
-//		mDrawerList.addHeaderView (imageView, data, false);
 		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+		
 
 		// enable ActionBar app icon to behave as action to toggle nav drawer
 		getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -140,20 +142,8 @@ public class MainActivity extends Activity {
 			selectItem(0);
 		}
 		
-		//testJsonReaderWriter();
 	}
 
-	public void testJsonReaderWriter(){
-
-    	//QuestionController questionInfo = QuestionController.get(getApplicationContext());
-    	//questionInfo.getNextQuestion(this);
-    	
-    	UserController userInfo = UserController.getInstance(getApplicationContext());
-
-    	userInfo.userLoggedIn("Marianna");
-    	userInfo.answeredQuestionCorrectly(6);
-
-    }
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
