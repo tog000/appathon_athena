@@ -11,24 +11,26 @@ class Question_model extends CI_Model {
 		if($id!==FALSE){
 
 			$question = $this->db->get_where('question', array('id' => $id));
+			$result = $question->result();
+			if(count($result)>0){
+				$question = $result[0];
 
-			$question = $question->result()[0];
-
-			$query = $this->db->get_where('question_answer', array('id_question'=>$question->id));
-			$answers = $query->result();
-			
-			$question->answers = array();
-			$correct = -1;
-			foreach($answers as $index=>$answer){
-				if($answer->correct == 1){
-					$correct = $index;
+				$query = $this->db->get_where('question_answer', array('id_question'=>$question->id));
+				$answers = $query->result();
+				
+				$question->answers = array();
+				$correct = -1;
+				foreach($answers as $index=>$answer){
+					if($answer->correct == 1){
+						$correct = $index;
+					}
+					array_push($question->answers, $answer->text);
 				}
-				array_push($question->answers, $answer->text);
+				$question->correct = $correct;
+
+
+				return $question;
 			}
-			$question->correct = $correct;
-
-
-			return $question;
 		}
 		return NULL;
 	}

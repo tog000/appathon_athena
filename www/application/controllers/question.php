@@ -38,9 +38,9 @@ class Question extends CI_Controller{
 
 		if ($this->form_validation->run() === FALSE)
 		{
-			//$this->load->view('templates/header', $data);
+			$this->load->view('header');
 			$this->load->view('question/create');
-			//$this->load->view('templates/footer');
+			$this->load->view('footer');
 
 		}
 		else
