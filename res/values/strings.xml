@@ -23,6 +23,14 @@
         <item>Leaderboard</item>
         <item>My Stats</item>
     </string-array>
+    
+        
+     <array name="nav_drawer_icons">
+        <item>@drawable/ic_launcher</item>
+        <item>@drawable/ic_launcher</item>
+        <item>@drawable/ic_launcher</item>
+    </array>
+    
     <string-array name="planets_array">
         <item>Mercury</item>
         <item>Venus</item>
@@ -33,6 +41,7 @@
         <item>Uranus</item>
         <item>Neptune</item>
     </string-array>
+
 
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>

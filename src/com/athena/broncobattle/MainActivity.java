@@ -16,6 +16,8 @@
 
 package com.athena.broncobattle;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.Fragment;
@@ -23,6 +25,7 @@ import android.app.FragmentManager;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.NotificationCompat;
@@ -87,6 +90,10 @@ public class MainActivity extends Activity {
 
 	private final int NUM_FRAGMENTS = 3;
 
+	private ArrayList<NavDrawerItem> navDrawerItems;
+	private TypedArray navMenuIcons;
+	private NavDrawerListAdapter adapter;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -94,22 +101,30 @@ public class MainActivity extends Activity {
 
 		mTitle = mDrawerTitle = getTitle();
 		mDrawerButtonTitles = getResources().getStringArray(R.array.drawer_array);
+	    navMenuIcons = getResources().obtainTypedArray(R.array.nav_drawer_icons);
+	    
 //		mPlanetTitles = getResources().getStringArray(R.array.planets_array);
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-		mDrawerList = (ListView) findViewById(R.id.left_drawer);
+		mDrawerList = (ListView) findViewById(R.id.list_slidermenu);
 		
 		View header = View.inflate(this, R.layout.dialog_header_layout, null);
 		header.findViewById(R.id.drawer_header_icon);
 		mDrawerList.addHeaderView(header);
+		 
+        navDrawerItems = new ArrayList<NavDrawerItem>();
+        navDrawerItems.add(new NavDrawerItem(mDrawerButtonTitles[0], navMenuIcons.getResourceId(0, -1)));
+        navDrawerItems.add(new NavDrawerItem(mDrawerButtonTitles[1], navMenuIcons.getResourceId(1, -1)));
+        navDrawerItems.add(new NavDrawerItem(mDrawerButtonTitles[2], navMenuIcons.getResourceId(2, -1)));
 		
-
 		fragments = new Fragment[NUM_FRAGMENTS];
 
-		// set a custom shadow that overlays the main content when the drawer
-		// opens
 		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-		// set up the drawer's list view with items and click listener
-		mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, mDrawerButtonTitles));
+		//mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, mDrawerButtonTitles));
+		
+		
+		adapter = new NavDrawerListAdapter(getApplicationContext(), navDrawerItems);
+	    mDrawerList.setAdapter(adapter);
+		
 		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 		
 
