@@ -76,8 +76,6 @@ public class AthenaJsonReader extends AsyncTask<String, Void, JSONObject> {
 			Question q = new Question(json);
 			listener.onJsonFinished(q,type);
 		}else{
-			Toast toast = Toast.makeText(mContext, mContext.getResources().getString(R.string.no_more_questions), Toast.LENGTH_SHORT);
-			toast.show();
 			listener.onJsonFinished(null,type);
 		}
 

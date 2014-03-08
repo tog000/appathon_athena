@@ -4,7 +4,7 @@
     android:layout_height="?android:attr/listPreferredItemHeight"
     android:padding="6dip" >
 
-    <ImageView
+    <com.athena.broncobattle.AchievementView
         android:id="@+id/achievement_icon"
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
