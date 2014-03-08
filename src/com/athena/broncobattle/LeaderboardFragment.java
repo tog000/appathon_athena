@@ -21,6 +21,16 @@ public class LeaderboardFragment extends  ListFragment {
 				new User("id2", "Spock", "http://www.gravatar.com/avatar/9032743fd412323m4b23?d=retro&f=y", 10000),
 				new User("id3", "Tim", "http://www.gravatar.com/avatar/9032743fd412323m4b23?d=retro&f=y", 10000),
 				new User("id4", "Amit", "http://www.gravatar.com/avatar/9032743fd412323m4b23?d=retro&f=y", 10000),
+				new User("id5", "Elena", "http://www.gravatar.com/avatar/9032743fd412323m4b23?d=retro&f=y", 10000),
+				new User("id1", "Doctor", "http://www.gravatar.com/avatar/9032743fd412323m4b23?d=retro&f=y", 10000),
+				new User("id2", "Spock", "http://www.gravatar.com/avatar/9032743fd412323m4b23?d=retro&f=y", 10000),
+				new User("id3", "Tim", "http://www.gravatar.com/avatar/9032743fd412323m4b23?d=retro&f=y", 10000),
+				new User("id4", "Amit", "http://www.gravatar.com/avatar/9032743fd412323m4b23?d=retro&f=y", 10000),
+				new User("id5", "Elena", "http://www.gravatar.com/avatar/9032743fd412323m4b23?d=retro&f=y", 10000),
+				new User("id1", "Doctor", "http://www.gravatar.com/avatar/9032743fd412323m4b23?d=retro&f=y", 10000),
+				new User("id2", "Spock", "http://www.gravatar.com/avatar/9032743fd412323m4b23?d=retro&f=y", 10000),
+				new User("id3", "Tim", "http://www.gravatar.com/avatar/9032743fd412323m4b23?d=retro&f=y", 10000),
+				new User("id4", "Amit", "http://www.gravatar.com/avatar/9032743fd412323m4b23?d=retro&f=y", 10000),
 				new User("id5", "Elena", "http://www.gravatar.com/avatar/9032743fd412323m4b23?d=retro&f=y", 10000)
 				
 		};
@@ -36,5 +46,5 @@ public class LeaderboardFragment extends  ListFragment {
 	  public void onListItemClick(ListView l, View v, int position, long id) {
 	    // do something with the data
 	  }
-	
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
 }
