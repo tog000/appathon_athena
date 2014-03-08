@@ -76,21 +76,21 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Que
 	protected void changeQuestion(View v) {
 		RadioGroup answers = (RadioGroup) getView().findViewById(R.id.answers);
 		if (answers.getCheckedRadioButtonId() != -1) {
-			TextView question = (TextView) getView().findViewById(R.id.question);
-
-			question.setText("What's next?");
-
-			answers.clearCheck();
-
-			for (int i = 0; i < answers.getChildCount(); i++) {
-				View obj = answers.getChildAt(i);
-				if (obj instanceof RadioButton) {
-					RadioButton button = (RadioButton) obj;
-					button.setText("yay " + i);
-					button.setEnabled(true);
-					button.setTextColor(Color.WHITE);
-				}
-			}
+//			TextView question = (TextView) getView().findViewById(R.id.question);
+//
+//			question.setText("What's next?");
+//
+//			answers.clearCheck();
+//
+//			for (int i = 0; i < answers.getChildCount(); i++) {
+//				View obj = answers.getChildAt(i);
+//				if (obj instanceof RadioButton) {
+//					RadioButton button = (RadioButton) obj;
+//					button.setText("yay " + i);
+//					button.setEnabled(true);
+//					button.setTextColor(Color.WHITE);
+//				}
+//			}
 
 //			Button nextQuestion = (Button) getView().findViewById(R.id.next_question_button);
 //			nextQuestion.setEnabled(false);
@@ -120,6 +120,11 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Que
 		RadioGroup answers = (RadioGroup) getView().findViewById(R.id.answers);
 
 		if (answers.getCheckedRadioButtonId() != -1) {
+			Button submitAnswerButton = (Button) getView().findViewById(R.id.submit_answer_button);
+			submitAnswerButton.setText("Next");
+			//submitAnswerButton.setEnabled(false);
+			QuestionController.getInstance(v.getContext()).getNextQuestion();
+			
 			int selectedAnswer = answers.getCheckedRadioButtonId();
 			QuestionController.getInstance(v.getContext()).questionAnswered(currentQuestion, selectedAnswer);
 
@@ -136,9 +141,6 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Que
 //			Button nextQuestionButton = (Button) getView().findViewById(R.id.next_question_button);
 //			nextQuestionButton.setEnabled(true);
 
-			Button submitAnswerButton = (Button) getView().findViewById(R.id.submit_answer_button);
-			submitAnswerButton.setText("Next");
-			//submitAnswerButton.setEnabled(false);
 		}
 	}
 }
