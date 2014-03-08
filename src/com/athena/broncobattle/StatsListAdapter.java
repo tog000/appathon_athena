@@ -58,4 +58,9 @@ public class StatsListAdapter extends ArrayAdapter<Achievement> {
 	public Achievement getItem(int position) {
 		return achievements.get(position);
 	}
+	
+	@Override
+	public boolean isEnabled(int position) {
+		return false;
+	}
 }
