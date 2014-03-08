@@ -105,11 +105,11 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Que
 		correctAnswer=((RadioButton)answers.getChildAt(object.correctAnswerIndex)).getId();
 	}
 	private void submitAnswer(View v){
-		QuestionController.getInstance(v.getContext()).questionAnswered(currentQuestion, correctAnswer);
 		RadioGroup answers = (RadioGroup) getView().findViewById(R.id.answers);
 
 		if (answers.getCheckedRadioButtonId() != -1) {
 			int selectedAnswer = answers.getCheckedRadioButtonId();
+			QuestionController.getInstance(v.getContext()).questionAnswered(currentQuestion, selectedAnswer);
 
 			if (selectedAnswer != correctAnswer) {
 				((RadioButton) getView().findViewById(selectedAnswer)).setTextColor(Color.RED);
