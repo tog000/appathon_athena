@@ -1,6 +1,7 @@
 package com.athena.broncobattle;
 
 import android.content.Context;
+import android.widget.Toast;
 
 public class QuestionController {
 	
@@ -34,7 +35,16 @@ public class QuestionController {
 	}
 	
 	public void getNextQuestion(){
-		jsonReader.execute(new String[]{questionReadRequest,UserController.getInstance(mContext).currentUser.id});
+		try{
+			jsonReader.execute(new String[]{questionReadRequest,UserController.getInstance(mContext).currentUser.id});
+		}catch(Exception e){
+			Toast toast = Toast.makeText(mContext, mContext.getResources().getString(R.string.error_fetching_question), Toast.LENGTH_SHORT);
+			toast.show();
+		}
+	}
+	
+	public void questionAnswered(Question q, int selectedAnswer){
+		
 	}
 
 }
