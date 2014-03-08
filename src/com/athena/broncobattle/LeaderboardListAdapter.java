@@ -29,10 +29,18 @@ public class LeaderboardListAdapter extends ArrayAdapter<User> {
 	  public View getView(int position, View convertView, ViewGroup parent) {
 	    LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	    View rowView = inflater.inflate(R.layout.leaderboard_list_item, parent, false);
-	    TextView textView = (TextView) rowView.findViewById(R.id.user_name);
-	    textView.setText(users.get(position).name);
+	    
+	    User user = users.get(position);
+	    
+	    TextView nameTextView = (TextView) rowView.findViewById(R.id.user_name);
+	    nameTextView.setText(user.name);
+	    
+	    TextView experienceTextView = (TextView) rowView.findViewById(R.id.level);
+	    experienceTextView.setText("Experience " + user.experience);
+	    
 	    ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
-	    //TODO add image
+	    ImageDownloader downloader = new ImageDownloader(imageView);
+	    downloader.execute(user.avatar);
 
 	    return rowView;
 	  }

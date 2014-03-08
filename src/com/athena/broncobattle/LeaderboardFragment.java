@@ -1,5 +1,7 @@
 package com.athena.broncobattle;
 
+import java.util.Arrays;
+
 import android.app.Fragment;
 import android.app.ListFragment;
 import android.os.Bundle;
@@ -14,13 +16,27 @@ public class LeaderboardFragment extends  ListFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.leaderboard_fragment_layout, container, false);
-	    String[] values = new String[] { "Android", "iPhone", "WindowsMobile",
-		        "Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
-		        "Linux", "OS/2" };
-		    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
-		        android.R.layout.simple_list_item_1, values);
+		User[] users = new User[]{
+				new User("id1", "Doctor", "http://www.gravatar.com/avatar/9032743fd412323m4b23?d=retro&f=y", 10000),
+				new User("id2", "Spock", "http://www.gravatar.com/avatar/9032743fd412323m4b23?d=retro&f=y", 10000),
+				new User("id3", "Tim", "http://www.gravatar.com/avatar/9032743fd412323m4b23?d=retro&f=y", 10000),
+				new User("id4", "Amit", "http://www.gravatar.com/avatar/9032743fd412323m4b23?d=retro&f=y", 10000),
+				new User("id5", "Elena", "http://www.gravatar.com/avatar/9032743fd412323m4b23?d=retro&f=y", 10000),
+				new User("id1", "Doctor", "http://www.gravatar.com/avatar/9032743fd412323m4b23?d=retro&f=y", 10000),
+				new User("id2", "Spock", "http://www.gravatar.com/avatar/9032743fd412323m4b23?d=retro&f=y", 10000),
+				new User("id3", "Tim", "http://www.gravatar.com/avatar/9032743fd412323m4b23?d=retro&f=y", 10000),
+				new User("id4", "Amit", "http://www.gravatar.com/avatar/9032743fd412323m4b23?d=retro&f=y", 10000),
+				new User("id5", "Elena", "http://www.gravatar.com/avatar/9032743fd412323m4b23?d=retro&f=y", 10000),
+				new User("id1", "Doctor", "http://www.gravatar.com/avatar/9032743fd412323m4b23?d=retro&f=y", 10000),
+				new User("id2", "Spock", "http://www.gravatar.com/avatar/9032743fd412323m4b23?d=retro&f=y", 10000),
+				new User("id3", "Tim", "http://www.gravatar.com/avatar/9032743fd412323m4b23?d=retro&f=y", 10000),
+				new User("id4", "Amit", "http://www.gravatar.com/avatar/9032743fd412323m4b23?d=retro&f=y", 10000),
+				new User("id5", "Elena", "http://www.gravatar.com/avatar/9032743fd412323m4b23?d=retro&f=y", 10000)
+				
+		};
+		    ArrayAdapter<User> adapter = new LeaderboardListAdapter(getActivity().getApplicationContext(), 0, 0, Arrays.asList(users));
 		    setListAdapter(adapter);
-		    view.setEnabled(false);
+		    //view.setEnabled(false);
 		return view;
 
 	}
@@ -30,5 +46,5 @@ public class LeaderboardFragment extends  ListFragment {
 	  public void onListItemClick(ListView l, View v, int position, long id) {
 	    // do something with the data
 	  }
-	
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
 }
