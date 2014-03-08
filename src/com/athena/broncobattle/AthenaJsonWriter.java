@@ -9,23 +9,37 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 
+import android.content.Context;
 import android.os.AsyncTask;
 
 public class AthenaJsonWriter extends AsyncTask<String, Void, String> {
 		
-		private String hostURL;
+		private Context mContext;
 		String response;
 		
-		public AthenaJsonWriter(String hostURL){
-			this.hostURL = hostURL;
+		
+		public AthenaJsonWriter(Context context){
+			this.mContext = context;
 		}
 
 		@Override
 		protected String doInBackground(String... parameters) {
-		    DefaultHttpClient httpclient = new DefaultHttpClient();
 
-		    HttpPost httpost = new HttpPost(hostURL + parameters[0]);
+			String url = MainActivity.HOST;
+			for(String param : parameters){
+				url+="/"+param;
+			}
+
+		    HttpPost httpost = new HttpPost(url);
+		    
+		    HttpParams httpParams = new BasicHttpParams();
+			HttpConnectionParams.setConnectionTimeout(httpParams, 30000);
+			HttpConnectionParams.setSoTimeout(httpParams, 30000);
+		    DefaultHttpClient httpClient = new DefaultHttpClient(httpParams);
 
 		    StringEntity se = null;
 			try {
@@ -41,7 +55,7 @@ public class AthenaJsonWriter extends AsyncTask<String, Void, String> {
 		    ResponseHandler<String> responseHandler = new BasicResponseHandler();
 		    
 		    try {
-				response = httpclient.execute(httpost, responseHandler);
+				response = httpClient.execute(httpost, responseHandler);
 			} catch (ClientProtocolException e) {
 				e.printStackTrace();
 			} catch (IOException e) {

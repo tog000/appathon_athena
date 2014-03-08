@@ -79,6 +79,8 @@ public class MainActivity extends Activity {
     private CharSequence mTitle;
     private String[] mPlanetTitles;
 
+    public static final String HOST = "http://132.178.174.53";
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -129,22 +131,14 @@ public class MainActivity extends Activity {
 
     
     public void testJsonReaderWriter(){
-    	String hostURL = "http://132.178.174.53";
-    	
-    	AthenaJsonReader reader = new AthenaJsonReader(hostURL, getApplicationContext());
-    	AthenaJsonWriter writer = new AthenaJsonWriter(hostURL);
+
+    	QuestionController questionInfo = QuestionController.get(getApplicationContext());
+    	questionInfo.getNextQuestion();
     	
     	UserController userInfo = UserController.get(getApplicationContext());
-    	userInfo.setReader(reader);
-    	userInfo.setWriter(writer);
-    	
+
     	userInfo.userLoggedIn("Marianna");
     	userInfo.answeredQuestionCorrectly(6);
-    	
-    	
-    	QuestionController questionInfo = QuestionController.get(getApplicationContext());
-    	questionInfo.setReader(reader);
-    	questionInfo.getNextQuestion();
 
     }
     

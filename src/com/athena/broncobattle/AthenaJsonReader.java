@@ -10,7 +10,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -19,18 +18,20 @@ import android.os.AsyncTask;
 
 public class AthenaJsonReader extends AsyncTask<String, Void, JSONObject> {
 
-	private String hostURL;
 	private Context mContext;
 
-	public AthenaJsonReader(String host, Context context) {
-		hostURL = host;
+	public AthenaJsonReader(Context context) {
 		mContext = context;
 	}
 
 	@Override
-	protected JSONObject doInBackground(String... params) {
+	protected JSONObject doInBackground(String... parameters) {
 		try {
-			String url = hostURL + params[0];
+			String url = MainActivity.HOST;
+			for(String param : parameters){
+				url+="/"+param;
+			}
+			
 			HttpParams httpParams = new BasicHttpParams();
 
 			HttpConnectionParams.setConnectionTimeout(httpParams, 30000);

@@ -1,6 +1,5 @@
 package com.athena.broncobattle;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -9,7 +8,7 @@ import android.content.Context;
 public class UserController {
 	
 	private static UserController sActiveUser;
-	User currentUser;
+	public User currentUser;
 	Context mContext;
 	AthenaJsonReader jsonReader;
 	AthenaJsonWriter jsonWriter;
@@ -18,7 +17,8 @@ public class UserController {
 	
 	private UserController(Context context){
 		mContext = context;
-		
+		jsonReader = new AthenaJsonReader(context);
+		jsonWriter = new AthenaJsonWriter(context);
 	}
 	
 	public static UserController get(Context context){
@@ -26,15 +26,6 @@ public class UserController {
 			return new UserController(context);
 		}
 		return sActiveUser;
-	}
-	
-	
-	public void setWriter(AthenaJsonWriter writer){
-		this.jsonWriter = writer;
-	}
-	
-	public void setReader(AthenaJsonReader reader){
-		this.jsonReader = reader;
 	}
 	
 	public void answeredQuestionCorrectly(int questionID){
@@ -45,7 +36,7 @@ public class UserController {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		jsonWriter.doInBackground(new String[]{userWriteRequest, correctAnswerUser.toString()});
+		jsonWriter.execute(new String[]{userWriteRequest, correctAnswerUser.toString()});
 	}
 
 	public void userLoggedIn(String userName){
@@ -53,6 +44,6 @@ public class UserController {
 	}
 	
 	public void readActiveUser(String userName){
-		jsonReader.doInBackground(new String[]{userReadRequest, userName});
+		jsonReader.execute(new String[]{userReadRequest, userName});
 	}
 }
