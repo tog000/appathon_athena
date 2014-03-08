@@ -11,7 +11,7 @@ public class AchievementController {
 	private static AchievementController sAchievement;
 //	Question currentQuestion;
 	Context mContext;
-//	private final String READ_QUESTION = "question_for_user";
+	private final String GET_ACHIEVEMENTS = "question_for_user";
 //	private final String QUESTION_ANSWERED = "question_answered";
 	private AthenaJsonReader jsonReader;
 	private AthenaJsonWriter jsonWriter;
@@ -40,7 +40,7 @@ public class AchievementController {
 		try{
 			jsonReader = new AthenaJsonReader(mContext);
 			jsonReader.addJsonEventListener(listener,type);
-			jsonReader.execute(new String[]{READ_QUESTION,UserController.getInstance(mContext).currentUser.id});
+			jsonReader.execute(new String[]{GET_ACHIEVEMENTS,UserController.getInstance(mContext).currentUser.id});
 		}catch(Exception e){
 			Toast toast = Toast.makeText(mContext, mContext.getResources().getString(R.string.error_fetching_question), Toast.LENGTH_SHORT);
 			toast.show();
