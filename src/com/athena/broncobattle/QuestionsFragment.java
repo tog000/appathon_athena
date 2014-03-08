@@ -15,6 +15,7 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Que
 
 	int correctAnswer = 0;
 	boolean isSubmit=true;
+	private Question currentQuestion;
 	
 	
 	@Override
@@ -100,9 +101,11 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Que
 		for(int i=0;i<object.answers.size();i++){
 			((RadioButton)answers.getChildAt(i)).setText(object.answers.get(i));
 		}
+		currentQuestion=object;
 		correctAnswer=((RadioButton)answers.getChildAt(object.correctAnswerIndex)).getId();
 	}
 	private void submitAnswer(View v){
+		QuestionController.getInstance(v.getContext()).questionAnswered(currentQuestion, correctAnswer);
 		RadioGroup answers = (RadioGroup) getView().findViewById(R.id.answers);
 
 		if (answers.getCheckedRadioButtonId() != -1) {
