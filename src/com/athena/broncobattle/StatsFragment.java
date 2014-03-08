@@ -1,10 +1,8 @@
 package com.athena.broncobattle;
 
 import android.app.Fragment;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +16,9 @@ public class StatsFragment extends Fragment {
 	int experiencePoints = 0;
 	int level = 0;
 	
-	int timerTime = 5000;
+	private CountDownTimer timer;
+	
+	int timerTime = 1000;
 
 	private final int experienceFuntionX = 100;
 	private final double experienceFunctionY = 1.2;
@@ -27,18 +27,9 @@ public class StatsFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.stats_fragment_layout, container, false);
 
-		ProgressBar experienceBar = (ProgressBar) view.findViewById(R.id.experience_bar);
-
-		level = calculateLevel();
-		
-		TextView levelText = (TextView) view.findViewById(R.id.level_title);
-		levelText.setText("Level " + level);
-
-		
 		timer =  new CountDownTimer(timerTime, 50) {
 			
 			public void onTick(long millisUntilFinished) {
-				//updateBar(millisUntilFinished / (double)timerTime);
 				updateBar(millisUntilFinished);
 			}
 
@@ -52,9 +43,18 @@ public class StatsFragment extends Fragment {
 	}
 	
 	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		level = calculateLevel();
+		
+		TextView levelText = (TextView) view.findViewById(R.id.level_title);
+		levelText.setText("Level " + level);
+	};
+	
+	
+	@Override
 	public void onViewStateRestored(Bundle savedInstanceState) {
 		super.onViewStateRestored(savedInstanceState);
-		startTimeout();
+		timer.start();
 	}
 
 	private int calculateLevel() {
@@ -76,14 +76,6 @@ public class StatsFragment extends Fragment {
 	}
 
 	@Override
-	public void onConfigurationChanged(Configuration newConfig) {
-		super.onConfigurationChanged(newConfig);
-		
-		timer.cancel();
-		
-	}
-	
-	@Override
 	public void onPause() {
 		// TODO Auto-generated method stub
 		timer.cancel();
@@ -93,26 +85,15 @@ public class StatsFragment extends Fragment {
 	public void updateBar(double progress) {
 		ProgressBar p = (ProgressBar) getView().findViewById(R.id.experience_bar);
 		if(progress==0){
-			p.setProgress(100);
+			p.setProgress((int) (100 * (experiencePoints/ (double) nextLevelThreshold)));
 		}else{
-			p.setProgress(100-(int)((progress/timerTime)*100));
+			p.setProgress((int) ((100 * (experiencePoints/ (double) nextLevelThreshold)) * (1 - (progress/timerTime))));
 		}
-		//Log.i("",(int) ((experiencePoints / nextLevelThreshold) * (100 - (progress/timerTime))));
 	}
 
 	public void close() {
 		timer.cancel();
 		//ProgressBar p = (ProgressBar) getView().findViewById(R.id.experience_bar);
 		//p.setProgress(experiencePoints / nextLevelThreshold);
-	}
-
-	private CountDownTimer timer;
-
-	public void startTimeout() {
-
-		// final AchievementFragment instance = this;
-
-		timer.cancel();
-		timer.start();
 	}
 }
