@@ -102,7 +102,6 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 	@Override
 	public void onJsonFinished(Object object, String type) {
 		
-		
 		if(type.equals(NEW_QUESTION)){
 			Button submitAnswerButton = (Button) getView().findViewById(R.id.submit_answer_button);
 			submitAnswerButton.setEnabled(true);
