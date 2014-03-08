@@ -1,4 +1,4 @@
-package com.example.android.navigationdrawerexample;
+package com.athena.broncobattle;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
