@@ -21,54 +21,59 @@
 	      <LinearLayout
         android:layout_height="0dp"
         android:layout_width="fill_parent"
-        android:layout_weight="1"
+        android:layout_weight="2"        
         >
     <TextView
         android:id="@+id/question"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:gravity="center_horizontal"
-        android:padding="12dp"
-        android:textSize="30sp" />
+         android:text="hello world"
+ />
 	</LinearLayout>
     
           <LinearLayout
         android:layout_height="0dp"
         android:layout_width="fill_parent"
         android:layout_weight="4"
+                android:gravity="center_horizontal"
         >
     <RadioGroup
         android:id="@+id/answers"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:padding="10dp" >
+        android:padding="10dp"
+         >
 
         <RadioButton
             android:id="@+id/answer_one"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="aserlser" 
              />
 
         <RadioButton
             android:id="@+id/answer_two"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/answer_four_text" 
             />
 
         <RadioButton
             android:id="@+id/answer_three"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/answer_four_text" 
              />
 
         <RadioButton
             android:id="@+id/answer_four"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/answer_four_text" />
+            android:text="@string/answer_four_text" 
+            />
     </RadioGroup>
 	</LinearLayout>
     

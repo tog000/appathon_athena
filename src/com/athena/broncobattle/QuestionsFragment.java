@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 
 public class QuestionsFragment extends Fragment implements JsonEventListener<Question>{
@@ -22,23 +23,6 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Que
 	public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.questions_fragment_layout, container, false);
 		
-		correctAnswer = R.id.answer_one;
-
-		Button submitAnswerButton = (Button) view.findViewById(R.id.submit_answer_button);
-		submitAnswerButton.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if(isSubmit){
-					isSubmit=false;
-					submitAnswer(v);
-				}
-				else{
-					isSubmit=true;
-					changeQuestion(v);
-				}
-			}
-		});
-
 //		Button nextQuestionButton = (Button) view.findViewById(R.id.next_question_button);
 //		nextQuestionButton.setOnClickListener(new View.OnClickListener() {
 //			@Override
@@ -56,6 +40,32 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Que
 	
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
+		correctAnswer = R.id.answer_one;
+
+		Button submitAnswerButton = (Button) view.findViewById(R.id.submit_answer_button);
+		submitAnswerButton.setEnabled(false);
+		submitAnswerButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if(isSubmit){
+					isSubmit=false;
+					submitAnswer(v);
+				}
+				else{
+					isSubmit=true;
+					changeQuestion(v);
+				}
+			}
+		});
+		RadioGroup answers = (RadioGroup) getView().findViewById(R.id.answers);
+		
+	    answers.setOnCheckedChangeListener(new OnCheckedChangeListener() 
+	    {
+	        public void onCheckedChanged(RadioGroup group, int checkedId) {
+				Button submitAnswerButton = (Button) getView().findViewById(R.id.submit_answer_button);
+				submitAnswerButton.setEnabled(true);	        }
+	    });
+		
 		// TODO Auto-generated method stub
 		super.onViewCreated(view, savedInstanceState);
 		
@@ -93,6 +103,8 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Que
 
 	@Override
 	public void onReadFinished(Question object) {
+		Button submitAnswerButton = (Button) getView().findViewById(R.id.submit_answer_button);
+		submitAnswerButton.setEnabled(true);
 		
 		TextView question = (TextView) getView().findViewById(R.id.question);
 		question.setText(object.question);
@@ -126,7 +138,7 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Que
 
 			Button submitAnswerButton = (Button) getView().findViewById(R.id.submit_answer_button);
 			submitAnswerButton.setText("Next");
-//			submitAnswerButton.setEnabled(false);
+			//submitAnswerButton.setEnabled(false);
 		}
 	}
 }
