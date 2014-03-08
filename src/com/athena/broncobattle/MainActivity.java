@@ -238,10 +238,6 @@ public class MainActivity extends Activity {
 		// updated.
 		mNotificationManager.notify(notifyID, mNotifyBuilder.build());
 		
-		if(position>0){
-			position -= 1;
-		}
-		
 		if (fragments[position] == null) {
 			switch (position) {
 			case 0:
