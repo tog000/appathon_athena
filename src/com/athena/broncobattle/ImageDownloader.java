@@ -4,20 +4,24 @@ import java.io.InputStream;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.opengl.Visibility;
 import android.os.AsyncTask;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 public class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
 	ImageView bmImage;
+	ProgressBar progressBar;
 
-	public ImageDownloader(ImageView bmImage) {
+	public ImageDownloader(ImageView bmImage, ProgressBar progressBar) {
 		this.bmImage = bmImage;
+		this.progressBar = progressBar;
 	}
 
 	@Override
 	protected void onPreExecute() {
 		super.onPreExecute();
-		// pd.show(); progress dialog
 	}
 
 	protected Bitmap doInBackground(String... urls) {
@@ -35,8 +39,9 @@ public class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
 	@Override
 	protected void onPostExecute(Bitmap result) {
 		super.onPostExecute(result);
-		// pd.dismiss();progress dialog
+		progressBar.setVisibility(View.INVISIBLE);
 		bmImage.setImageBitmap(result);
+		bmImage.setVisibility(View.VISIBLE);
 	}
 
 }
