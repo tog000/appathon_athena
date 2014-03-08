@@ -7,23 +7,27 @@ public class QuestionController {
 	private static QuestionController sActiveQuestion;
 	Question currentQuestion;
 	Context mContext;
-	String questionReadRequest = "question_for_user";
+	String questionReadRequest = "questionRead";
 	AthenaJsonReader jsonReader;
 	
 	private QuestionController(Context context){
 		mContext = context;
-		jsonReader = new AthenaJsonReader(context);
+		
 	}
 	
 	public static QuestionController get(Context context){
 		if (sActiveQuestion == null){
-			return new QuestionController(context);
+			sActiveQuestion = new QuestionController(context);
 		}
 		return sActiveQuestion;
 	}
 	
+	public void setReader(AthenaJsonReader reader){
+		this.jsonReader = reader;
+	}
+	
 	public void getNextQuestion(){
-		jsonReader.execute(new String[]{questionReadRequest,"1"});
+		jsonReader.doInBackground(new String[]{questionReadRequest});
 	}
 
 }

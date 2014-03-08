@@ -137,7 +137,7 @@ public class MainActivity extends Activity {
 			selectItem(0);
 		}
 		
-		testJsonReaderWriter();
+		//testJsonReaderWriter();
 	}
 
 	public void testJsonReaderWriter(){
