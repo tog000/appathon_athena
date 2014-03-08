@@ -12,6 +12,7 @@ public class QuestionController {
 	
 	private QuestionController(Context context){
 		mContext = context;
+		jsonReader = new AthenaJsonReader(mContext);
 		
 	}
 	
@@ -34,7 +35,7 @@ public class QuestionController {
 	}
 	
 	public void getNextQuestion(){
-		jsonReader.doInBackground(new String[]{questionReadRequest});
+		jsonReader.execute(new String[]{questionReadRequest});
 	}
 
 }
