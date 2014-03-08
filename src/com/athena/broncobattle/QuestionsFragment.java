@@ -86,7 +86,7 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Que
 					RadioButton button = (RadioButton) obj;
 					button.setText("yay " + i);
 					button.setEnabled(true);
-					button.setTextColor(Color.BLACK);
+					button.setTextColor(button.getTextColors().getDefaultColor());
 				}
 			}
 

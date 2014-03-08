@@ -67,7 +67,9 @@ public class AthenaJsonReader extends AsyncTask<String, Void, JSONObject> {
 	@Override
 	protected void onPostExecute(JSONObject json) {
 		super.onPostExecute(json);
+
 		Question q = new Question(json);
 		listener.onReadFinished(q);
+
 	}
 }

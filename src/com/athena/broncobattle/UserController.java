@@ -24,7 +24,7 @@ public class UserController {
 	
 	public static UserController get(Context context){
 		if (sActiveUser == null){
-			return new UserController(context);
+			sActiveUser = new UserController(context);
 		}
 		return sActiveUser;
 	}
