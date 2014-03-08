@@ -16,13 +16,13 @@ import android.widget.TextView;
 public class StatsFragment extends ListFragment {
 
 	int nextLevelThreshold = 0;
-	int totalExperiencePoints = 184;
+	int totalExperiencePoints = 200;
 	int experiencePoints = 0;
 	int level = 0;
 
 	private CountDownTimer timer;
 
-	int timerTime = 500;
+	int timerTime = 750;
 	int TIMER_REFRESH = 60; // 60 Hz
 
 	private final int experienceFuntionX = 100;
