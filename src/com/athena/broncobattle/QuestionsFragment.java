@@ -7,6 +7,8 @@ import android.app.Fragment;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -117,14 +119,14 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Que
 			Button submitAnswerButton = (Button) getView().findViewById(R.id.submit_answer_button);
 			submitAnswerButton.setText("Next");
 			//submitAnswerButton.setEnabled(false);
-			QuestionController.getInstance(v.getContext()).getNextQuestion(this);
 			
 			int selectedAnswer = answers.getCheckedRadioButtonId();
 
 			if (selectedAnswer != correctAnswer) {
 				((RadioButton) getView().findViewById(selectedAnswer)).setTextColor(Color.RED);
 			}
-
+			else
+				questionAnimation();
 			((RadioButton) getView().findViewById(correctAnswer)).setTextColor(Color.GREEN);
 
 			int selectedIndex=-1;
@@ -139,6 +141,7 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Que
 
 //			Button nextQuestionButton = (Button) getView().findViewById(R.id.next_question_button);
 //			nextQuestionButton.setEnabled(true);
+			QuestionController.getInstance(v.getContext()).getNextQuestion(this);
 
 		}
 	}
@@ -149,4 +152,25 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Que
 		Toast toast = Toast.makeText(context, toastString, duration);
 		toast.show();
 	}
+	
+	private Handler customHandler = new Handler();
+	private int[] colorArray={Color.BLUE, Color.CYAN, Color.GREEN, Color.MAGENTA, Color.RED, Color.YELLOW};
+	private void questionAnimation(){
+		customHandler.postDelayed(updateTimerThread, 0);
+	}
+	 private Runnable updateTimerThread = new Runnable() {
+		 		private int changes=10;
+		         public void run() {
+		     		TextView hidden = (TextView) getView().findViewById(R.id.hidden_value);
+		    		hidden.setVisibility(TextView.VISIBLE);
+		    		hidden.setTextColor(colorArray[changes%colorArray.length]);
+		    		if(changes>0){
+		    			changes--;
+		                customHandler.postDelayed(this, 100);
+		    		}
+		    		else
+			    		hidden.setVisibility(TextView.INVISIBLE);
+		         }
+		     };
+
 }
