@@ -82,6 +82,8 @@ public class MainActivity extends Activity {
 	private String[] mDrawerButtonTitles;
 
 	private Fragment[] fragments;
+	
+	public static final String HOST = "http://132.178.174.53";
 
 	private final int NUM_FRAGMENTS = 3;
 
@@ -134,8 +136,22 @@ public class MainActivity extends Activity {
 		if (savedInstanceState == null) {
 			selectItem(0);
 		}
+		
+		testJsonReaderWriter();
 	}
 
+	public void testJsonReaderWriter(){
+
+    	QuestionController questionInfo = QuestionController.get(getApplicationContext());
+    	questionInfo.getNextQuestion();
+    	
+    	UserController userInfo = UserController.get(getApplicationContext());
+
+    	userInfo.userLoggedIn("Marianna");
+    	userInfo.answeredQuestionCorrectly(6);
+
+    }
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
