@@ -1,6 +1,10 @@
 package com.athena.broncobattle;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import android.app.Fragment;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,6 +15,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class QuestionsFragment extends Fragment implements JsonEventListener<Question>{
 
@@ -18,6 +23,7 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Que
 	boolean isSubmit=true;
 	private Question currentQuestion;
 	private boolean isInitial=true;
+	
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
@@ -29,7 +35,8 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Que
 	
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
-		correctAnswer = R.id.answer_one;
+		isInitial=true;
+		QuestionController.getInstance(view.getContext()).getNextQuestion(this);
 
 		Button submitAnswerButton = (Button) view.findViewById(R.id.submit_answer_button);
 		submitAnswerButton.setEnabled(false);
@@ -57,9 +64,6 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Que
 		
 		// TODO Auto-generated method stub
 		super.onViewCreated(view, savedInstanceState);
-		
-		QuestionController.getInstance(view.getContext()).getNextQuestion(this);
-		isInitial=true;
 	}
 
 	protected void changeQuestion(View v) {
@@ -116,7 +120,6 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Que
 			QuestionController.getInstance(v.getContext()).getNextQuestion(this);
 			
 			int selectedAnswer = answers.getCheckedRadioButtonId();
-			QuestionController.getInstance(v.getContext()).questionAnswered(currentQuestion, selectedAnswer);
 
 			if (selectedAnswer != correctAnswer) {
 				((RadioButton) getView().findViewById(selectedAnswer)).setTextColor(Color.RED);
@@ -124,13 +127,26 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Que
 
 			((RadioButton) getView().findViewById(correctAnswer)).setTextColor(Color.GREEN);
 
+			int selectedIndex=-1;
 			for (int i = 0; i < answers.getChildCount(); i++) {
-				((RadioButton) answers.getChildAt(i)).setEnabled(false);
+				RadioButton answer=((RadioButton) answers.getChildAt(i));
+				if(answer.getId()==selectedAnswer){
+					selectedIndex=i;
+				}
+				answer.setEnabled(false);
 			}
+			QuestionController.getInstance(v.getContext()).questionAnswered(currentQuestion, selectedIndex);
 
 //			Button nextQuestionButton = (Button) getView().findViewById(R.id.next_question_button);
 //			nextQuestionButton.setEnabled(true);
 
 		}
+	}
+	public void toastSomething(String toastString){
+		Context context = getView().getContext();
+		int duration = Toast.LENGTH_SHORT;
+
+		Toast toast = Toast.makeText(context, toastString, duration);
+		toast.show();
 	}
 }
