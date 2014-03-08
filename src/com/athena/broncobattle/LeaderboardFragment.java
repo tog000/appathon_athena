@@ -12,6 +12,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 public class LeaderboardFragment extends  ListFragment {
+	
+	ArrayAdapter<User> adapter;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
@@ -34,11 +36,18 @@ public class LeaderboardFragment extends  ListFragment {
 				new User("id5", "Elena", "http://www.gravatar.com/avatar/9032743fd412323m4b23?d=retro&f=y", 10000)
 				
 		};
-		    ArrayAdapter<User> adapter = new LeaderboardListAdapter(getActivity().getApplicationContext(), 0, 0, Arrays.asList(users));
-		    setListAdapter(adapter);
+		    adapter = new LeaderboardListAdapter(getActivity().getApplicationContext(), 0, 0, Arrays.asList(users));
+		    
 		    //view.setEnabled(false);
 		return view;
 
+	}
+	
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+
+		//super.onViewCreated(view, savedInstanceState);
+		((ListView)view.findViewById(R.id.leaderboard_list)).setAdapter(adapter);
 	}
 
 
