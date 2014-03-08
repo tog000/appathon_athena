@@ -110,5 +110,6 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Que
 			((RadioButton)answers.getChildAt(i)).setText(object.answers.get(i));
 		}
 		
+		correctAnswer = ((RadioButton) answers.getChildAt(object.correctAnswerIndex)).getId();
 	}
 }
