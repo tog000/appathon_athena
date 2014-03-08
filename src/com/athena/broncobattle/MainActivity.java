@@ -99,6 +99,7 @@ public class MainActivity extends Activity {
 		mDrawerList = (ListView) findViewById(R.id.left_drawer);
 		
 		View header = View.inflate(this, R.layout.dialog_header_layout, null);
+		header.findViewById(R.id.drawer_header_icon);
 		mDrawerList.addHeaderView(header);
 		
 
@@ -197,6 +198,9 @@ public class MainActivity extends Activity {
 	private class DrawerItemClickListener implements ListView.OnItemClickListener {
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+			if (((ListView)parent).getHeaderViewsCount()>0){
+				position --;
+			}
 			selectItem(position);
 		}
 	}
@@ -242,7 +246,7 @@ public class MainActivity extends Activity {
 		fragmentManager.beginTransaction().replace(R.id.content_frame, fragments[position]).commit();
 
 		// update selected item and title, then close the drawer
-		mDrawerList.setItemChecked(position, true);
+		mDrawerList.setItemChecked(position+1, true);
 		setTitle(mDrawerButtonTitles[position]);
 		// setTitle(mPlanetTitles[position]);
 		mDrawerLayout.closeDrawer(mDrawerList);
