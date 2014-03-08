@@ -1,5 +1,6 @@
 package com.athena.broncobattle;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import android.app.ListFragment;
@@ -9,14 +10,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
-public class StatsFragment extends ListFragment {
+public class StatsFragment extends ListFragment implements JsonEventListener {
 
 	int nextLevelThreshold = 0;
-	int totalExperiencePoints = 200;
+	long totalExperiencePoints = 200;
 	int experiencePoints = 0;
 	int level = 0;
 
@@ -27,6 +31,10 @@ public class StatsFragment extends ListFragment {
 
 	private final int experienceFuntionX = 100;
 	private final double experienceFunctionY = 1.2;
+	
+	private static final String GET_ACHIEVEMENT = "getAchievement";
+	
+	ArrayList<Achievement> achievements;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
@@ -49,29 +57,49 @@ public class StatsFragment extends ListFragment {
 
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
+		
+		User user = UserController.getInstance(getView().getContext()).currentUser;
+		
+		totalExperiencePoints = user.experience;
+		
+		AchievementController.getInstance(view.getContext()).getAchievements(this, GET_ACHIEVEMENT);
+		
 		level = calculateLevel();
 
 		TextView levelText = (TextView) view.findViewById(R.id.level_title);
 		levelText.setText("Level " + level);
 		
-		Achievement[] achievements = new Achievement[] { 
-				new Achievement("id1", "", "foo", "blah di blah"),
-				new Achievement("id1", "", "foo", "blah di blah"),
-				new Achievement("id1", "", "foo", "blah di blah"),
-				new Achievement("id1", "", "foo", "blah di blah"),
-				new Achievement("id1", "", "foo", "blah di blah"),
-				new Achievement("id1", "", "foo", "blah di blah"),
-				new Achievement("id1", "", "foo", "blah di blah"),
-				new Achievement("id1", "", "foo", "blah di blah"),
-				new Achievement("id1", "", "foo", "blah di blah"),
-				new Achievement("id1", "", "foo", "blah di blah")
+//		Achievement[] achievements = new Achievement[] { 
+//				new Achievement("id1", "", "foo", "blah di blah"),
+//				new Achievement("id1", "", "foo", "blah di blah"),
+//				new Achievement("id1", "", "foo", "blah di blah"),
+//				new Achievement("id1", "", "foo", "blah di blah"),
+//				new Achievement("id1", "", "foo", "blah di blah"),
+//				new Achievement("id1", "", "foo", "blah di blah"),
+//				new Achievement("id1", "", "foo", "blah di blah"),
+//				new Achievement("id1", "", "foo", "blah di blah"),
+//				new Achievement("id1", "", "foo", "blah di blah"),
+//				new Achievement("id1", "", "foo", "blah di blah")
+//
+//		};
 
-		};
-
-		ArrayAdapter<Achievement> adapter = new StatsListAdapter(getActivity().getApplicationContext(), 0, 0, Arrays.asList(achievements));
+		ArrayAdapter<Achievement> adapter = new StatsListAdapter(getActivity().getApplicationContext(), 0, 0, achievements);
 
 		((ListView) getView().findViewById(R.id.stats_list)).setAdapter(adapter);
 	};
+	
+	@Override
+	public void onJsonFinished(Object object, String type) {
+		if(type.equals(GET_ACHIEVEMENT)){
+			Button submitAnswerButton = (Button) getView().findViewById(R.id.submit_answer_button);
+			submitAnswerButton.setEnabled(true);
+			
+			achievements = (ArrayList<Achievement>) object;
+			
+			
+			
+		}
+	}
 
 	@Override
 	public void onViewStateRestored(Bundle savedInstanceState) {
@@ -89,7 +117,7 @@ public class StatsFragment extends ListFragment {
 			sumThreshold += nextLevelThreshold;
 			if (sumThreshold > totalExperiencePoints) {
 				rval = loopLevel - 1;
-				experiencePoints = totalExperiencePoints - previousLevelThreshold;
+				experiencePoints = (int) (totalExperiencePoints - previousLevelThreshold);
 				break;
 			}
 		}
