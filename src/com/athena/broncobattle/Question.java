@@ -9,13 +9,14 @@ import org.json.JSONObject;
 import android.content.Context;
 
 public class Question {
-	String question;
-	int experience;
-	String image;
-	LinkedList<String> answers;
-	int correctAnswerIndex;
+	public int id;
+	public String question;
+	public int experience;
+	public String image;
+	public LinkedList<String> answers;
+	public int correctAnswerIndex;
 	
-	public static final String JSON_QUESTION_ID = "question_id";
+	public static final String JSON_QUESTION_ID = "id";
 	public static final String JSON_QUESTION = "question";
 	public static final String JSON_EXPERIENCE = "experience";
 	public static final String JSON_IMAGE = "image";
@@ -32,6 +33,7 @@ public class Question {
 	
 	public Question(JSONObject json){
         try {
+        	id = json.getInt(JSON_QUESTION_ID);
         	question = json.getString(JSON_QUESTION);
         	experience = json.getInt(JSON_EXPERIENCE);
         	image = json.getString(JSON_IMAGE);
