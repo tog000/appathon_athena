@@ -193,6 +193,8 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 	private void displayCorrect(){
  		RelativeLayout layout=(RelativeLayout)getView().findViewById(R.id.hidden_view);
  		layout.setVisibility(RelativeLayout.VISIBLE);
+		TextView expView = (TextView) getView().findViewById(R.id.hidden_experience);
+		expView.setText("Experience: "+UserController.getInstance(getActivity()).currentUser.experience);
  		new CountDownTimer(UPDATE_ANIMATION_TIME, UPDATE_ANIMATION_INTERVAL) {
 			int tickCounter=0;
 			long experience=UserController.getInstance(getActivity()).currentUser.experience;
@@ -203,7 +205,9 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 		 		hiddenField.setTextColor(color[tickCounter%color.length]);
 		 		tickCounter++;
 		 		if(experience<maxExperience){
-		 			
+		 			experience+=experienceIncrement;
+		 			TextView expView = (TextView) getView().findViewById(R.id.hidden_experience);
+		 			expView.setText("Experience: "+experience);
 		 		}
 		     }
 
