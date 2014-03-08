@@ -42,6 +42,7 @@
 $route['404_override'] = '';
 $route['question/create'] = 'question/create';
 $route['question/(:any)'] = 'question/index/$1';
+$route['question_answered'] = 'question/question_answered';
 $route['question_for_user/(:any)'] = 'question/question_for_user/$1';
 $route['user'] = 'user';
 //$route['question/create'] = 'question/create';

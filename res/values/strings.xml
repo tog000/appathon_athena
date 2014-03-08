@@ -50,6 +50,7 @@
     <string name="question_image_desc"></string>
     <string name="level_title_text">Level 0</string>
     <string name="error_fetching_question">Couldn\'t contact the server</string>
+    <string name="error_answering_question">Count\t save your question</string>
     
 
 </resources>

@@ -23,6 +23,12 @@ class Question extends CI_Controller{
 		}
 	}
 
+	public function question_answered()
+	{
+		$this->load->helper('url');
+		print_r($this->input->post());
+	}
+
 	public function view($id)
 	{
 		echo "view";

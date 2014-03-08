@@ -1,6 +1,7 @@
 package com.athena.broncobattle;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 public class QuestionController {
@@ -8,12 +9,15 @@ public class QuestionController {
 	private static QuestionController sActiveQuestion;
 	Question currentQuestion;
 	Context mContext;
-	String questionReadRequest = "question_for_user";
-	AthenaJsonReader jsonReader;
+	private final String READ_QUESTION = "question_for_user";
+	private final String QUESTION_ANSWERED = "question_answered";
+	private AthenaJsonReader jsonReader;
+	private AthenaJsonWriter jsonWriter;
 	
 	private QuestionController(Context context){
 		mContext = context;
 		jsonReader = new AthenaJsonReader(mContext);
+		jsonWriter = new AthenaJsonWriter(mContext);
 	}
 	
 	public static QuestionController getInstance(Context context){
@@ -30,13 +34,11 @@ public class QuestionController {
 		return sActiveQuestion;
 	}
 	
-	public void addJsonEventListener(JsonEventListener listener){
-		this.jsonReader.addJsonEventListener(listener);
-	}
-	
-	public void getNextQuestion(){
+	public void getNextQuestion(JsonEventListener<?> listener){
 		try{
-			jsonReader.execute(new String[]{questionReadRequest,UserController.getInstance(mContext).currentUser.id});
+			jsonReader = new AthenaJsonReader(mContext);
+			jsonReader.addJsonEventListener(listener);
+			jsonReader.execute(new String[]{READ_QUESTION,UserController.getInstance(mContext).currentUser.id});
 		}catch(Exception e){
 			Toast toast = Toast.makeText(mContext, mContext.getResources().getString(R.string.error_fetching_question), Toast.LENGTH_SHORT);
 			toast.show();
@@ -44,7 +46,19 @@ public class QuestionController {
 	}
 	
 	public void questionAnswered(Question q, int selectedAnswer){
-		
+		try{
+			
+			jsonWriter = new AthenaJsonWriter(mContext);
+			jsonWriter.addNamedParameter("user_id", UserController.getInstance(mContext).currentUser.id);
+			jsonWriter.addNamedParameter("question_id", q.id+"");
+			jsonWriter.addNamedParameter("answer", selectedAnswer+"");
+			jsonWriter.execute(new String[]{QUESTION_ANSWERED});
+		}catch(Exception e){
+			Toast toast = Toast.makeText(mContext, mContext.getResources().getString(R.string.error_answering_question), Toast.LENGTH_SHORT);
+			toast.show();
+			Log.e("questionAnswered",e.toString());
+			e.printStackTrace();
+		}
 	}
 
 }

@@ -13,8 +13,6 @@ public class UserController {
 	Context mContext;
 	AthenaJsonReader jsonReader;
 	AthenaJsonWriter jsonWriter;
-	String userWriteRequest = "userWrite";
-	String userReadRequest = "userRead";
 	
 	private UserController(Context context){
 		mContext = context;
@@ -41,7 +39,7 @@ public class UserController {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		jsonWriter.execute(new String[]{userWriteRequest, "1"});//correctAnswerUser.toString()
+		//jsonWriter.execute(new String[]{userWriteRequest, "1"});//correctAnswerUser.toString()
 	}
 
 	public void userLoggedIn(String userName){
@@ -49,6 +47,6 @@ public class UserController {
 	}
 	
 	public void readActiveUser(String userName){
-		jsonReader.execute(new String[]{userReadRequest, userName});
+		//jsonReader.execute(new String[]{userReadRequest, userName});
 	}
 }

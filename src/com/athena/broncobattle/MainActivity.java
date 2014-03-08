@@ -142,8 +142,8 @@ public class MainActivity extends Activity {
 
 	public void testJsonReaderWriter(){
 
-    	QuestionController questionInfo = QuestionController.get(getApplicationContext());
-    	questionInfo.getNextQuestion();
+    	//QuestionController questionInfo = QuestionController.get(getApplicationContext());
+    	//questionInfo.getNextQuestion(this);
     	
     	UserController userInfo = UserController.getInstance(getApplicationContext());
 

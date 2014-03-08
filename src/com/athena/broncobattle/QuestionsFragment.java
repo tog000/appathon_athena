@@ -69,8 +69,7 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Que
 		// TODO Auto-generated method stub
 		super.onViewCreated(view, savedInstanceState);
 		
-		QuestionController.getInstance(view.getContext()).addJsonEventListener(this);
-		QuestionController.getInstance(view.getContext()).getNextQuestion();
+		QuestionController.getInstance(view.getContext()).getNextQuestion(this);
 	}
 
 	protected void changeQuestion(View v) {
@@ -120,7 +119,7 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Que
 			Button submitAnswerButton = (Button) getView().findViewById(R.id.submit_answer_button);
 			submitAnswerButton.setText("Next");
 			//submitAnswerButton.setEnabled(false);
-			QuestionController.getInstance(v.getContext()).getNextQuestion();
+			QuestionController.getInstance(v.getContext()).getNextQuestion(this);
 			
 			int selectedAnswer = answers.getCheckedRadioButtonId();
 			QuestionController.getInstance(v.getContext()).questionAnswered(currentQuestion, selectedAnswer);
