@@ -18,7 +18,8 @@ public class StatsFragment extends Fragment {
 	
 	private CountDownTimer timer;
 	
-	int timerTime = 1000;
+	int timerTime = 500;
+	int TIMER_REFRESH = 60; //60 Hz
 
 	private final int experienceFuntionX = 100;
 	private final double experienceFunctionY = 1.2;
@@ -27,7 +28,7 @@ public class StatsFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.stats_fragment_layout, container, false);
 
-		timer =  new CountDownTimer(timerTime, 50) {
+		timer =  new CountDownTimer(timerTime, timerTime/TIMER_REFRESH) {
 			
 			public void onTick(long millisUntilFinished) {
 				updateBar(millisUntilFinished);
