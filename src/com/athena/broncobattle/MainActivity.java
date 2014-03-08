@@ -124,8 +124,31 @@ public class MainActivity extends Activity {
         if (savedInstanceState == null) {
             selectItem(0);
         }
+        testJsonReaderWriter();
     }
 
+    
+    public void testJsonReaderWriter(){
+    	String hostURL = "http://132.178.174.53";
+    	
+    	AthenaJsonReader reader = new AthenaJsonReader(hostURL, getApplicationContext());
+    	AthenaJsonWriter writer = new AthenaJsonWriter(hostURL);
+    	
+    	UserController userInfo = UserController.get(getApplicationContext());
+    	userInfo.setReader(reader);
+    	userInfo.setWriter(writer);
+    	
+    	userInfo.userLoggedIn("Marianna");
+    	userInfo.answeredQuestionCorrectly(6);
+    	
+    	
+    	QuestionController questionInfo = QuestionController.get(getApplicationContext());
+    	questionInfo.setReader(reader);
+    	questionInfo.getNextQuestion();
+
+    }
+    
+    
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
