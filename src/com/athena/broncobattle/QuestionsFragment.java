@@ -7,6 +7,7 @@ import android.app.Fragment;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +25,8 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 	boolean isSubmit=true;
 	private Question currentQuestion;
 	private boolean isInitial=true;
+	private final int UPDATE_ANIMATION_TIME=5000;
+	private final int UPDATE_ANIMATION_INTERVAL=100;
 	
 	private static final String NEW_QUESTION= "newQuestion";
 	private static final String SAVE_ANSWER = "saveQuestion";
@@ -37,11 +41,15 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 	
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
+		correctAnswer = ((RadioButton) getView().findViewById(R.id.answer_three)).getId();
 		isInitial=true;
 		QuestionController.getInstance(view.getContext()).getNextQuestion(this,NEW_QUESTION);
+		
 
 		Button submitAnswerButton = (Button) view.findViewById(R.id.submit_answer_button);
 		submitAnswerButton.setEnabled(false);
+		submitAnswerButton.setVisibility(Button.INVISIBLE);
+
 		submitAnswerButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -55,13 +63,25 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 				}
 			}
 		});
+		
+ 		RelativeLayout layout=(RelativeLayout)getView().findViewById(R.id.hidden_view);
+ 		layout.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+		 		RelativeLayout layout=(RelativeLayout)getView().findViewById(R.id.hidden_view);
+		 		layout.setVisibility(RelativeLayout.GONE);
+			}
+		});
+		
 		RadioGroup answers = (RadioGroup) getView().findViewById(R.id.answers);
 		
 	    answers.setOnCheckedChangeListener(new OnCheckedChangeListener() 
 	    {
 	        public void onCheckedChanged(RadioGroup group, int checkedId) {
 				Button submitAnswerButton = (Button) getView().findViewById(R.id.submit_answer_button);
-				submitAnswerButton.setEnabled(true);	        }
+				submitAnswerButton.setEnabled(true);
+				submitAnswerButton.setVisibility(Button.VISIBLE);	
+	        }
 	    });
 		
 		// TODO Auto-generated method stub
@@ -105,7 +125,14 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 		
 		if(type.equals(NEW_QUESTION)){
 			Button submitAnswerButton = (Button) getView().findViewById(R.id.submit_answer_button);
+			if(object==null){
+				toastSomething("Sorry, no more questions. Have a nice day,");
+				submitAnswerButton.setEnabled(false);
+				submitAnswerButton.setVisibility(Button.INVISIBLE);	
+				return;
+			}
 			submitAnswerButton.setEnabled(true);
+			submitAnswerButton.setVisibility(Button.VISIBLE);
 			
 			currentQuestion=(Question)object;
 			RadioGroup answers = (RadioGroup) getView().findViewById(R.id.answers);
@@ -125,12 +152,17 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 		if (answers.getCheckedRadioButtonId() != -1) {
 			Button submitAnswerButton = (Button) getView().findViewById(R.id.submit_answer_button);
 			submitAnswerButton.setText("Next");
-			//submitAnswerButton.setEnabled(false);
+			submitAnswerButton.setEnabled(false);
+			submitAnswerButton.setVisibility(Button.INVISIBLE);	
+
 			
 			int selectedAnswer = answers.getCheckedRadioButtonId();
 
 			if (selectedAnswer != correctAnswer) {
 				((RadioButton) getView().findViewById(selectedAnswer)).setTextColor(Color.RED);
+			}
+			else{
+				displayCorrect();
 			}
 
 			((RadioButton) getView().findViewById(correctAnswer)).setTextColor(Color.GREEN);
@@ -156,5 +188,30 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 
 		Toast toast = Toast.makeText(context, toastString, duration);
 		toast.show();
+	}
+	
+	static final int[]color={Color.BLUE,Color.CYAN, Color.GREEN, Color.MAGENTA, Color.RED, Color.YELLOW};
+	private void displayCorrect(){
+ 		RelativeLayout layout=(RelativeLayout)getView().findViewById(R.id.hidden_view);
+ 		layout.setVisibility(RelativeLayout.VISIBLE);
+ 		new CountDownTimer(UPDATE_ANIMATION_TIME, UPDATE_ANIMATION_INTERVAL) {
+			int tickCounter=0;
+			long experience=UserController.getInstance(getActivity()).currentUser.experience;
+			long experienceIncrement=2*currentQuestion.experience/(UPDATE_ANIMATION_TIME/UPDATE_ANIMATION_INTERVAL);
+			long maxExperience=experience+currentQuestion.experience;
+		     public void onTick(long millisUntilFinished) {
+		 		TextView hiddenField = (TextView) getView().findViewById(R.id.hidden_value);
+		 		hiddenField.setTextColor(color[tickCounter%color.length]);
+		 		tickCounter++;
+		 		if(experience<maxExperience){
+		 			
+		 		}
+		     }
+
+		     public void onFinish() {
+		  		RelativeLayout layout=(RelativeLayout)getView().findViewById(R.id.hidden_view);
+		 		layout.setVisibility(RelativeLayout.GONE);
+		     }
+		  }.start();
 	}
 }
