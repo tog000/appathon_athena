@@ -49,6 +49,7 @@
     <string name="achievement_title_text">Achievements</string>
     <string name="question_image_desc"></string>
     <string name="level_title_text">Level 0</string>
+    <string name="error_fetching_question">Couldn\'t contact the server</string>
     
 
 </resources>

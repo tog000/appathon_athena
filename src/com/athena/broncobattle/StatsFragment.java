@@ -1,8 +1,10 @@
 package com.athena.broncobattle;
 
 import android.app.Fragment;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,9 +34,27 @@ public class StatsFragment extends Fragment {
 		TextView levelText = (TextView) view.findViewById(R.id.level_title);
 		levelText.setText("Level " + level);
 
-		startTimeout();
+		
+		timer =  new CountDownTimer(timerTime, 50) {
+			
+			public void onTick(long millisUntilFinished) {
+				//updateBar(millisUntilFinished / (double)timerTime);
+				updateBar(millisUntilFinished);
+			}
 
+			public void onFinish() {
+				updateBar(0f);
+				close();
+			}
+		};
+		
 		return view;
+	}
+	
+	@Override
+	public void onViewStateRestored(Bundle savedInstanceState) {
+		super.onViewStateRestored(savedInstanceState);
+		startTimeout();
 	}
 
 	private int calculateLevel() {
@@ -55,15 +75,35 @@ public class StatsFragment extends Fragment {
 		return rval;
 	}
 
-	public void updateBar(long progress) {
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+		
+		timer.cancel();
+		
+	}
+	
+	@Override
+	public void onPause() {
+		// TODO Auto-generated method stub
+		timer.cancel();
+		super.onPause();
+	}
+	
+	public void updateBar(double progress) {
 		ProgressBar p = (ProgressBar) getView().findViewById(R.id.experience_bar);
-		p.setProgress((int) ((experiencePoints / nextLevelThreshold) * (100 - (progress/timerTime))));
+		if(progress==0){
+			p.setProgress(100);
+		}else{
+			p.setProgress(100-(int)((progress/timerTime)*100));
+		}
+		//Log.i("",(int) ((experiencePoints / nextLevelThreshold) * (100 - (progress/timerTime))));
 	}
 
 	public void close() {
 		timer.cancel();
-		ProgressBar p = (ProgressBar) getView().findViewById(R.id.experience_bar);
-		p.setProgress(experiencePoints / nextLevelThreshold);
+		//ProgressBar p = (ProgressBar) getView().findViewById(R.id.experience_bar);
+		//p.setProgress(experiencePoints / nextLevelThreshold);
 	}
 
 	private CountDownTimer timer;
@@ -72,16 +112,7 @@ public class StatsFragment extends Fragment {
 
 		// final AchievementFragment instance = this;
 
-		timer = new CountDownTimer(timerTime, 50) {
-
-			public void onTick(long millisUntilFinished) {
-				updateBar(millisUntilFinished * timerTime);
-			}
-
-			public void onFinish() {
-//				updateBar(0f);
-				close();
-			}
-		}.start();
+		timer.cancel();
+		timer.start();
 	}
 }
