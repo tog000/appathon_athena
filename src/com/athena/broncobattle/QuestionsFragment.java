@@ -7,8 +7,6 @@ import android.app.Fragment;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,13 +17,15 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class QuestionsFragment extends Fragment implements JsonEventListener<Question>{
+public class QuestionsFragment extends Fragment implements JsonEventListener<Object>{
 
 	int correctAnswer = 0;
 	boolean isSubmit=true;
 	private Question currentQuestion;
 	private boolean isInitial=true;
 	
+	private static final String NEW_QUESTION= "newQuestion";
+	private static final String SAVE_ANSWER = "saveQuestion";
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
@@ -38,7 +38,7 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Que
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		isInitial=true;
-		QuestionController.getInstance(view.getContext()).getNextQuestion(this);
+		QuestionController.getInstance(view.getContext()).getNextQuestion(this,NEW_QUESTION);
 
 		Button submitAnswerButton = (Button) view.findViewById(R.id.submit_answer_button);
 		submitAnswerButton.setEnabled(false);
@@ -100,18 +100,25 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Que
 	}
 
 	@Override
-	public void onReadFinished(Question object) {
-		Button submitAnswerButton = (Button) getView().findViewById(R.id.submit_answer_button);
-		submitAnswerButton.setEnabled(true);
+	public void onJsonFinished(Object object, String type) {
 		
-		currentQuestion=object;
-		RadioGroup answers = (RadioGroup) getView().findViewById(R.id.answers);
-		correctAnswer=((RadioButton)answers.getChildAt(object.correctAnswerIndex)).getId();
-		if(isInitial){
-			initializeQuestion(getView());
-			isInitial=false;
+		
+		if(type.equals(NEW_QUESTION)){
+			Button submitAnswerButton = (Button) getView().findViewById(R.id.submit_answer_button);
+			submitAnswerButton.setEnabled(true);
+			
+			currentQuestion=(Question)object;
+			RadioGroup answers = (RadioGroup) getView().findViewById(R.id.answers);
+			correctAnswer=((RadioButton)answers.getChildAt(currentQuestion.correctAnswerIndex)).getId();
+			if(isInitial){
+				initializeQuestion(getView());
+				isInitial=false;
+			}
+		}else if(type.equals(SAVE_ANSWER)){
+			QuestionController.getInstance(getView().getContext()).getNextQuestion(this, NEW_QUESTION);
 		}
 	}
+	
 	private void submitAnswer(View v){
 		RadioGroup answers = (RadioGroup) getView().findViewById(R.id.answers);
 
@@ -125,8 +132,7 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Que
 			if (selectedAnswer != correctAnswer) {
 				((RadioButton) getView().findViewById(selectedAnswer)).setTextColor(Color.RED);
 			}
-			else
-				questionAnimation();
+
 			((RadioButton) getView().findViewById(correctAnswer)).setTextColor(Color.GREEN);
 
 			int selectedIndex=-1;
@@ -137,11 +143,10 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Que
 				}
 				answer.setEnabled(false);
 			}
-			QuestionController.getInstance(v.getContext()).questionAnswered(currentQuestion, selectedIndex);
+			QuestionController.getInstance(v.getContext()).questionAnswered(currentQuestion, selectedIndex, this, SAVE_ANSWER);
 
 //			Button nextQuestionButton = (Button) getView().findViewById(R.id.next_question_button);
 //			nextQuestionButton.setEnabled(true);
-			QuestionController.getInstance(v.getContext()).getNextQuestion(this);
 
 		}
 	}
@@ -152,25 +157,4 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Que
 		Toast toast = Toast.makeText(context, toastString, duration);
 		toast.show();
 	}
-	
-	private Handler customHandler = new Handler();
-	private int[] colorArray={Color.BLUE, Color.CYAN, Color.GREEN, Color.MAGENTA, Color.RED, Color.YELLOW};
-	private void questionAnimation(){
-		customHandler.postDelayed(updateTimerThread, 0);
-	}
-	 private Runnable updateTimerThread = new Runnable() {
-		 		private int changes=10;
-		         public void run() {
-		     		TextView hidden = (TextView) getView().findViewById(R.id.hidden_value);
-		    		hidden.setVisibility(TextView.VISIBLE);
-		    		hidden.setTextColor(colorArray[changes%colorArray.length]);
-		    		if(changes>0){
-		    			changes--;
-		                customHandler.postDelayed(this, 100);
-		    		}
-		    		else
-			    		hidden.setVisibility(TextView.INVISIBLE);
-		         }
-		     };
-
 }

@@ -1,5 +1,5 @@
 package com.athena.broncobattle;
 
-public interface JsonEventListener<T> {
-	public void onReadFinished(T object);
+public interface JsonEventListener<T> {	
+	public void onJsonFinished(T object, String eventType);
 }

@@ -9,6 +9,8 @@ class Question extends CI_Controller{
 
 	public function index($id = NULL)
 	{
+		echo "nothing so see here...";
+		return;
 		$response = $this->question_model->get_question($id);
 		if(count($response)>0){
 			echo json_encode($response);
@@ -25,8 +27,7 @@ class Question extends CI_Controller{
 
 	public function question_answered()
 	{
-		$this->load->helper('url');
-		print_r($this->input->post());
+		echo $this->question_model->add_answer();
 	}
 
 	public function view($id)

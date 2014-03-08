@@ -38,7 +38,7 @@
 |
 */
 
-//$route['default_controller'] = "welcome";
+$route['default_controller'] = "question";
 $route['404_override'] = '';
 $route['question/create'] = 'question/create';
 $route['question/(:any)'] = 'question/index/$1';
