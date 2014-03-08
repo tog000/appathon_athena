@@ -40,9 +40,13 @@ class Question_model extends CI_Model {
 		if ($user_id !== FALSE)
 		{
 
-			$previously_answered = $this->db->get_where('user_question_answer', array('id_user'=>$user_id));
+			$this->db->from('user_question_answer');
+			$this->db->where('id_user',$user_id);
+			$this->db->where('correct',1);
+
 			$ids = [-1];
-			foreach($previously_answered->result() as $index=>$object){
+			//print_r($this->db->get()->result());
+			foreach($this->db->get()->result() as $index=>$object){
 				array_push($ids, $object->id_question);
 			}
 
@@ -66,6 +70,23 @@ class Question_model extends CI_Model {
 		return NULL;
 	}
 
+	public function add_answer(){
+
+		if($this->input->post('question_id')){
+
+			$data = array(
+				'id_question' => $this->input->post('question_id'),
+				'id_user' => $this->input->post('user_id'),
+				'answer' => $this->input->post('answer'),
+				'correct' => $this->input->post('correct'),
+				);
+
+			$this->db->insert('user_question_answer', $data);
+
+			return $this->db->insert_id();
+		}
+		return null;
+	}
 
 	public function set_question()
 	{

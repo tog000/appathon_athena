@@ -8,7 +8,7 @@ import android.provider.Settings.Secure;
 
 public class UserController {
 	
-	private static UserController sActiveUser;
+	private static UserController instance;
 	public User currentUser;
 	Context mContext;
 	AthenaJsonReader jsonReader;
@@ -25,10 +25,10 @@ public class UserController {
 	}
 	
 	public static UserController getInstance(Context context){
-		if (sActiveUser == null){
-			sActiveUser = new UserController(context);
+		if (instance == null){
+			instance = new UserController(context);
 		}
-		return sActiveUser;
+		return instance;
 	}
 	
 	public void answeredQuestionCorrectly(int questionID){

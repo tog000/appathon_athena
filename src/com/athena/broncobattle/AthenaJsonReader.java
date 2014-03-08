@@ -15,15 +15,19 @@ import org.json.JSONObject;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
+import android.widget.Toast;
 
 public class AthenaJsonReader extends AsyncTask<String, Void, JSONObject> {
 
 	private Context mContext;
-	JsonEventListener listener;
+	private JsonEventListener listener;
+	private String type;
 	
 	
-	public void addJsonEventListener(JsonEventListener listener){
+	public void addJsonEventListener(JsonEventListener listener, String type){
 		this.listener = listener;
+		this.type=type;
 	}
 
 	public AthenaJsonReader(Context context) {
@@ -67,9 +71,15 @@ public class AthenaJsonReader extends AsyncTask<String, Void, JSONObject> {
 	@Override
 	protected void onPostExecute(JSONObject json) {
 		super.onPostExecute(json);
-
-		Question q = new Question(json);
-		listener.onReadFinished(q);
+		
+		if(json.isNull("server_message")){
+			Question q = new Question(json);
+			listener.onJsonFinished(q,type);
+		}else{
+			Toast toast = Toast.makeText(mContext, mContext.getResources().getString(R.string.no_more_questions), Toast.LENGTH_SHORT);
+			toast.show();
+			listener.onJsonFinished(null,type);
+		}
 
 	}
 }
