@@ -19,6 +19,12 @@ import android.os.AsyncTask;
 public class AthenaJsonReader extends AsyncTask<String, Void, JSONObject> {
 
 	private Context mContext;
+	JsonEventListener listener;
+	
+	
+	public void addJsonEventListener(JsonEventListener listener){
+		this.listener = listener;
+	}
 
 	public AthenaJsonReader(Context context) {
 		mContext = context;
@@ -61,6 +67,7 @@ public class AthenaJsonReader extends AsyncTask<String, Void, JSONObject> {
 	@Override
 	protected void onPostExecute(JSONObject json) {
 		super.onPostExecute(json);
-		Question q = new Question(json, mContext);
+		Question q = new Question(json);
+		listener.onReadFinished(q);
 	}
 }

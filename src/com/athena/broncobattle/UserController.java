@@ -19,6 +19,7 @@ public class UserController {
 		mContext = context;
 		jsonReader = new AthenaJsonReader(context);
 		jsonWriter = new AthenaJsonWriter(context);
+		currentUser = new User("A", "B", "C", 0);
 	}
 	
 	public static UserController get(Context context){
@@ -36,7 +37,7 @@ public class UserController {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		jsonWriter.execute(new String[]{userWriteRequest, correctAnswerUser.toString()});
+		jsonWriter.execute(new String[]{userWriteRequest, "1"});//correctAnswerUser.toString()
 	}
 
 	public void userLoggedIn(String userName){

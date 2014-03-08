@@ -11,7 +11,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-public class QuestionsFragment extends Fragment {
+public class QuestionsFragment extends Fragment implements JsonEventListener<Question>{
 
 	int correctAnswer = 0;
 	
@@ -21,6 +21,9 @@ public class QuestionsFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.questions_fragment_layout, container, false);
 
+		QuestionController.get().addJsonEventListener(this);
+		QuestionController.get().getNextQuestion();
+		
 		correctAnswer = R.id.answer_one;
 
 		Button submitAnswerButton = (Button) view.findViewById(R.id.submit_answer_button);
@@ -94,5 +97,18 @@ public class QuestionsFragment extends Fragment {
 			submitAnswerButton.setEnabled(true);
 
 		}
+	}
+
+	@Override
+	public void onReadFinished(Question object) {
+		
+		TextView question = (TextView) getView().findViewById(R.id.question);
+		question.setText(object.question);
+		
+		RadioGroup answers = (RadioGroup) getView().findViewById(R.id.answers);
+		for(int i=0;i<object.answers.size();i++){
+			((RadioButton)answers.getChildAt(i)).setText(object.answers.get(i));
+		}
+		
 	}
 }

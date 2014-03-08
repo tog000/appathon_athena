@@ -30,7 +30,7 @@ public class Question {
 		this.correctAnswerIndex = correntAnswerIndex;
 	}
 	
-	public Question(JSONObject json, Context context){
+	public Question(JSONObject json){
         try {
         	question = json.getString(JSON_QUESTION);
         	experience = json.getInt(JSON_EXPERIENCE);
