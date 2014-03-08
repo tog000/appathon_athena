@@ -47,7 +47,8 @@ public class QuestionController {
 	
 	public void questionAnswered(Question q, int selectedAnswer){
 		try{
-			jsonWriter.clearParameters();
+			
+			jsonWriter = new AthenaJsonWriter(mContext);
 			jsonWriter.addNamedParameter("user_id", UserController.getInstance(mContext).currentUser.id);
 			jsonWriter.addNamedParameter("question_id", q.id+"");
 			jsonWriter.addNamedParameter("answer", selectedAnswer+"");
