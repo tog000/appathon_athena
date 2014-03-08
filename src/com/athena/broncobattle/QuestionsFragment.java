@@ -21,8 +21,8 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Que
 	public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.questions_fragment_layout, container, false);
 
-		QuestionController.get().addJsonEventListener(this);
-		QuestionController.get().getNextQuestion();
+		QuestionController.getInstance(view.getContext()).addJsonEventListener(this);
+		QuestionController.getInstance(view.getContext()).getNextQuestion();
 		
 		correctAnswer = R.id.answer_one;
 

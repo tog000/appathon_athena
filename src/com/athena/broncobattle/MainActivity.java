@@ -83,7 +83,7 @@ public class MainActivity extends Activity {
 
 	private Fragment[] fragments;
 	
-	public static final String HOST = "http://132.178.174.52/";
+	public static final String HOST = "http://132.178.174.53";
 
 	private final int NUM_FRAGMENTS = 3;
 
@@ -145,7 +145,7 @@ public class MainActivity extends Activity {
     	QuestionController questionInfo = QuestionController.get(getApplicationContext());
     	questionInfo.getNextQuestion();
     	
-    	UserController userInfo = UserController.get(getApplicationContext());
+    	UserController userInfo = UserController.getInstance(getApplicationContext());
 
     	userInfo.userLoggedIn("Marianna");
     	userInfo.answeredQuestionCorrectly(6);

@@ -4,6 +4,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.provider.Settings.Secure;
 
 public class UserController {
 	
@@ -19,10 +20,13 @@ public class UserController {
 		mContext = context;
 		jsonReader = new AthenaJsonReader(context);
 		jsonWriter = new AthenaJsonWriter(context);
-		currentUser = new User("A", "B", "C", 0);
+		
+		String android_id = Secure.getString(context.getContentResolver(),Secure.ANDROID_ID);
+		
+		currentUser = new User(android_id, "PLACEHOLDER", "http://www.gravatar.com/avatar/"+android_id+"?d=retro&f=y", 0);
 	}
 	
-	public static UserController get(Context context){
+	public static UserController getInstance(Context context){
 		if (sActiveUser == null){
 			sActiveUser = new UserController(context);
 		}
