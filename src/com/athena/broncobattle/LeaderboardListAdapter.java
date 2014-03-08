@@ -66,4 +66,9 @@ public class LeaderboardListAdapter extends ArrayAdapter<User> {
 	public User getItem(int position) {
 		return users.get(position);
 	}
+	
+	@Override
+    public boolean isEnabled(int position) {
+        return false;
+     }
 }
