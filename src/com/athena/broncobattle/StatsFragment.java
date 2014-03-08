@@ -62,28 +62,28 @@ public class StatsFragment extends ListFragment implements JsonEventListener {
 		
 		totalExperiencePoints = user.experience;
 		
-		AchievementController.getInstance(view.getContext()).getAchievements(this, GET_ACHIEVEMENT);
+		//AchievementController.getInstance(view.getContext()).getAchievements(this, GET_ACHIEVEMENT);
 		
 		level = calculateLevel();
 
 		TextView levelText = (TextView) view.findViewById(R.id.level_title);
 		levelText.setText("Level " + level);
 		
-//		Achievement[] achievements = new Achievement[] { 
-//				new Achievement("id1", "", "foo", "blah di blah"),
-//				new Achievement("id1", "", "foo", "blah di blah"),
-//				new Achievement("id1", "", "foo", "blah di blah"),
-//				new Achievement("id1", "", "foo", "blah di blah"),
-//				new Achievement("id1", "", "foo", "blah di blah"),
-//				new Achievement("id1", "", "foo", "blah di blah"),
-//				new Achievement("id1", "", "foo", "blah di blah"),
-//				new Achievement("id1", "", "foo", "blah di blah"),
-//				new Achievement("id1", "", "foo", "blah di blah"),
-//				new Achievement("id1", "", "foo", "blah di blah")
-//
-//		};
+		Achievement[] achievements = new Achievement[] { 
+				new Achievement("id1", "", "foo", "blah di blah"),
+				new Achievement("id1", "", "foo", "blah di blah"),
+				new Achievement("id1", "", "foo", "blah di blah"),
+				new Achievement("id1", "", "foo", "blah di blah"),
+				new Achievement("id1", "", "foo", "blah di blah"),
+				new Achievement("id1", "", "foo", "blah di blah"),
+				new Achievement("id1", "", "foo", "blah di blah"),
+				new Achievement("id1", "", "foo", "blah di blah"),
+				new Achievement("id1", "", "foo", "blah di blah"),
+				new Achievement("id1", "", "foo", "blah di blah")
 
-		ArrayAdapter<Achievement> adapter = new StatsListAdapter(getActivity().getApplicationContext(), 0, 0, achievements);
+		};
+
+		ArrayAdapter<Achievement> adapter = new StatsListAdapter(getActivity().getApplicationContext(), 0, 0, Arrays.asList(achievements));
 
 		((ListView) getView().findViewById(R.id.stats_list)).setAdapter(adapter);
 	};

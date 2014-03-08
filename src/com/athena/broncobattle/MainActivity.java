@@ -237,7 +237,11 @@ public class MainActivity extends Activity {
 		// Because the ID remains unchanged, the existing notification is
 		// updated.
 		mNotificationManager.notify(notifyID, mNotifyBuilder.build());
-
+		
+		if(position>0){
+			position -= 1;
+		}
+		
 		if (fragments[position] == null) {
 			switch (position) {
 			case 0:
