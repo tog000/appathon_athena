@@ -1,26 +1,18 @@
 <?php
 
-class Question extends CI_Controller{
+class User extends CI_Controller{
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('question_model');
+		$this->load->model('user_model');
 	}
 
-	public function index($id = NULL)
+	public function index()
 	{
-		$response = $this->question_model->get_question($id);
-		if(count($response)>0){
-			echo json_encode($response);
-		}
-	}
 
-	public function question_for_user($user_id = NULL)
-	{
-		$response = $this->question_model->get_question_for_user($user_id);
-		if(count($response)>0){
-			echo json_encode($response);
-		}
+		$response = $this->user_model->get_user()[0];
+		//print_r($response);
+		echo json_encode($response);
 	}
 
 	public function view($id)

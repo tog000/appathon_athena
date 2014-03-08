@@ -40,7 +40,10 @@
 
 //$route['default_controller'] = "welcome";
 $route['404_override'] = '';
-$route['question'] = 'question';
+$route['question/create'] = 'question/create';
+$route['question/(:any)'] = 'question/index/$1';
+$route['question_for_user/(:any)'] = 'question/question_for_user/$1';
+$route['user'] = 'user';
 //$route['question/create'] = 'question/create';
 
 
