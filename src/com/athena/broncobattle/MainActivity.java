@@ -126,6 +126,7 @@ public class MainActivity extends Activity {
         if (savedInstanceState == null) {
             selectItem(0);
         }
+        //something
         testJsonReaderWriter();
     }
 
