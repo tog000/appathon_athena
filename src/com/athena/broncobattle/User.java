@@ -3,6 +3,9 @@
  */
 package com.athena.broncobattle;
 
+import java.util.LinkedList;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -17,11 +20,13 @@ public class User {
 	String name;
 	String avatar;
 	long experience;
+	LinkedList<Achievement> achievements = new LinkedList<Achievement>();
 	
 	public static final String JSON_ID = "id";
 	public static final String JSON_NAME = "name";
 	public static final String JSON_AVATAR = "avatar";
 	public static final String JSON_EXPERIENCE = "experience";
+	public static final String JSON_ACHIEVEMENTS = "achievements";
 	
 	public User (String id, String name, String avatar, long experience){
 		this.id = id;
@@ -36,6 +41,10 @@ public class User {
 	        	name = json.getString(JSON_NAME);
 	        	avatar = json.getString(JSON_AVATAR);
 	        	experience = json.getLong(JSON_EXPERIENCE);
+	        	JSONArray array = json.getJSONArray(JSON_ACHIEVEMENTS);
+	        	for (int i = 0; i< array.length(); i++){
+	        		achievements.add(new Achievement(array.getJSONObject(i), context));
+	        	}
 	        } catch (JSONException e) {
 	            e.printStackTrace();
 	        }
