@@ -28,7 +28,7 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 	boolean isSubmit=true;
 	private Question currentQuestion;
 	private boolean isInitial=true;
-	private final int UPDATE_ANIMATION_TIME=5000;
+	private final int UPDATE_ANIMATION_TIME=2500;
 	private final int UPDATE_ANIMATION_INTERVAL=20;
 	boolean noMoreQuestions=false;
 	
@@ -45,14 +45,12 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 	
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
-		correctAnswer = ((RadioButton) getView().findViewById(R.id.answer_three)).getId();
-		isInitial=true;
-		QuestionController.getInstance(view.getContext()).getNextQuestion(this,NEW_QUESTION);
-		
-
 		Button submitAnswerButton = (Button) view.findViewById(R.id.submit_answer_button);
 		submitAnswerButton.setEnabled(false);
 		submitAnswerButton.setVisibility(Button.INVISIBLE);
+		
+		isInitial=true;
+		QuestionController.getInstance(view.getContext()).getNextQuestion(this,NEW_QUESTION);
 
 		submitAnswerButton.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -64,6 +62,12 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 				else{
 					if(noMoreQuestions){
 						toastSomething("Sorry, there are no more questions. Have a nice day!");
+						RadioGroup answers = (RadioGroup) getView().findViewById(R.id.answers);
+						answers.setVisibility(RadioGroup.GONE);
+						TextView question = (TextView) getView().findViewById(R.id.question);
+						question.setText(getString(R.string.question_text));
+						Button submitAnswerButton = (Button) getView().findViewById(R.id.submit_answer_button);
+						submitAnswerButton.setText("Next");
 						QuestionController.getInstance(getView().getContext()).getNextQuestion(QuestionsFragment.this, NEW_QUESTION);
 					}
 					else{
@@ -133,15 +137,18 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 	public void onJsonFinished(Object object, String type) {
 		
 		if(type.equals(NEW_QUESTION)){
-			if(noMoreQuestions){
-				if(object!=null)
+				if(object!=null){
+					RadioGroup answers = (RadioGroup) getView().findViewById(R.id.answers);
+					answers.setVisibility(RadioGroup.VISIBLE);
 					noMoreQuestions=false;
-			}
+				}
 			Button submitAnswerButton = (Button) getView().findViewById(R.id.submit_answer_button);
 			
 			submitAnswerButton.setEnabled(true);
 			submitAnswerButton.setVisibility(Button.VISIBLE);
 			if(object==null){
+				RadioGroup answers = (RadioGroup) getView().findViewById(R.id.answers);
+				answers.setVisibility(RadioGroup.GONE);
 				noMoreQuestions=true;
 				return;
 			}
@@ -221,11 +228,13 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 		expView = (TextView) getView().findViewById(R.id.hidden_value);
 		expView.setTypeface(tf);
 		
+		UserController.getInstance(getView().getContext()).currentUser.experience+=currentQuestion.experience;
 		
  		new CountDownTimer(UPDATE_ANIMATION_TIME, UPDATE_ANIMATION_INTERVAL) {
 			long experience=0;
 			long experienceIncrement=2*currentQuestion.experience/(UPDATE_ANIMATION_TIME/UPDATE_ANIMATION_INTERVAL);
 			long maxExperience=experience+currentQuestion.experience;
+			
 		     public void onTick(long millisUntilFinished) {
 		 		if(experience<maxExperience){
 		 			experience+=experienceIncrement;
