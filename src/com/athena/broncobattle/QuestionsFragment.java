@@ -270,14 +270,34 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 		 		layout.setVisibility(RelativeLayout.GONE);
 		     }
 		  }.start();
-		  t=null;
 	}
 	@Override
 	public void onPause(){
+		super.onPause();
 		if(t!=null){
 			t.cancel();
-			  t=null;
-		}
-		super.onPause();
+	 		t=new CountDownTimer(UPDATE_ANIMATION_TIME-currentTick*UPDATE_ANIMATION_INTERVAL, UPDATE_ANIMATION_INTERVAL) {
+				long experienceIncrement=2*currentQuestion.experience/(UPDATE_ANIMATION_TIME/UPDATE_ANIMATION_INTERVAL);
+				long experience=currentTick*experienceIncrement;
+				long maxExperience=currentQuestion.experience;
+				
+			     public void onTick(long millisUntilFinished) {
+			    	 currentTick++;
+			 		if(experience<maxExperience){
+			 			experience+=experienceIncrement;
+			 			TextView expView = (TextView) getView().findViewById(R.id.hidden_experience);
+			 			expView.setText("+"+experience);
+			 		}
+			 		else{
+			 			TextView expView = (TextView) getView().findViewById(R.id.hidden_experience);
+			 			expView.setText("+"+maxExperience);
+			 		}
+			     }
+
+			     public void onFinish() {
+			  		RelativeLayout layout=(RelativeLayout)getView().findViewById(R.id.hidden_view);
+			 		layout.setVisibility(RelativeLayout.GONE);
+			     }
+			  }.start();		}
 	}
 }
