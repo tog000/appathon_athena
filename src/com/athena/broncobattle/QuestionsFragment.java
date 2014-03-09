@@ -283,7 +283,8 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 				achievementLayout.setAlpha(0);
 				achievementLayout.setScaleX(2);
 				achievementLayout.setScaleY(2);
-				achievementLayout.setRotation(1000);
+				achievementLayout.setRotationY(100);
+				//achievementLayout.setRotation(1000);
 				
 				achievementView.setText(a.icon);
 				achievementView.setColor(a.color);
@@ -293,7 +294,7 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 				achievementTitle.setText(a.name);
 				achievementDescription.setText(a.description);
 				achievementLayout.setVisibility(View.VISIBLE);
-				achievementLayout.animate().setDuration(1000).scaleX(1).scaleY(1).alpha(1).rotation(0);
+				achievementLayout.animate().setDuration(1000).scaleX(1).scaleY(1).rotationY(0).alpha(1);//.rotation(0);
 				
 				/**
 				Bitmap b = Bitmap.createBitmap(achievementLayout.getWidth(),
@@ -328,7 +329,6 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 		RadioGroup answers = (RadioGroup) getView().findViewById(R.id.answers);
 
 		if (answers.getCheckedRadioButtonId() != -1) {
-			Button submitAnswerButton = (Button) getView().findViewById(R.id.submit_answer_button);
 			submitAnswerButton.setText("Next");
 			submitAnswerButton.setEnabled(false);
 			submitAnswerButton.setVisibility(Button.INVISIBLE);	
@@ -353,10 +353,6 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 				}
 				answer.setEnabled(false);
 			}
-			
-			LinearLayout achLayout = ((LinearLayout) getView().findViewById(R.id.achievement_layout));
-			
-			achLayout.setVisibility(View.INVISIBLE);
 			
 			QuestionController.getInstance(v.getContext()).questionAnswered(currentQuestion, selectedIndex, this, SAVE_ANSWER);
 
@@ -396,8 +392,9 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 		 			TextView expView = (TextView) getView().findViewById(R.id.hidden_experience);
 		 			expView.setText("+"+experience+" XP");
 		 			
+		 			//TODO improve sound
 		 			if(millisUntilFinished%4==0){
-			 			sp.play(soundId, (float)Math.random(), (float)Math.random(), 1, 0, 1);
+			 			sp.play(soundId,  (float)Math.random(), (float)Math.random(), 1, 0, 1);
 			 		}
 		 			
 		 		}

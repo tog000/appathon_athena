@@ -56,6 +56,7 @@ public class QuestionController {
 			jsonWriter.addNamedParameter("question_id", q.id+"");
 			jsonWriter.addNamedParameter("answer", selectedAnswer+"");
 			jsonWriter.addNamedParameter("correct", (q.correctAnswerIndex == selectedAnswer)?"1":"0");
+			jsonWriter.addNamedParameter("experience", q.experience+"");
 			jsonWriter.execute(new String[]{QUESTION_ANSWERED});
 		}catch(Exception e){
 			Toast toast = Toast.makeText(mContext, mContext.getResources().getString(R.string.error_answering_question), Toast.LENGTH_SHORT);
