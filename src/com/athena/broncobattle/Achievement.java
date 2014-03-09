@@ -35,7 +35,7 @@ public class Achievement {
 	
 	public Achievement(JSONObject json, Context context){
 	        try {
-	        	id = json.getString(JSON_ID);
+	        	id = json.getString(JSON_ID);	
 	        	icon = json.getString(JSON_ICON);
 	        	color = json.getString(JSON_COLOR);
 	        	name = json.getString(JSON_NAME);
