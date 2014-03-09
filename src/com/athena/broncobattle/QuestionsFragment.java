@@ -230,11 +230,13 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 		expView = (TextView) getView().findViewById(R.id.hidden_value);
 		expView.setTypeface(tf);
 		
+		UserController.getInstance(getView().getContext()).currentUser.experience+=currentQuestion.experience;
 		
  		new CountDownTimer(UPDATE_ANIMATION_TIME, UPDATE_ANIMATION_INTERVAL) {
 			long experience=0;
 			long experienceIncrement=2*currentQuestion.experience/(UPDATE_ANIMATION_TIME/UPDATE_ANIMATION_INTERVAL);
 			long maxExperience=experience+currentQuestion.experience;
+			
 		     public void onTick(long millisUntilFinished) {
 		 		if(experience<maxExperience){
 		 			experience+=experienceIncrement;
