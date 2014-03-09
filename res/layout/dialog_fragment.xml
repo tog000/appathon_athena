@@ -22,14 +22,14 @@
         android:max="100" />
 
     <com.athena.broncobattle.AchievementView
-        android:id="@+id/achievement_dialog_icon"
+        android:id="@+id/achievement_dialog_icon1"
         android:layout_width="64dip"
         android:layout_height="64dip"
         android:layout_gravity="center"
         android:layout_marginRight="12dip" />
 
     <TextView
-        android:id="@+id/achievement_dialog_name"
+        android:id="@+id/achievement_dialog_name1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal|top"
@@ -39,7 +39,7 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/achievement_dialog_description"
+        android:id="@+id/achievement_dialog_description1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal|top"
