@@ -73,8 +73,7 @@ public class AthenaJsonReader extends AsyncTask<String, Void, JSONObject> {
 		super.onPostExecute(json);
 		
 		if(json.isNull("server_message")){
-			Question q = new Question(json);
-			listener.onJsonFinished(q,type);
+			listener.onJsonFinished(json,type);
 		}else{
 			listener.onJsonFinished(null,type);
 		}

@@ -40,6 +40,7 @@
 
 $route['default_controller'] = "question";
 $route['404_override'] = '';
+$route['achievements/(:any)'] = 'achievement/get_achievements/$1';
 $route['question/create'] = 'question/create';
 $route['question/(:any)'] = 'question/index/$1';
 $route['question_answered'] = 'question/question_answered';
