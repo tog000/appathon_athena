@@ -50,6 +50,8 @@ class Question_model extends CI_Model {
 				array_push($ids, $object->id_question);
 			}
 
+			//print_r($ids);
+
 			$this->db->select('id');
 			$this->db->where_not_in('id',$ids);
 			$query = $this->db->get('question');
@@ -79,13 +81,16 @@ class Question_model extends CI_Model {
 				'id_user' => $this->input->post('user_id'),
 				'answer' => $this->input->post('answer'),
 				'correct' => $this->input->post('correct'),
-				);
+			);
 
 			$this->db->insert('user_question_answer', $data);
 
-			return $this->db->insert_id();
+			if($this->input->post('correct')==1){
+				$achievements = $this->db->get('achievement')->result();
+				return $achievements[array_rand($achievements)];
+			}
+
 		}
-		return null;
 	}
 
 	public function set_question()

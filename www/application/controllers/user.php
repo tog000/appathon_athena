@@ -10,14 +10,14 @@ class User extends CI_Controller{
 	public function index()
 	{
 
-		$response = $this->user_model->get_user()[0];
+		//$response = $this->user_model->get_user()[0];
 		//print_r($response);
 		echo json_encode($response);
 	}
 
-	public function view($id)
+	public function get_scoreboard()
 	{
-		echo "view";
+		echo json_encode($this->user_model->get_scoreboard());
 	}
 	
 	public function create()

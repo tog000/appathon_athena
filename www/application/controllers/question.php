@@ -27,7 +27,7 @@ class Question extends CI_Controller{
 
 	public function question_answered()
 	{
-		echo $this->question_model->add_answer();
+		echo json_encode($this->question_model->add_answer());
 	}
 
 	public function get_achievements($id=NULL)

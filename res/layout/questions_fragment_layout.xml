@@ -6,6 +6,7 @@
 
     <RelativeLayout
         android:id="@+id/hidden_view"
+        android:animateLayoutChanges="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone" >
@@ -74,21 +75,32 @@
         </LinearLayout>
     </RelativeLayout>
 
+    <include
+        android:id="@+id/question_loading"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center_horizontal|center_vertical"
+        layout="@layout/loading_view" />
+    
     <LinearLayout
+        android:id="@+id/question_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical" >
-
+        android:gravity="center_horizontal|center_vertical"
+        android:orientation="vertical"
+        android:visibility="gone" >
+        
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" >
-
+            android:layout_weight="2" >
+            
             <ImageView
-                android:id="@+id/imageView1"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:src="@drawable/sorry" />
+            android:id="@+id/imageView1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/sorry" />
+            
         </LinearLayout>
 
         <LinearLayout

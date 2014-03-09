@@ -1,9 +1,7 @@
 package com.athena.broncobattle;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
-import android.app.Fragment;
 import android.app.ListFragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -30,7 +28,7 @@ public class LeaderboardFragment extends  ListFragment implements JsonEventListe
 		reader.addJsonEventListener(this, GET_USERS);
 		reader.execute(new String[]{GET_USERS});
 		adapter = new LeaderboardListAdapter(getActivity().getApplicationContext(), 0, 0, users);
-
+		
 		return view;
 
 	}
@@ -39,6 +37,7 @@ public class LeaderboardFragment extends  ListFragment implements JsonEventListe
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		//super.onViewCreated(view, savedInstanceState);
 		((ListView)view.findViewById(R.id.leaderboard_list)).setAdapter(adapter);
+		
 	}
 
 
@@ -52,6 +51,13 @@ public class LeaderboardFragment extends  ListFragment implements JsonEventListe
 		UsersFactory.parseUsers(users, object, getActivity().getApplicationContext());
 		((ListView)getView().findViewById(R.id.leaderboard_list)).setAdapter(adapter);
 		adapter.notifyDataSetChanged();
+		
+		
+		((View)getView().findViewById(R.id.leaderbord_loading)).setVisibility(View.GONE);
+		ListView list = (ListView)getView().findViewById(R.id.leaderboard_list);
+		list.setAlpha(0);
+		list.setVisibility(View.VISIBLE);
+		list.animate().setDuration(500).alpha(1);
 		
 	}
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       

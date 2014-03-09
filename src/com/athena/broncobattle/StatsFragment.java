@@ -111,6 +111,13 @@ public class StatsFragment extends ListFragment implements JsonEventListener<Obj
 				
 				ArrayAdapter<Achievement> adapter = new StatsListAdapter(getActivity().getApplicationContext(), 0, 0, achievements);
 				((ListView) getView().findViewById(R.id.stats_list)).setAdapter(adapter);
+				
+				((View)getView().findViewById(R.id.stats_achievements_loading)).setVisibility(View.GONE);
+				ListView list = (ListView)getView().findViewById(R.id.stats_list);
+				list.setAlpha(0);
+				list.setVisibility(View.VISIBLE);
+				list.animate().setDuration(500).alpha(1);
+				
 			
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
