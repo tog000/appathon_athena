@@ -276,28 +276,20 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 		super.onPause();
 		if(t!=null){
 			t.cancel();
-	 		t=new CountDownTimer(UPDATE_ANIMATION_TIME-currentTick*UPDATE_ANIMATION_INTERVAL, UPDATE_ANIMATION_INTERVAL) {
-				long experienceIncrement=2*currentQuestion.experience/(UPDATE_ANIMATION_TIME/UPDATE_ANIMATION_INTERVAL);
-				long experience=currentTick*experienceIncrement;
-				long maxExperience=currentQuestion.experience;
-				
-			     public void onTick(long millisUntilFinished) {
-			    	 currentTick++;
-			 		if(experience<maxExperience){
-			 			experience+=experienceIncrement;
-			 			TextView expView = (TextView) getView().findViewById(R.id.hidden_experience);
-			 			expView.setText("+"+experience);
-			 		}
-			 		else{
-			 			TextView expView = (TextView) getView().findViewById(R.id.hidden_experience);
-			 			expView.setText("+"+maxExperience);
-			 		}
-			     }
-
-			     public void onFinish() {
-			  		RelativeLayout layout=(RelativeLayout)getView().findViewById(R.id.hidden_view);
-			 		layout.setVisibility(RelativeLayout.GONE);
-			     }
-			  }.start();		}
+		}
+	}
+	@Override
+	public void onStop(){
+		super.onPause();
+		if(t!=null){
+			t.cancel();
+		}
+	}
+	@Override
+	public void onDestroyView(){
+		super.onPause();
+		if(t!=null){
+			t.cancel();
+		}
 	}
 }
