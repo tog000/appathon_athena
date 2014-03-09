@@ -185,6 +185,26 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 				e.printStackTrace();
 			}
 		}else if(type.equals(SAVE_ANSWER)){
+			
+			try {
+				Achievement a = new Achievement(new JSONObject((String)object),getView().getContext());
+				
+				AchievementView achView = ((AchievementView) getView().findViewById(R.id.achievement_dialog_icon));
+				achView.setText(a.icon);
+				achView.setColor(a.color);
+				achView.invalidate();
+				
+				TextView title = ((TextView) getView().findViewById(R.id.achievement_dialog_name));
+				title.setText(a.name);
+				
+				TextView description = ((TextView) getView().findViewById(R.id.achievement_dialog_description));
+				description.setText(a.description);
+				
+				
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			
 			QuestionController.getInstance(getView().getContext()).getNextQuestion(this, NEW_QUESTION);
 		}
 	}
