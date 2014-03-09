@@ -19,7 +19,7 @@ public class UserController {
 		
 		String android_id = Secure.getString(context.getContentResolver(),Secure.ANDROID_ID);
 		
-		currentUser = new User(android_id, "PLACEHOLDER", "http://www.gravatar.com/avatar/"+android_id+"?d=retro&f=y", 0);
+		currentUser = new User(android_id, "PLACEHOLDER", "http://www.gravatar.com/avatar/"+android_id+"?d=retro&f=y&s=240", 0);
 	}
 	
 	public static UserController getInstance(Context context){
@@ -27,6 +27,11 @@ public class UserController {
 			instance = new UserController(context);
 		}
 		return instance;
+	}
+	
+	
+	public User getCurrentUser(){
+		return currentUser;
 	}
 	
 	public void answeredQuestionCorrectly(int questionID){
