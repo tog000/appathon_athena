@@ -11,15 +11,13 @@ public class AchievementController {
 	private static AchievementController sAchievement;
 //	Question currentQuestion;
 	Context mContext;
-	private final String GET_ACHIEVEMENTS = "question_for_user";
+	private final String GET_ACHIEVEMENTS = "get_achievements";
 //	private final String QUESTION_ANSWERED = "question_answered";
 	private AthenaJsonReader jsonReader;
 	private AthenaJsonWriter jsonWriter;
 //	
 	private AchievementController(Context context){
 		mContext = context;
-		jsonReader = new AthenaJsonReader(mContext);
-		jsonWriter = new AthenaJsonWriter(mContext);
 	}
 	
 	public static AchievementController getInstance(Context context){
@@ -42,29 +40,8 @@ public class AchievementController {
 			jsonReader.addJsonEventListener(listener,type);
 			jsonReader.execute(new String[]{GET_ACHIEVEMENTS,UserController.getInstance(mContext).currentUser.id});
 		}catch(Exception e){
-			Toast toast = Toast.makeText(mContext, mContext.getResources().getString(R.string.error_fetching_question), Toast.LENGTH_SHORT);
+			Toast toast = Toast.makeText(mContext, mContext.getResources().getString(R.string.error_fetching_achievements), Toast.LENGTH_SHORT);
 			toast.show();
 		}
 	}
-//	
-//	public void questionAnswered(Question q, int selectedAnswer, JsonEventListener listener, String type){
-//		try{
-//			
-//			jsonWriter = new AthenaJsonWriter(mContext);
-//			
-//			jsonWriter.addJsonEventListener(listener,type);
-//			
-//			jsonWriter.addNamedParameter("user_id", UserController.getInstance(mContext).currentUser.id);
-//			jsonWriter.addNamedParameter("question_id", q.id+"");
-//			jsonWriter.addNamedParameter("answer", selectedAnswer+"");
-//			jsonWriter.addNamedParameter("correct", (q.correctAnswerIndex == selectedAnswer)?"1":"0");
-//			jsonWriter.execute(new String[]{QUESTION_ANSWERED});
-//		}catch(Exception e){
-//			Toast toast = Toast.makeText(mContext, mContext.getResources().getString(R.string.error_answering_question), Toast.LENGTH_SHORT);
-//			toast.show();
-//			Log.e("questionAnswered",e.toString());
-//			e.printStackTrace();
-//		}
-//	}
-
 }
