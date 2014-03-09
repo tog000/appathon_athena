@@ -18,18 +18,24 @@
         android:gravity="center"
         android:text="@string/hidden_value_text" 
         android:textColor="#fff"
-                android:textSize="40sp"
+                android:textSize="80sp"
         />
-        <TextView android:id="@+id/hidden_experience"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_centerInParent="true"
-        android:gravity="center"
-        android:text="@string/hidden_value_text" 
-        android:textColor="#fff"
-                android:textSize="20sp"
-        />
+
+        <TextView
+            android:id="@+id/hidden_experience"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:shadowColor="@android:color/holo_red_dark"
+            android:shadowDx="10"
+            android:shadowDy="10"
+            android:shadowRadius="10"
+            android:text="@string/hidden_value_text"
+            android:textColor="#fff"
+            android:textSize="100sp" />
+
 </RelativeLayout>
 <LinearLayout 
     android:layout_width="match_parent"

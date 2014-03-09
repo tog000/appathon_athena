@@ -6,6 +6,7 @@ import java.util.TimerTask;
 import android.app.Fragment;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.LayoutInflater;
@@ -26,7 +27,8 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 	private Question currentQuestion;
 	private boolean isInitial=true;
 	private final int UPDATE_ANIMATION_TIME=5000;
-	private final int UPDATE_ANIMATION_INTERVAL=100;
+	private final int UPDATE_ANIMATION_INTERVAL=20;
+	boolean noMoreQuestions=false;
 	
 	private static final String NEW_QUESTION= "newQuestion";
 	private static final String SAVE_ANSWER = "saveQuestion";
@@ -54,12 +56,18 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 			@Override
 			public void onClick(View v) {
 				if(isSubmit){
-					isSubmit=false;
-					submitAnswer(v);
+						isSubmit=false;
+						submitAnswer(v);
 				}
 				else{
-					isSubmit=true;
-					changeQuestion(v);
+					if(noMoreQuestions){
+						toastSomething("Sorry, there are no more questions. Have a nice day!");
+						QuestionController.getInstance(getView().getContext()).getNextQuestion(this, NEW_QUESTION);
+					}
+					else{
+						isSubmit=true;
+						changeQuestion(v);
+					}
 				}
 			}
 		});
@@ -123,17 +131,22 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 	public void onJsonFinished(Object object, String type) {
 		
 		if(type.equals(NEW_QUESTION)){
-			Button submitAnswerButton = (Button) getView().findViewById(R.id.submit_answer_button);
-			if(object==null){
-				toastSomething("Sorry, no more questions. Have a nice day,");
-				submitAnswerButton.setEnabled(false);
-				submitAnswerButton.setVisibility(Button.INVISIBLE);	
-				return;
+			if(noMoreQuestions){
+				if(object!=null)
+					noMoreQuestions=false;
 			}
+			Button submitAnswerButton = (Button) getView().findViewById(R.id.submit_answer_button);
+			
 			submitAnswerButton.setEnabled(true);
 			submitAnswerButton.setVisibility(Button.VISIBLE);
+			if(object==null){
+				noMoreQuestions=true;
+				return;
+			}
+			Question q=new Question((JSONObject)object);
+
 			
-			currentQuestion=(Question)object;
+			currentQuestion=(Question)q;
 			RadioGroup answers = (RadioGroup) getView().findViewById(R.id.answers);
 			correctAnswer=((RadioButton)answers.getChildAt(currentQuestion.correctAnswerIndex)).getId();
 			if(isInitial){
@@ -194,20 +207,23 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
  		RelativeLayout layout=(RelativeLayout)getView().findViewById(R.id.hidden_view);
  		layout.setVisibility(RelativeLayout.VISIBLE);
 		TextView expView = (TextView) getView().findViewById(R.id.hidden_experience);
-		expView.setText("Experience: "+UserController.getInstance(getActivity()).currentUser.experience);
+		Typeface tf = Typeface.createFromAsset(getView().getContext().getAssets(), "fonts/American Captain.ttf");
+		expView.setTypeface(tf);
+		expView.setText("+"+0);
+		
+		expView = (TextView) getView().findViewById(R.id.hidden_value);
+		expView.setTypeface(tf);
+		
+		
  		new CountDownTimer(UPDATE_ANIMATION_TIME, UPDATE_ANIMATION_INTERVAL) {
-			int tickCounter=0;
-			long experience=UserController.getInstance(getActivity()).currentUser.experience;
+			long experience=0;
 			long experienceIncrement=2*currentQuestion.experience/(UPDATE_ANIMATION_TIME/UPDATE_ANIMATION_INTERVAL);
 			long maxExperience=experience+currentQuestion.experience;
 		     public void onTick(long millisUntilFinished) {
-		 		TextView hiddenField = (TextView) getView().findViewById(R.id.hidden_value);
-		 		hiddenField.setTextColor(color[tickCounter%color.length]);
-		 		tickCounter++;
 		 		if(experience<maxExperience){
 		 			experience+=experienceIncrement;
 		 			TextView expView = (TextView) getView().findViewById(R.id.hidden_experience);
-		 			expView.setText("Experience: "+experience);
+		 			expView.setText("+"+experience);
 		 		}
 		     }
 
