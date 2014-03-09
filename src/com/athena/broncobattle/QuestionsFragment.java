@@ -314,8 +314,8 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 
 				achievementLayout.setVisibility(View.GONE);
 				achievementLayout.setAlpha(0);
-				achievementLayout.setScaleX(0);
-				achievementLayout.setScaleY(0);
+				achievementLayout.setScaleX(2);
+				achievementLayout.setScaleY(2);
 				achievementLayout.setRotationY(100);
 				// achievementLayout.setRotation(1000);
 
