@@ -1,5 +1,6 @@
 package com.athena.broncobattle;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import org.json.JSONObject;
@@ -153,15 +154,20 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 				isSubmit=false;
 				return;
 			}
-			Question q=new Question((JSONObject)object);
 
-			
-			currentQuestion=(Question)q;
-			RadioGroup answers = (RadioGroup) getView().findViewById(R.id.answers);
-			correctAnswer=((RadioButton)answers.getChildAt(currentQuestion.correctAnswerIndex)).getId();
-			if(isInitial){
-				initializeQuestion(getView());
-				isInitial=false;
+			try {
+				Question q = new Question(new JSONObject((String)object));
+						
+				currentQuestion=(Question)q;
+				RadioGroup answers = (RadioGroup) getView().findViewById(R.id.answers);
+				correctAnswer=((RadioButton)answers.getChildAt(currentQuestion.correctAnswerIndex)).getId();
+				if(isInitial){
+					initializeQuestion(getView());
+					isInitial=false;
+				}
+				
+			} catch (JSONException e) {
+				e.printStackTrace();
 			}
 		}else if(type.equals(SAVE_ANSWER)){
 			QuestionController.getInstance(getView().getContext()).getNextQuestion(this, NEW_QUESTION);

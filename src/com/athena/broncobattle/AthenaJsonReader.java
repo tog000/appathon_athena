@@ -18,7 +18,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
-public class AthenaJsonReader extends AsyncTask<String, Void, JSONObject> {
+public class AthenaJsonReader extends AsyncTask<String, Void, String> {
 
 	private Context mContext;
 	private JsonEventListener listener;
@@ -35,7 +35,7 @@ public class AthenaJsonReader extends AsyncTask<String, Void, JSONObject> {
 	}
 
 	@Override
-	protected JSONObject doInBackground(String... parameters) {
+	protected String doInBackground(String... parameters) {
 		try {
 			String url = MainActivity.HOST;
 			for(String param : parameters){
@@ -56,10 +56,10 @@ public class AthenaJsonReader extends AsyncTask<String, Void, JSONObject> {
 			@SuppressWarnings("unchecked")
 			String response = (String) httpClient.execute(httpGet, responseHandler);
 
-			return new JSONObject(response);
+			return response;
 			
-		} catch (JSONException e) {
-			e.printStackTrace();
+		//} catch (JSONException e) {
+		//	e.printStackTrace();
 		} catch (ClientProtocolException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -69,14 +69,14 @@ public class AthenaJsonReader extends AsyncTask<String, Void, JSONObject> {
 	}
 
 	@Override
-	protected void onPostExecute(JSONObject json) {
+	protected void onPostExecute(String json) {
 		super.onPostExecute(json);
 		
-		if(json.isNull("server_message")){
+		//if(json.isNull("server_message")){
 			listener.onJsonFinished(json,type);
-		}else{
-			listener.onJsonFinished(null,type);
-		}
+		//}else{
+			//listener.onJsonFinished(null,type);
+		//}
 
 	}
 }

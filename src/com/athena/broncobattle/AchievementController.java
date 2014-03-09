@@ -11,7 +11,7 @@ public class AchievementController {
 	private static AchievementController sAchievement;
 //	Question currentQuestion;
 	Context mContext;
-	private final String GET_ACHIEVEMENTS = "get_achievements";
+	private final String GET_ACHIEVEMENTS = "achievements";
 //	private final String QUESTION_ANSWERED = "question_answered";
 	private AthenaJsonReader jsonReader;
 	private AthenaJsonWriter jsonWriter;
