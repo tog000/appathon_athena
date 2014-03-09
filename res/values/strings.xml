@@ -42,11 +42,13 @@
         <item>Neptune</item>
     </string-array>
 
-
+	<!-- Drawer/Main Fragment -->
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
     <string name="action_websearch">Web search</string>
     <string name="app_not_available">Sorry, there\'s no web browser available</string>
+    
+    <!-- Question Fragment -->
     <string name="question_text">Sorry, there are no more questions.</string>
     <string name="answer_one_text">1</string>
     <string name="answer_two_text">1000000</string>
@@ -54,18 +56,25 @@
     <string name="answer_four_text">42</string>
     <string name="submit_answer_button_text">Submit</string>
     <string name="next_question_button_text">Next</string>
+    <string name="question_image_desc"></string>
+    <string name="hidden_value_text">Correct!</string>
+    
+    <!-- Stats Fragment -->
     <string name="experience_bar_title_text">Experience</string>
     <string name="achievement_title_text">Achievements</string>
-    <string name="question_image_desc"></string>
+    <string name="achievement_description_text">You foobar-ed better than any other.</string>
+    <string name="achievement_name_text">Top Foobar-er!!!</string>   
     <string name="level_title_text">Level 0</string>
+    
+    <!-- JSON/Web Server Strings -->
     <string name="error_fetching_question">Couldn\'t contact the server</string>
     <string name="error_answering_question">Couldn\'t save your question</string>
     <string name="error_fetching_achievements">Couldn\'t fetch achievements</string>
     <string name="no_more_questions">No more questions to answer!</string>
-    <string name="achievement_description_text">You foobar-ed better than any other.</string>
-    <string name="achievement_name_text">Top Foobar-er!!!</string>
-    <string name="hidden_value_text">Correct!</string>
-    
+
+	<!-- Achievement Dialog Fragment -->
+	<string name="achievement_dialog_description_text">No more questions to answer!</string>
+	<string name="achievement_dialog_name_text">No more questions to answer!</string>
     
 
 </resources>
