@@ -39,6 +39,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 /**
@@ -107,9 +108,11 @@ public class MainActivity extends Activity {
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mDrawerList = (ListView) findViewById(R.id.list_slidermenu);
 		
-		View header = View.inflate(this, R.layout.dialog_header_layout, null);
+		View header = View.inflate(this, R.layout.drawer_header_layout, null);
 		header.findViewById(R.id.drawer_header_icon);
 		mDrawerList.addHeaderView(header);
+		ImageDownloader downloader = new ImageDownloader((ImageView)header.findViewById(R.id.drawer_header_icon), null);
+		downloader.execute(UserController.getInstance(getApplicationContext()).getCurrentUser().avatar);
 		 
         navDrawerItems = new ArrayList<NavDrawerItem>();
         navDrawerItems.add(new NavDrawerItem(mDrawerButtonTitles[0], navMenuIcons.getResourceId(0, -1)));

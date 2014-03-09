@@ -39,7 +39,9 @@ public class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
 	@Override
 	protected void onPostExecute(Bitmap result) {
 		super.onPostExecute(result);
-		progressBar.setVisibility(View.INVISIBLE);
+		if (progressBar!= null){
+			progressBar.setVisibility(View.INVISIBLE);
+		}
 		bmImage.setImageBitmap(result);
 		bmImage.setVisibility(View.VISIBLE);
 	}
