@@ -246,7 +246,7 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 		TextView expView = (TextView) getView().findViewById(R.id.hidden_experience);
 		Typeface tf = Typeface.createFromAsset(getView().getContext().getAssets(), "fonts/American Captain.ttf");
 		expView.setTypeface(tf);
-		expView.setText("+"+0);
+		expView.setText("+"+0+" XP");
 		
 		expView = (TextView) getView().findViewById(R.id.hidden_value);
 		expView.setTypeface(tf);
@@ -263,11 +263,11 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 		 		if(experience<maxExperience){
 		 			experience+=experienceIncrement;
 		 			TextView expView = (TextView) getView().findViewById(R.id.hidden_experience);
-		 			expView.setText("+"+experience);
+		 			expView.setText("+"+experience+" XP");
 		 		}
 		 		else{
 		 			TextView expView = (TextView) getView().findViewById(R.id.hidden_experience);
-		 			expView.setText("+"+maxExperience);
+		 			expView.setText("+"+maxExperience+" XP");
 		 		}
 		     }
 

@@ -24,9 +24,10 @@
 
         <TextView
             android:id="@+id/hidden_experience"
+                android:layout_below="@id/hidden_value"
+           
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
             android:layout_gravity="center"
             android:gravity="center"
             android:shadowColor="@android:color/holo_red_dark"
