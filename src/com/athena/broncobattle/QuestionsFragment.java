@@ -265,8 +265,8 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 //		int scrollWidth = .getMeasuredWidth();
 //		int scrollHeight = ((ScrollView) getView().findViewById(R.id.scroll_view)).getMeasuredHeight();
 		
-		_translateAnimation = new TranslateAnimation(TranslateAnimation.ABSOLUTE, 0f, TranslateAnimation.ABSOLUTE, 0f, TranslateAnimation.ABSOLUTE, 0f,
-				TranslateAnimation.ABSOLUTE, -((float) (Math.random()*300)));
+		_translateAnimation = new TranslateAnimation(TranslateAnimation.ABSOLUTE, 0f, TranslateAnimation.ABSOLUTE, 0f, TranslateAnimation.ABSOLUTE,-( (float) (Math.random()*300)),
+				TranslateAnimation.ABSOLUTE, 0f);
 		_translateAnimation.setDuration(8000);
 		_translateAnimation.setRepeatCount(-1);
 		_translateAnimation.setRepeatMode(Animation.REVERSE); // REVERSE
