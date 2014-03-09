@@ -3,6 +3,8 @@
  */
 package com.athena.broncobattle;
 
+import java.io.Serializable;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -12,7 +14,7 @@ import android.content.Context;
  * @author Athena
  *
  */
-public class Achievement {
+public class Achievement implements Serializable{
 	String id;
 	String icon;
 	String name;
