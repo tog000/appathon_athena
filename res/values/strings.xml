@@ -73,8 +73,8 @@
     <string name="no_more_questions">No more questions to answer!</string>
 
 	<!-- Achievement Dialog Fragment -->
-	<string name="achievement_dialog_description_text">No more questions to answer!</string>
-	<string name="achievement_dialog_name_text">No more questions to answer!</string>
+	<string name="achievement_dialog_description_text">Answered 45 questions in under 2 seconds!</string>
+	<string name="achievement_dialog_name_text">Fastest Answerer</string>
     
 
 </resources>
