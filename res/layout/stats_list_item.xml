@@ -34,8 +34,6 @@
         android:ellipsize="marquee"
         android:paddingLeft="24dp"
         android:paddingTop="12dp"
-        android:typeface="serif"
-        android:textStyle="italic"
         android:text="@string/achievement_description_text"
         android:textSize="14sp" />
 
