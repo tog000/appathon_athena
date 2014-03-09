@@ -31,7 +31,7 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 	boolean isSubmit=false;
 	private Question currentQuestion;
 	private boolean isInitial=true;
-	private final int UPDATE_ANIMATION_TIME=2500;
+	private final int UPDATE_ANIMATION_TIME=3500;
 	private final int UPDATE_ANIMATION_INTERVAL=20;
 	boolean noMoreQuestions=true;
 	
@@ -52,6 +52,8 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 		submitAnswerButton.setText("Next");
 		RadioGroup answers = (RadioGroup) getView().findViewById(R.id.answers);
 		answers.setVisibility(RadioGroup.GONE);
+		TextView question = (TextView) getView().findViewById(R.id.question);
+		question.setText("");
 		
 		isInitial=true;
 		QuestionController.getInstance(view.getContext()).getNextQuestion(this,NEW_QUESTION);
@@ -145,8 +147,13 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 		if(type.equals(NEW_QUESTION)){
 
 			try {
-				JSONObject job = new JSONObject((String)object);
-
+				JSONObject job;
+				if(object!=null)
+					job= new JSONObject((String)object);
+				else{
+					setupToFail();
+					return;
+				}
 					if(job.isNull("server_message")){
 						RadioGroup answers = (RadioGroup) getView().findViewById(R.id.answers);
 						answers.setVisibility(RadioGroup.VISIBLE);
@@ -157,15 +164,7 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 				submitAnswerButton.setEnabled(true);
 				submitAnswerButton.setVisibility(Button.VISIBLE);
 				if(!job.isNull("server_message")){
-					RadioGroup answers = (RadioGroup) getView().findViewById(R.id.answers);
-					answers.setVisibility(RadioGroup.GONE);
-					TextView question = (TextView) getView().findViewById(R.id.question);
-					question.setText(getString(R.string.question_text));
-					ImageView image = (ImageView) getView().findViewById(R.id.imageView1);
-					image.setImageResource(R.drawable.sorry);
-					submitAnswerButton.setText("Next");
-					isSubmit=false;
-					noMoreQuestions=true;
+					setupToFail();
 					return;
 				}
 
@@ -252,7 +251,7 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 		currentTick=0;
  		t=new CountDownTimer(UPDATE_ANIMATION_TIME, UPDATE_ANIMATION_INTERVAL) {
 			long experience=0;
-			long experienceIncrement=2*currentQuestion.experience/(UPDATE_ANIMATION_TIME/UPDATE_ANIMATION_INTERVAL);
+			long experienceIncrement=3*currentQuestion.experience/(UPDATE_ANIMATION_TIME/UPDATE_ANIMATION_INTERVAL);
 			long maxExperience=currentQuestion.experience;
 			
 		     public void onTick(long millisUntilFinished) {
@@ -273,6 +272,18 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 		 		layout.setVisibility(RelativeLayout.GONE);
 		     }
 		  }.start();
+	}
+	private void setupToFail(){
+		RadioGroup answers = (RadioGroup) getView().findViewById(R.id.answers);
+		answers.setVisibility(RadioGroup.GONE);
+		TextView question = (TextView) getView().findViewById(R.id.question);
+		question.setText(getString(R.string.question_text));
+		ImageView image = (ImageView) getView().findViewById(R.id.imageView1);
+		image.setImageResource(R.drawable.sorry);
+		Button submitAnswerButton = (Button) getView().findViewById(R.id.submit_answer_button);
+		submitAnswerButton.setText("Next");
+		isSubmit=false;
+		noMoreQuestions=true;
 	}
 	@Override
 	public void onPause(){
