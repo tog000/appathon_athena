@@ -59,6 +59,13 @@ public class AchievementFragment extends DialogFragment {
 		return builder.create();
 
 	}
+	
+	@Override
+	public void onPause() {
+		// TODO Auto-generated method stub
+		timer.cancel();
+		super.onPause();
+	}
 
 
 	// @Override
