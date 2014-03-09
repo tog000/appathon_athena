@@ -83,11 +83,11 @@ public class MainActivity extends Activity {
 
 	private CharSequence mDrawerTitle;
 	private CharSequence mTitle;
-//	private String[] mPlanetTitles;
+	// private String[] mPlanetTitles;
 	private String[] mDrawerButtonTitles;
 
 	private Fragment[] fragments;
-	
+
 	public static final String HOST = "http://132.178.174.53";
 
 	private final int NUM_FRAGMENTS = 3;
@@ -95,7 +95,7 @@ public class MainActivity extends Activity {
 	private ArrayList<NavDrawerItem> navDrawerItems;
 	private TypedArray navMenuIcons;
 	private NavDrawerListAdapter adapter;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -103,33 +103,31 @@ public class MainActivity extends Activity {
 
 		mTitle = mDrawerTitle = getTitle();
 		mDrawerButtonTitles = getResources().getStringArray(R.array.drawer_array);
-	    navMenuIcons = getResources().obtainTypedArray(R.array.nav_drawer_icons);
-	    
+		navMenuIcons = getResources().obtainTypedArray(R.array.nav_drawer_icons);
+
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mDrawerList = (ListView) findViewById(R.id.list_slidermenu);
-		
+
 		User currentUser = UserController.getInstance(getApplicationContext()).getCurrentUser();
 		View header = View.inflate(this, R.layout.drawer_header_layout, null);
-		((TextView)header.findViewById(R.id.drawer_user_name)).setText(currentUser.name);
+		((TextView) header.findViewById(R.id.drawer_user_name)).setText(currentUser.name);
 		header.findViewById(R.id.drawer_header_icon);
 		mDrawerList.addHeaderView(header);
-		ImageDownloader downloader = new ImageDownloader((ImageView)header.findViewById(R.id.drawer_header_icon), null);
+		ImageDownloader downloader = new ImageDownloader((ImageView) header.findViewById(R.id.drawer_header_icon), null);
 		downloader.execute(currentUser.avatar);
-		
-		 
-        navDrawerItems = new ArrayList<NavDrawerItem>();
-        navDrawerItems.add(new NavDrawerItem(mDrawerButtonTitles[0], navMenuIcons.getResourceId(0, -1)));
-        navDrawerItems.add(new NavDrawerItem(mDrawerButtonTitles[1], navMenuIcons.getResourceId(1, -1)));
-        navDrawerItems.add(new NavDrawerItem(mDrawerButtonTitles[2], navMenuIcons.getResourceId(2, -1)));
-		
+
+		navDrawerItems = new ArrayList<NavDrawerItem>();
+		navDrawerItems.add(new NavDrawerItem(mDrawerButtonTitles[0], navMenuIcons.getResourceId(0, -1)));
+		navDrawerItems.add(new NavDrawerItem(mDrawerButtonTitles[1], navMenuIcons.getResourceId(1, -1)));
+		navDrawerItems.add(new NavDrawerItem(mDrawerButtonTitles[2], navMenuIcons.getResourceId(2, -1)));
+
 		fragments = new Fragment[NUM_FRAGMENTS];
 
 		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-		
+
 		adapter = new NavDrawerListAdapter(getApplicationContext(), navDrawerItems);
-	    mDrawerList.setAdapter(adapter);
+		mDrawerList.setAdapter(adapter);
 		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-		
 
 		// enable ActionBar app icon to behave as action to toggle nav drawer
 		getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -160,10 +158,9 @@ public class MainActivity extends Activity {
 		if (savedInstanceState == null) {
 			selectItem(0);
 		}
-		
+
 	}
 
-	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
@@ -216,8 +213,8 @@ public class MainActivity extends Activity {
 	private class DrawerItemClickListener implements ListView.OnItemClickListener {
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-			if (((ListView)parent).getHeaderViewsCount()>0){
-				position --;
+			if (((ListView) parent).getHeaderViewsCount() > 0) {
+				position--;
 			}
 			selectItem(position);
 		}
@@ -240,34 +237,36 @@ public class MainActivity extends Activity {
 		// Because the ID remains unchanged, the existing notification is
 		// updated.
 		mNotificationManager.notify(notifyID, mNotifyBuilder.build());
-		
-		if (fragments[position] == null) {
-			switch (position) {
-			case 0:
-				fragments[position] = new QuestionsFragment();
-				break;
-			case 1:
-				fragments[position] = new LeaderboardFragment();
-				break;
-			case 2:
-				fragments[position] = new StatsFragment();
-				break;
+
+		if (!(position < 0)) {
+			if (fragments[position] == null) {
+				switch (position) {
+				case 0:
+					fragments[position] = new QuestionsFragment();
+					break;
+				case 1:
+					fragments[position] = new LeaderboardFragment();
+					break;
+				case 2:
+					fragments[position] = new StatsFragment();
+					break;
+				}
 			}
+
+			// Fragment fragment = new PlanetFragment();
+			// Bundle args = new Bundle();
+			// args.putInt(PlanetFragment.ARG_PLANET_NUMBER, position);
+			// fragment.setArguments(args);
+
+			FragmentManager fragmentManager = getFragmentManager();
+			fragmentManager.beginTransaction().replace(R.id.content_frame, fragments[position]).commit();
+
+			// update selected item and title, then close the drawer
+			mDrawerList.setItemChecked(position + 1, true);
+			setTitle(mDrawerButtonTitles[position]);
+			// setTitle(mPlanetTitles[position]);
+			mDrawerLayout.closeDrawer(mDrawerList);
 		}
-
-		// Fragment fragment = new PlanetFragment();
-		// Bundle args = new Bundle();
-		// args.putInt(PlanetFragment.ARG_PLANET_NUMBER, position);
-		// fragment.setArguments(args);
-
-		FragmentManager fragmentManager = getFragmentManager();
-		fragmentManager.beginTransaction().replace(R.id.content_frame, fragments[position]).commit();
-
-		// update selected item and title, then close the drawer
-		mDrawerList.setItemChecked(position+1, true);
-		setTitle(mDrawerButtonTitles[position]);
-		// setTitle(mPlanetTitles[position]);
-		mDrawerLayout.closeDrawer(mDrawerList);
 	}
 
 	@Override

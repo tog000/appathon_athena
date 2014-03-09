@@ -14,7 +14,7 @@ public class AchievementFragment extends DialogFragment {
 
 	private Achievement achievement = null;
 	private CountDownTimer timer;
-	int timerTime = 2000;
+	int timerTime = 3000;
 	int TIMER_REFRESH = 60; // 60 Hz
 
 	/** The system calls this only when creating the layout in a dialog. */
