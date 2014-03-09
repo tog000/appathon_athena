@@ -1,7 +1,10 @@
 package com.athena.broncobattle;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.app.ListFragment;
 import android.os.Bundle;
@@ -13,8 +16,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 public class StatsFragment extends ListFragment implements JsonEventListener {
@@ -32,7 +33,7 @@ public class StatsFragment extends ListFragment implements JsonEventListener {
 	private final int experienceFuntionX = 100;
 	private final double experienceFunctionY = 1.2;
 	
-	private static final String GET_ACHIEVEMENT = "getAchievement";
+	private static final String GET_ACHIEVEMENT = "achievements";
 	
 	ArrayList<Achievement> achievements;
 
@@ -55,6 +56,8 @@ public class StatsFragment extends ListFragment implements JsonEventListener {
 		return view;
 	}
 
+	private boolean fragmentInitialized = false;
+	
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		
@@ -64,24 +67,35 @@ public class StatsFragment extends ListFragment implements JsonEventListener {
 		
 		AchievementController.getInstance(view.getContext()).getAchievements(this, GET_ACHIEVEMENT);
 		
-		level = calculateLevel();
-
-		TextView levelText = (TextView) view.findViewById(R.id.level_title);
-		levelText.setText("Level " + level);
-
-		ArrayAdapter<Achievement> adapter = new StatsListAdapter(getActivity().getApplicationContext(), 0, 0, achievements);
-
-		((ListView) getView().findViewById(R.id.stats_list)).setAdapter(adapter);
 	};
 	
 	@Override
 	public void onJsonFinished(Object object, String type) {
 		if(type.equals(GET_ACHIEVEMENT)){
-			Button submitAnswerButton = (Button) getView().findViewById(R.id.submit_answer_button);
-			submitAnswerButton.setEnabled(true);
 			
-			achievements = (ArrayList<Achievement>) object;
+			try {
+				JSONArray jo = new JSONArray((String)object);
 			
+				level = calculateLevel();
+				
+				if(!fragmentInitialized){
+					TextView levelText = (TextView) getView().findViewById(R.id.level_title);
+					levelText.setText("Level " + level);
+		
+					ArrayAdapter<Achievement> adapter = new StatsListAdapter(getActivity().getApplicationContext(), 0, 0, achievements);
+		
+					((ListView) getView().findViewById(R.id.stats_list)).setAdapter(adapter);
+				}
+				
+				Button submitAnswerButton = (Button) getView().findViewById(R.id.submit_answer_button);
+				submitAnswerButton.setEnabled(true);
+				
+				achievements = (ArrayList<Achievement>) object;
+			
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 			
 		}
