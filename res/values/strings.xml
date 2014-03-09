@@ -60,10 +60,10 @@
     <string name="level_title_text">Level 0</string>
     <string name="error_fetching_question">Couldn\'t contact the server</string>
     <string name="error_answering_question">Couldn\'t save your question</string>
-    <string name="error_fetching_achievements">Couldn\'t fetch achivements</string>
+    <string name="error_fetching_achievements">Couldn\'t fetch achievements</string>
     <string name="no_more_questions">No more questions to answer!</string>
-    <string name="achievement_description_text">FOOBAR</string>
-    <string name="achievement_name_text">foo</string>
+    <string name="achievement_description_text">You foobar-ed better than any other.</string>
+    <string name="achievement_name_text">Top Foobar-er!!!</string>
     <string name="hidden_value_text">Correct!</string>
     
     
