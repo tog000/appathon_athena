@@ -154,6 +154,10 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 				if(!job.isNull("server_message")){
 					RadioGroup answers = (RadioGroup) getView().findViewById(R.id.answers);
 					answers.setVisibility(RadioGroup.GONE);
+					TextView question = (TextView) getView().findViewById(R.id.question);
+					question.setText(getString(R.string.question_text));
+					submitAnswerButton.setText("Next");
+					isSubmit=false;
 					noMoreQuestions=true;
 					return;
 				}
