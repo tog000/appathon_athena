@@ -95,7 +95,12 @@ public class AchievementView extends View implements ValueAnimator.AnimatorUpdat
     }
 
     public void initializeCanvas(){
-        gradient = new RadialGradient(width/3,width/3,width/2,Util.lightenColor(color,0.4f),color, Shader.TileMode.MIRROR);
+    	
+    	gradient=null;
+    	
+    	if(width/2>0.1){
+    		gradient = new RadialGradient(width/3,width/3,width/2,Util.lightenColor(color,0.4f),color, Shader.TileMode.MIRROR);
+    	}
 
         glow = new Path();
         glow.reset(); // only needed when reusing this path for a new build
@@ -124,10 +129,12 @@ public class AchievementView extends View implements ValueAnimator.AnimatorUpdat
         borderPaint.setColor(Util.darkenColor(Util.saturateColor(color,0.3f),0.4f));
         rect.inset(height*0.05f,height*0.05f);
         canvas.drawRoundRect(rect, 10, 10, borderPaint);
-
-        gradientPaint.setShader(gradient);
-        rect.inset(height*0.02f,height*0.02f);
-        canvas.drawRoundRect(rect, 10, 10, gradientPaint);
+        
+        if(gradient!=null){
+        	gradientPaint.setShader(gradient);
+        	rect.inset(height*0.02f,height*0.02f);
+        	canvas.drawRoundRect(rect, 10, 10, gradientPaint);
+        }
 
         borderPaint.setColor(Color.WHITE);
         borderPaint.setAlpha(50);

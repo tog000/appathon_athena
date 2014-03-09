@@ -13,6 +13,8 @@ public class UsersFactory {
 
 	public static void parseUsers(ArrayList<User> users, String usersJson, Context context) {
 
+		users.clear();
+		
 		try {
 			JSONArray jsonArray = new JSONArray((String) usersJson);
 			for (int i = 0; i < jsonArray.length(); i++) {

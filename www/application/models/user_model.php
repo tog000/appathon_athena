@@ -21,6 +21,7 @@ class User_model extends CI_Model {
 	public function get_scoreboard(){
 		
 		$this->db->from('user');
+		$this->db->order_by("experience", "desc"); 
 
 		$users = array();
 

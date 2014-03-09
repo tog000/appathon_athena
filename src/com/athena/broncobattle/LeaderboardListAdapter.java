@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -40,13 +41,26 @@ public class LeaderboardListAdapter extends ArrayAdapter<User> {
 
 		TextView experienceTextView = (TextView) rowView
 				.findViewById(R.id.level);
-		experienceTextView.setText("Experience " + user.experience);
+		experienceTextView.setText(String.format("Level: %d Experience: %d", user.getLevel(), user.experience));
 
 		ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
 		ProgressBar progressBar = (ProgressBar) rowView
 				.findViewById(R.id.gravatar_load_spinner);
 		ImageDownloader downloader = new ImageDownloader(imageView, progressBar);
 		downloader.execute(user.avatar);
+		
+		LinearLayout ll = (LinearLayout) rowView.findViewById(R.id.leaderboard_achievement_list);
+		
+		for(Achievement a : user.achievements){
+			
+			AchievementView av = new AchievementView(mContext, null);
+			av.setColor(a.color);
+			av.setText(a.icon);
+			LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(40, 40);
+			params.setMarginEnd(5);
+			ll.addView(av,params);
+		}
+		
 		return rowView;
 	}
 

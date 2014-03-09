@@ -48,6 +48,7 @@ public class LeaderboardFragment extends  ListFragment implements JsonEventListe
 
 	@Override
 	public void onJsonFinished(String object, String eventType) {
+		
 		UsersFactory.parseUsers(users, object, getActivity().getApplicationContext());
 		((ListView)getView().findViewById(R.id.leaderboard_list)).setAdapter(adapter);
 		adapter.notifyDataSetChanged();
