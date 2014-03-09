@@ -67,7 +67,7 @@ public class UserController implements JsonEventListener {
 			jsonWriter.addJsonEventListener(this, REGISTER_USER);
 			
 			jsonWriter.addNamedParameter("user_id", currentUser.id);
-			jsonWriter.addNamedParameter("name", Util.getEmail(mContext)+"");
+			jsonWriter.addNamedParameter("name", currentUser.name+"");
 			jsonWriter.addNamedParameter("avatar", currentUser.avatar+"");
 			
 			jsonWriter.execute(new String[]{REGISTER_USER,currentUser.id});
