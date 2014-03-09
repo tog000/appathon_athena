@@ -5,7 +5,9 @@ import org.json.JSONObject;
 
 import org.json.JSONObject;
 
+import android.app.DialogFragment;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -235,6 +237,10 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 	CountDownTimer t=null;
 	int currentTick=0;
 	private void displayCorrect(){
+		DialogFragment dialog = new AchievementFragment();
+		FragmentManager fragmentManager = getFragmentManager();
+		dialog.show(fragmentManager, "dialog");
+		
  		RelativeLayout layout=(RelativeLayout)getView().findViewById(R.id.hidden_view);
  		layout.setVisibility(RelativeLayout.VISIBLE);
 		TextView expView = (TextView) getView().findViewById(R.id.hidden_experience);
