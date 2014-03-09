@@ -6,8 +6,8 @@
 
     <ImageView
         android:id="@+id/drawer_header_icon"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="240dip"
+        android:layout_height="240dip"
         android:src="@drawable/mars" />
 
 </LinearLayout>
