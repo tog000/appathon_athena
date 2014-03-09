@@ -10,31 +10,30 @@
         android:layout_height="64dip"
         android:layout_alignParentBottom="true"
         android:layout_alignParentTop="true"
-        android:layout_marginRight="6dip"/>
-
-    <TextView
-        android:id="@+id/achievement_description"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_toRightOf="@id/achievement_icon"
-        android:ellipsize="marquee"
-        android:singleLine="true"
-        android:text="@string/achievement_description_text"
-        android:textSize="14sp" />
+        android:layout_marginRight="12dip"/>
 
     <TextView
         android:id="@+id/achievement_name"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/achievement_description"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentRight="false"
         android:layout_alignParentTop="true"
         android:layout_alignWithParentIfMissing="true"
         android:layout_toRightOf="@id/achievement_icon"
-        android:gravity="center_vertical"
+        android:gravity="top"
         android:text="@string/achievement_name_text"
         android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/achievement_description"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/achievement_name"
+        android:layout_centerVertical="true"
+        android:ellipsize="marquee"
+        android:paddingLeft="24dp"
+        android:singleLine="true"
+        android:text="@string/achievement_description_text"
+        android:textSize="14sp" />
 
 </RelativeLayout> 
