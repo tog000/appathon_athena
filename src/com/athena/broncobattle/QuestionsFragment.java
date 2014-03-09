@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
@@ -66,6 +67,8 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 						answers.setVisibility(RadioGroup.GONE);
 						TextView question = (TextView) getView().findViewById(R.id.question);
 						question.setText(getString(R.string.question_text));
+						ImageView image = (ImageView) getView().findViewById(R.id.imageView1);
+						//image.setImageResource(R.drawable.sorry);
 						Button submitAnswerButton = (Button) getView().findViewById(R.id.submit_answer_button);
 						submitAnswerButton.setText("Next");
 						QuestionController.getInstance(getView().getContext()).getNextQuestion(QuestionsFragment.this, NEW_QUESTION);
@@ -156,6 +159,8 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 					answers.setVisibility(RadioGroup.GONE);
 					TextView question = (TextView) getView().findViewById(R.id.question);
 					question.setText(getString(R.string.question_text));
+					ImageView image = (ImageView) getView().findViewById(R.id.imageView1);
+					//image.setImageResource(R.drawable.sorry);
 					submitAnswerButton.setText("Next");
 					isSubmit=false;
 					noMoreQuestions=true;
