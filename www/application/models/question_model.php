@@ -119,20 +119,23 @@ class Question_model extends CI_Model {
 				case 8:
 					$achievement_id=5;
 					break;
+				case 10:
+					$achievement_id=7;
+					break;
+				case 12:
+					$achievement_id=8;
+					break;
+				case 14:
+					$achievement_id=9;
+					break;
+				case 16:
+					$achievement_id=10;
+					break;
 
 				default:
 					# code...
 					break;
 			}
-		}
-
-		if(count($result)>8){
-
-			$random = rand(4,10);
-			if($random > 7){
-				$achievement_id = $random;
-			}
-
 		}
 
 		$this->db->from('achievement');
