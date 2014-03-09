@@ -61,6 +61,12 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 				else{
 					if(noMoreQuestions){
 						toastSomething("Sorry, there are no more questions. Have a nice day!");
+						RadioGroup answers = (RadioGroup) getView().findViewById(R.id.answers);
+						answers.setVisibility(RadioGroup.GONE);
+						TextView question = (TextView) getView().findViewById(R.id.question);
+						question.setText(getString(R.string.question_text));
+						Button submitAnswerButton = (Button) getView().findViewById(R.id.submit_answer_button);
+						submitAnswerButton.setText("Next");
 						QuestionController.getInstance(getView().getContext()).getNextQuestion(QuestionsFragment.this, NEW_QUESTION);
 					}
 					else{
@@ -130,10 +136,11 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 	public void onJsonFinished(Object object, String type) {
 		
 		if(type.equals(NEW_QUESTION)){
-			if(noMoreQuestions){
-				if(object!=null)
+				if(object!=null){
+					RadioGroup answers = (RadioGroup) getView().findViewById(R.id.answers);
+					answers.setVisibility(RadioGroup.VISIBLE);
 					noMoreQuestions=false;
-			}
+				}
 			Button submitAnswerButton = (Button) getView().findViewById(R.id.submit_answer_button);
 			
 			submitAnswerButton.setEnabled(true);
