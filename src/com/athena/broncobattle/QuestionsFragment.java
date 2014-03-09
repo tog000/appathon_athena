@@ -20,6 +20,7 @@ import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewPropertyAnimator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -48,6 +49,7 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 	private MediaPlayer mPlayer;
 	private SoundPool sp;
 	private int soundId;
+	ViewPropertyAnimator viewPAn=null;
 	
 	// Question
 	private View questionLoading;
@@ -134,7 +136,8 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 			public void onClick(View v) {
 				
 				countdownTimer.cancel();
-				achievementLayout.animate().cancel();
+				if(viewPAn!=null)
+					viewPAn.cancel();
 				
 				experienceOverlay.animate().setDuration(200).setListener(new AnimatorListener() {
 					
@@ -294,8 +297,10 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 				achievementTitle.setText(a.name);
 				achievementDescription.setText(a.description);
 				achievementLayout.setVisibility(View.VISIBLE);
-				achievementLayout.animate().setDuration(1000).scaleX(1).scaleY(1).rotationY(0).alpha(1);//.rotation(0);
-				
+				achievementView.setVisibility(View.VISIBLE);
+				viewPAn=achievementLayout.animate().setDuration(1000).scaleX(1).scaleY(1).rotationY(0).alpha(1);//.rotation(0);
+
+
 				/**
 				Bitmap b = Bitmap.createBitmap(achievementLayout.getWidth(),
 						achievementLayout.getHeight(),
@@ -373,6 +378,11 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 	CountDownTimer countdownTimer=null;
 	int currentTick=0;
 	private void displayCorrect(){
+		achievementView.setVisibility(View.GONE);
+		achievementTitle.setText("");
+		achievementDescription.setText("");
+		LinearLayout tempAch=(LinearLayout)getView().findViewById(R.id.achievement_layout);  
+		tempAch.setVisibility(LinearLayout.GONE);
 		
  		RelativeLayout layout=(RelativeLayout)getView().findViewById(R.id.hidden_view);
  		layout.setVisibility(RelativeLayout.VISIBLE);
@@ -405,10 +415,9 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 		     }
 
 		     public void onFinish() {
-		  		
-		    	 achievementLayout.animate().setDuration(200).x(400).alpha(0);
-		    	 
-		    	 experienceOverlay.animate().setDuration(500).setListener(new AnimatorListener() {
+
+		    	achievementLayout.animate().setDuration(200).x(400).alpha(0);
+		    	experienceOverlay.animate().setDuration(500).setListener(new AnimatorListener() {
 					
 					@Override
 					public void onAnimationStart(Animator animation) {}
@@ -432,6 +441,7 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 				}).alpha(0);
 		     }
 		  }.start();
+
 	}
 	
 	@Override
@@ -439,6 +449,8 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 		super.onPause();
 		if(countdownTimer!=null){
 			countdownTimer.cancel();
+			if(viewPAn!=null)
+				viewPAn.cancel();
 		}
 	}
 	@Override
@@ -446,6 +458,8 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 		super.onPause();
 		if(countdownTimer!=null){
 			countdownTimer.cancel();
+			if(viewPAn!=null)
+				viewPAn.cancel();
 		}
 	}
 	@Override
@@ -453,6 +467,8 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 		super.onPause();
 		if(countdownTimer!=null){
 			countdownTimer.cancel();
+			if(viewPAn!=null)
+				viewPAn.cancel();
 		}
 	}
 }
