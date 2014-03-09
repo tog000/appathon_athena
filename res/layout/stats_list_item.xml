@@ -31,7 +31,6 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/achievement_name"
         android:layout_centerVertical="true"
-        android:paddingLeft="24dp"
         android:paddingTop="12dp"
         android:text="@string/achievement_description_text"
         android:textSize="14sp" />

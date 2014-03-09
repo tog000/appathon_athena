@@ -73,7 +73,7 @@ public class AthenaJsonWriter extends AsyncTask<String, Void, String> {
 	
 			    
 	            UrlEncodedFormEntity encodedEntity = new UrlEncodedFormEntity(postParameters);
-			    httpPost.setEntity(encodedEntity);
+			    httpPost.setEntity(encodedEntity); 
 			    
 			    httpPost.setHeader("Accept", "text/plain");
 			    //httpPost.setHeader("Content-type", "text/plain");

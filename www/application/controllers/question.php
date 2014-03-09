@@ -30,6 +30,11 @@ class Question extends CI_Controller{
 		echo json_encode($this->question_model->add_answer());
 	}
 
+	public function question_answered_test($user_id)
+	{
+		print_r($this->question_model->compute_achievements($user_id));
+	}
+
 	public function get_achievements($id=NULL)
 	{
 		if($id!=NULL){

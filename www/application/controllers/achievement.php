@@ -10,7 +10,7 @@ class Achievement extends CI_Controller{
 	public function get_achievements($id=NULL)
 	{
 		if($id!=NULL){
-			$response = $this->achievement_model->get_achievements();
+			$response = $this->achievement_model->get_achievements($id);
 			echo json_encode($response);
 		}
 		return NULL;

@@ -80,17 +80,82 @@ class Question_model extends CI_Model {
 				'id_question' => $this->input->post('question_id'),
 				'id_user' => $this->input->post('user_id'),
 				'answer' => $this->input->post('answer'),
-				'correct' => $this->input->post('correct'),
+				'correct' => $this->input->post('correct')
 			);
 
 			$this->db->insert('user_question_answer', $data);
 
+			$query = $this->db->query('UPDATE user SET experience = experience + '. $this->input->post('experience').' WHERE id="'. $this->input->post('user_id').'"');
+
 			if($this->input->post('correct')==1){
-				$achievements = $this->db->get('achievement')->result();
-				return $achievements[array_rand($achievements)];
+				return self::compute_achievements($this->input->post('user_id'));
 			}
 
 		}
+	}
+
+	public function compute_achievements($user_id){
+
+		$query = $this->db->query('SELECT count(id_question) as total FROM `user_question_answer` where correct=1 and id_user="'.$user_id.'" group by id_user');
+
+		$achievement_id = 1;
+
+		$result = $query->result();
+		if(count($result)>0){
+			switch ($result[0]->total) {
+				case 2:
+					$achievement_id=2;
+					break;
+				case 4:
+					$achievement_id=3;
+					break;
+				case 6:
+					$achievement_id=4;
+					break;
+				case 8:
+					$achievement_id=5;
+					break;
+
+				default:
+					# code...
+					break;
+			}
+		}
+
+		if($achievement_id!=-1){
+
+			$this->db->from('user_achievement');
+			$this->db->select('id_achievement');
+			$this->db->where('id_user',$user_id);
+
+			$ids = [-1];
+			foreach($this->db->get()->result() as $index=>$object){
+				array_push($ids, $object->id_achievement);
+			}
+
+			$this->db->from('achievement');
+			$this->db->where_not_in('id',$ids);
+			$this->db->where('id',$achievement_id);
+			$achievements = $this->db->get()->result();
+
+
+
+			if(count($achievements)>0){
+
+				$data = array(
+					'id_user' => $user_id,
+					'id_achievement' => $achievement_id,
+				);
+
+				$this->db->insert('user_achievement', $data);
+
+				return $achievements[0];
+			}
+		}
+
+		//	$achievements = $this->db->get('achievement')->result();
+		//		return $achievements[array_rand($achievements)];
+
 	}
 
 	public function set_question()
