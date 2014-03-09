@@ -33,8 +33,23 @@ public class AchievementView extends View implements ValueAnimator.AnimatorUpdat
 
     private float position = 0;
 
+    public String getText() {
+		return text;
+	}
 
-    public AchievementView(Context context, AttributeSet attrs) {
+	public void setText(String text) {
+		this.text = Character.toString((char)Integer.parseInt(text,16));
+	}
+
+	public int getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = Color.parseColor(color);
+	}
+
+	public AchievementView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
         //TypedArray a = context.getTheme().obtainStyledAttributes(attrs, );
@@ -46,9 +61,6 @@ public class AchievementView extends View implements ValueAnimator.AnimatorUpdat
             a.recycle();
         }
 		*/
-        
-        text = "\uF001";
-        color = Color.GREEN;
         
         basePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         borderPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
