@@ -15,7 +15,10 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="logo.svg">
+   sodipodi:docname="logo.svg"
+   inkscape:export-filename="/home/tog/workspace_android/appathon_athena/res/drawable/logo.png"
+   inkscape:export-xdpi="111.88"
+   inkscape:export-ydpi="111.88">
   <defs
      id="defs4">
     <linearGradient
@@ -192,9 +195,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.4"
-     inkscape:cx="329.57476"
-     inkscape:cy="890.23876"
+     inkscape:zoom="1.979899"
+     inkscape:cx="381.7216"
+     inkscape:cy="888.18138"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -211,7 +214,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -264,10 +267,10 @@
     </g>
     <path
        style="opacity:0.17256637;fill:#ffffff;fill-opacity:1;stroke:none"
-       d="m 216.42857,261.6479 196.42857,-196.428576 -7.5,-3.928571 -212.51374,0.148117 -67.12911,6.637597 27.85714,159.285713 z"
+       d="m 216.42857,261.6479 196.42857,-196.428576 -7.5,-3.928571 -177.83284,-0.253669 c -5.112,-0.154815 -15.91861,5.01039 -16.10152,17.138264 -0.63116,41.848662 0.29447,136.940422 0.14882,172.156062 -0.0238,5.75428 3.32463,9.65912 4.85695,11.31649 z"
        id="path3799"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="ccccccc" />
+       sodipodi:nodetypes="ccccsscc" />
     <g
        id="g3825"
        clip-path="url(#clipPath3833)"
