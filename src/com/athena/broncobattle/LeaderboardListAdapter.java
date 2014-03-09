@@ -15,15 +15,13 @@ import android.widget.TextView;
 public class LeaderboardListAdapter extends ArrayAdapter<User> {
 
 	Context mContext;
-	ArrayList<User> users = new ArrayList<User>();
+	ArrayList<User> users;
 
 	public LeaderboardListAdapter(Context context, int resource,
 			int textViewResourceId, List<User> objects) {
 		super(context, resource, textViewResourceId);
 		mContext = context;
-		for (int i = 0; i < objects.size(); i++) {
-			users.add(objects.get(i));
-		}
+		users = (ArrayList<User>)objects;
 	}
 
 	@Override
@@ -71,4 +69,6 @@ public class LeaderboardListAdapter extends ArrayAdapter<User> {
     public boolean isEnabled(int position) {
         return false;
      }
+	
+	
 }

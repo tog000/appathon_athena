@@ -18,16 +18,17 @@ public class LeaderboardFragment extends  ListFragment implements JsonEventListe
 	
 	ArrayAdapter<User> adapter;
 
-	AthenaJsonReader reader = new AthenaJsonReader(getActivity().getApplicationContext());
-	private static final String GET_USERS = "getUsers";
-	private final String READ_USERS = "read_users";
+	AthenaJsonReader reader;
+
+	private final String GET_USERS = "get_scoreboard";
 	
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.leaderboard_fragment_layout, container, false);
+		reader = new AthenaJsonReader(getActivity().getApplicationContext());
 		reader.addJsonEventListener(this, GET_USERS);
-		reader.execute(new String[]{READ_USERS});
+		reader.execute(new String[]{GET_USERS});
 		adapter = new LeaderboardListAdapter(getActivity().getApplicationContext(), 0, 0, users);
 
 		return view;
@@ -49,6 +50,7 @@ public class LeaderboardFragment extends  ListFragment implements JsonEventListe
 	@Override
 	public void onJsonFinished(String object, String eventType) {
 		UsersFactory.parseUsers(users, object, getActivity().getApplicationContext());
+		((ListView)getView().findViewById(R.id.leaderboard_list)).setAdapter(adapter);
 		adapter.notifyDataSetChanged();
 		
 	}
