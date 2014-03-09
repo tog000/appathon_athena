@@ -15,6 +15,10 @@ class User extends CI_Controller{
 		echo json_encode($response);
 	}
 
+	public function register_user($user_id){
+		echo json_encode($this->user_model->register_user($user_id));
+	}
+
 	public function get_scoreboard()
 	{
 		echo json_encode($this->user_model->get_scoreboard());

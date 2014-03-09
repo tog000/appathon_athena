@@ -97,7 +97,6 @@ public class AthenaJsonWriter extends AsyncTask<String, Void, String> {
 		@Override
 		protected void onPostExecute(String response){
 			super.onPostExecute(response);
-			System.out.println(response);
 			listener.onJsonFinished(response,type);
 		}
 

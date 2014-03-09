@@ -32,6 +32,7 @@
     </array>
 
     <string name="loading_from_server">Talking to the server...</string>
+    <string name="network_error">Couldn\'t contact the server</string>
      
 	<!-- Drawer/Main Fragment -->
     <string name="drawer_open">Open navigation drawer</string>

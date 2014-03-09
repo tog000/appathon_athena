@@ -19,14 +19,18 @@ class User_model extends CI_Model {
 	}
 
 	public function get_scoreboard(){
+		
 		$this->db->from('user');
-		$this->db->join('user_achievement', 'id_achievement = user.id');
 
 		$users = array();
 
-		foreach($this->db->get()->result() as $index=>$user){
-			$this->db->from('achievement');
-			$this->db->where('id',$user->id_achievement);
+		$result = $this->db->get()->result();
+
+		foreach($result as $index=>$user){
+			$this->db->from('user_achievement');
+			$this->db->where('id_user',$user->id);
+			$this->db->join('achievement',"id_achievement = achievement.id");
+
 			$user->achievements = $this->db->get()->result();
 			array_push($users, $user);
 		}
@@ -34,22 +38,33 @@ class User_model extends CI_Model {
 		return $users;
 	}
 
-	public function set_question()
+	public function register_user($user_id)
 	{
 
-		$this->load->helper('url');
+		if($this->input->post('name')){
+			$data = array(
+				'id' => $user_id,
+				'name' => $this->input->post('name'),
+				'avatar' => $this->input->post('avatar'),
+				);
 
-		$data = array(
-			'name' => $this->input->post('name'),
-			'avatar' => $this->input->post('avatar'),
-			'experience' => 0,
-			);
+			$this->db->from('user');
+			$this->db->where('id',$user_id);
 
-		$this->db->insert('user', $data);
+			if(count($this->db->get()->result())>0){
+				$this->db->where('id', $user_id);
+				$this->db->update('user', $data); 
+			}else{
+				$this->db->insert('user', $data);
+			}
 
-		$insert_id = $this->db->insert_id();
-
-		return $insert_id;
+			$this->db->from('user');
+			$result = $this->db->where('id',$user_id)->get()->result();
+			if(count($result) > 0){
+				return $result[0];
+			}
+			return NULL;
+		}
 
 	}
 }

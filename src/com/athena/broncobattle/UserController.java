@@ -5,12 +5,17 @@ import org.json.JSONObject;
 
 import android.content.Context;
 import android.provider.Settings.Secure;
+import android.util.Log;
+import android.widget.Toast;
 
-public class UserController {
+public class UserController implements JsonEventListener {
 	
 	private static UserController instance;
 	public User currentUser;
 	Context mContext;
+	
+	private final static String REGISTER_USER = "register_user"; 
+	
 	AthenaJsonReader jsonReader;
 	AthenaJsonWriter jsonWriter;
 	
@@ -19,7 +24,7 @@ public class UserController {
 		
 		String android_id = Secure.getString(context.getContentResolver(),Secure.ANDROID_ID);
 		
-		currentUser = new User(android_id, "PLACEHOLDER", "http://www.gravatar.com/avatar/"+android_id+"?d=retro&f=y&s=400", 0);
+		currentUser = new User(android_id, Util.getEmail(context), "http://www.gravatar.com/avatar/"+android_id+"?d=retro&f=y&s=400", 0);
 	}
 	
 	public static UserController getInstance(Context context){
@@ -44,12 +49,41 @@ public class UserController {
 		}
 		//jsonWriter.execute(new String[]{userWriteRequest, "1"});//correctAnswerUser.toString()
 	}
-
-	public void userLoggedIn(String userName){
-		readActiveUser(userName);
-	}
 	
-	public void readActiveUser(String userName){
-		//jsonReader.execute(new String[]{userReadRequest, userName});
+	
+
+	public void registerCurrentUser(){
+		try{
+			
+			jsonWriter = new AthenaJsonWriter(mContext);
+			
+			jsonWriter.addJsonEventListener(this, REGISTER_USER);
+			
+			jsonWriter.addNamedParameter("user_id", currentUser.id);
+			jsonWriter.addNamedParameter("name", Util.getEmail(mContext)+"");
+			jsonWriter.addNamedParameter("avatar", currentUser.avatar+"");
+			
+			jsonWriter.execute(new String[]{REGISTER_USER,currentUser.id});
+			
+		}catch(Exception e){
+			Toast toast = Toast.makeText(mContext, mContext.getResources().getString(R.string.network_error), Toast.LENGTH_SHORT);
+			toast.show();
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void onJsonFinished(Object object, String eventType) {
+		if(object!=null){
+			try {
+				JSONObject user = new JSONObject((String)object);
+				
+				currentUser.experience = user.getInt("experience");
+				
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 }
