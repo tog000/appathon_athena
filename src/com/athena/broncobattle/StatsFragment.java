@@ -1,7 +1,9 @@
 package com.athena.broncobattle;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import android.app.ListFragment;
 import android.os.Bundle;
@@ -10,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -59,8 +60,7 @@ public class StatsFragment extends ListFragment implements JsonEventListener<Obj
 
 		experiencePoints = user.experience;
 
-		// AchievementController.getInstance(view.getContext()).getAchievements(this,
-		// GET_ACHIEVEMENT);
+		AchievementController.getInstance(view.getContext()).getAchievements(this, GET_ACHIEVEMENT);
 		
 		
 		level = calculateLevel();
@@ -68,27 +68,37 @@ public class StatsFragment extends ListFragment implements JsonEventListener<Obj
 		TextView levelText = (TextView) view.findViewById(R.id.level_title);
 		levelText.setText("Level " + level);
 
-		Achievement[] achievements = new Achievement[] { 
-				new Achievement("id1", "", "blue", "foo", "blah di blah"),
-				new Achievement("id1", "", "blue", "foo", "blah di blah"),
-				new Achievement("id1", "", "blue", "foo", "blah di blah"),
-				new Achievement("id1", "", "blue", "foo", "blah di blah")
-				
 
-		};
-
-		ArrayAdapter<Achievement> adapter = new StatsListAdapter(getActivity().getApplicationContext(), 0, 0, Arrays.asList(achievements));
-
-		((ListView) getView().findViewById(R.id.stats_list)).setAdapter(adapter);
 	};
 
+	private boolean listInitialized = false;
+	
 	@Override
 	public void onJsonFinished(Object object, String type) {
 		if (type.equals(GET_ACHIEVEMENT)) {
-			Button submitAnswerButton = (Button) getView().findViewById(R.id.submit_answer_button);
-			submitAnswerButton.setEnabled(true);
-
-			achievements = (ArrayList<Achievement>) object;
+			
+			try {
+				
+				JSONArray ja = new JSONArray((String)object);
+			
+				if(!listInitialized){
+					
+					achievements = new ArrayList<Achievement>(); 
+					
+					for(int i=0;i<ja.length();i++){
+						achievements.add(new Achievement(ja.getJSONObject(i), getView().getContext())); 
+					}
+					
+					ArrayAdapter<Achievement> adapter = new StatsListAdapter(getActivity().getApplicationContext(), 0, 0, achievements);
+					((ListView) getView().findViewById(R.id.stats_list)).setAdapter(adapter);
+					
+					listInitialized = true;
+				}
+				
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 		}
 	}

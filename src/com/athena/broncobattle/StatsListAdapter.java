@@ -30,11 +30,15 @@ public class StatsListAdapter extends ArrayAdapter<Achievement> {
 
 		Achievement achievement = achievements.get(position);
 
+		AchievementView achView = (AchievementView) rowView.findViewById(R.id.achievement_icon);
+		achView.setColor(achievement.color);
+		achView.setText(achievement.icon);
+		
 		TextView nameTextView = (TextView) rowView.findViewById(R.id.achievement_name);
 		nameTextView.setText(achievement.name);
 
 		TextView experienceTextView = (TextView) rowView.findViewById(R.id.achievement_description);
-		experienceTextView.setText("Experience " + achievement.description);
+		experienceTextView.setText(achievement.description);
 
 		// ImageView imageView = (ImageView)
 		// rowView.findViewById(R.id.achievement_icon);
