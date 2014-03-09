@@ -68,7 +68,7 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 						TextView question = (TextView) getView().findViewById(R.id.question);
 						question.setText(getString(R.string.question_text));
 						ImageView image = (ImageView) getView().findViewById(R.id.imageView1);
-						//image.setImageResource(R.drawable.sorry);
+						image.setImageResource(R.drawable.sorry);
 						Button submitAnswerButton = (Button) getView().findViewById(R.id.submit_answer_button);
 						submitAnswerButton.setText("Next");
 						QuestionController.getInstance(getView().getContext()).getNextQuestion(QuestionsFragment.this, NEW_QUESTION);
@@ -160,7 +160,7 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 					TextView question = (TextView) getView().findViewById(R.id.question);
 					question.setText(getString(R.string.question_text));
 					ImageView image = (ImageView) getView().findViewById(R.id.imageView1);
-					//image.setImageResource(R.drawable.sorry);
+					image.setImageResource(R.drawable.sorry);
 					submitAnswerButton.setText("Next");
 					isSubmit=false;
 					noMoreQuestions=true;
@@ -232,6 +232,8 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 	}
 	
 	static final int[]color={Color.BLUE,Color.CYAN, Color.GREEN, Color.MAGENTA, Color.RED, Color.YELLOW};
+	CountDownTimer t=null;
+	int currentTick=0;
 	private void displayCorrect(){
  		RelativeLayout layout=(RelativeLayout)getView().findViewById(R.id.hidden_view);
  		layout.setVisibility(RelativeLayout.VISIBLE);
@@ -244,13 +246,14 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 		expView.setTypeface(tf);
 		
 		UserController.getInstance(getView().getContext()).currentUser.experience+=currentQuestion.experience;
-		
- 		new CountDownTimer(UPDATE_ANIMATION_TIME, UPDATE_ANIMATION_INTERVAL) {
+		currentTick=0;
+ 		t=new CountDownTimer(UPDATE_ANIMATION_TIME, UPDATE_ANIMATION_INTERVAL) {
 			long experience=0;
 			long experienceIncrement=2*currentQuestion.experience/(UPDATE_ANIMATION_TIME/UPDATE_ANIMATION_INTERVAL);
 			long maxExperience=currentQuestion.experience;
 			
 		     public void onTick(long millisUntilFinished) {
+		    	 currentTick++;
 		 		if(experience<maxExperience){
 		 			experience+=experienceIncrement;
 		 			TextView expView = (TextView) getView().findViewById(R.id.hidden_experience);
@@ -267,5 +270,14 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 		 		layout.setVisibility(RelativeLayout.GONE);
 		     }
 		  }.start();
+		  t=null;
+	}
+	@Override
+	public void onPause(){
+		if(t!=null){
+			t.cancel();
+			  t=null;
+		}
+		super.onPause();
 	}
 }
