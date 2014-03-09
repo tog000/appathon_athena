@@ -29,7 +29,7 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 	private Question currentQuestion;
 	private boolean isInitial=true;
 	private final int UPDATE_ANIMATION_TIME=2500;
-	private final int UPDATE_ANIMATION_INTERVAL=20;
+	private final int UPDATE_ANIMATION_INTERVAL=25;
 	boolean noMoreQuestions=false;
 	
 	private static final String NEW_QUESTION= "newQuestion";
