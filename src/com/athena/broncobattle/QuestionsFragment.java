@@ -253,18 +253,6 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 	@Override
 	public void onImageLoaded(ImageView imageView) {
 		
-//		int imageWidth = imageView.getMaxWidth();
-//		int imageHeight = imageView.getMaxHeight();
-//		
-//		ScrollView scroll = ((ScrollView) getView().findViewById(R.id.scroll_view));
-//		
-//		FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) imageView.getLayoutParams();
-//		int width = params.width;
-//		int height = params.height;
-		
-//		int scrollWidth = .getMeasuredWidth();
-//		int scrollHeight = ((ScrollView) getView().findViewById(R.id.scroll_view)).getMeasuredHeight();
-		
 		double randomValue = .3 + (1 - .3) * Math.random();
 		
 		_translateAnimation = new TranslateAnimation(TranslateAnimation.ABSOLUTE, 0f, TranslateAnimation.ABSOLUTE, 0f, TranslateAnimation.ABSOLUTE,-( (float) (randomValue*300)),
