@@ -41,6 +41,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 /**
  * This example illustrates a common usage of the DrawerLayout widget in the
@@ -104,15 +105,17 @@ public class MainActivity extends Activity {
 		mDrawerButtonTitles = getResources().getStringArray(R.array.drawer_array);
 	    navMenuIcons = getResources().obtainTypedArray(R.array.nav_drawer_icons);
 	    
-//		mPlanetTitles = getResources().getStringArray(R.array.planets_array);
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mDrawerList = (ListView) findViewById(R.id.list_slidermenu);
 		
+		User currentUser = UserController.getInstance(getApplicationContext()).getCurrentUser();
 		View header = View.inflate(this, R.layout.drawer_header_layout, null);
+		((TextView)header.findViewById(R.id.drawer_user_name)).setText(currentUser.name);
 		header.findViewById(R.id.drawer_header_icon);
 		mDrawerList.addHeaderView(header);
 		ImageDownloader downloader = new ImageDownloader((ImageView)header.findViewById(R.id.drawer_header_icon), null);
-		downloader.execute(UserController.getInstance(getApplicationContext()).getCurrentUser().avatar);
+		downloader.execute(currentUser.avatar);
+		
 		 
         navDrawerItems = new ArrayList<NavDrawerItem>();
         navDrawerItems.add(new NavDrawerItem(mDrawerButtonTitles[0], navMenuIcons.getResourceId(0, -1)));
@@ -122,12 +125,9 @@ public class MainActivity extends Activity {
 		fragments = new Fragment[NUM_FRAGMENTS];
 
 		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-		//mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, mDrawerButtonTitles));
-		
 		
 		adapter = new NavDrawerListAdapter(getApplicationContext(), navDrawerItems);
 	    mDrawerList.setAdapter(adapter);
-		
 		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 		
 

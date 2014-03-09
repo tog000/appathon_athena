@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical" >
+    android:layout_height="wrap_content" >
 
     <ImageView
         android:id="@+id/drawer_header_icon"
@@ -10,4 +9,16 @@
         android:layout_height="240dip"
         android:src="@drawable/mars" />
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/drawer_user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Question???"
+        android:textAppearance="?android:attr/textAppearanceLarge" 
+        android:layout_alignRight="@id/drawer_header_icon"
+        android:layout_alignLeft="@id/drawer_header_icon"
+        android:layout_alignBottom="@id/drawer_header_icon"
+        android:background="#4DFFFFFF"
+        android:gravity="center"/>
+
+</RelativeLayout>
