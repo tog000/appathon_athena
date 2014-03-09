@@ -25,12 +25,12 @@ import android.widget.Toast;
 public class QuestionsFragment extends Fragment implements JsonEventListener<Object>{
 
 	int correctAnswer = 0;
-	boolean isSubmit=true;
+	boolean isSubmit=false;
 	private Question currentQuestion;
 	private boolean isInitial=true;
 	private final int UPDATE_ANIMATION_TIME=2500;
 	private final int UPDATE_ANIMATION_INTERVAL=20;
-	boolean noMoreQuestions=false;
+	boolean noMoreQuestions=true;
 	
 	private static final String NEW_QUESTION= "newQuestion";
 	private static final String SAVE_ANSWER = "saveQuestion";
@@ -46,8 +46,9 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		Button submitAnswerButton = (Button) view.findViewById(R.id.submit_answer_button);
-		submitAnswerButton.setEnabled(false);
-		submitAnswerButton.setVisibility(Button.INVISIBLE);
+		submitAnswerButton.setText("Next");
+		RadioGroup answers = (RadioGroup) getView().findViewById(R.id.answers);
+		answers.setVisibility(RadioGroup.GONE);
 		
 		isInitial=true;
 		QuestionController.getInstance(view.getContext()).getNextQuestion(this,NEW_QUESTION);
@@ -61,7 +62,6 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 				}
 				else{
 					if(noMoreQuestions){
-						toastSomething("Sorry, there are no more questions. Have a nice day!");
 						RadioGroup answers = (RadioGroup) getView().findViewById(R.id.answers);
 						answers.setVisibility(RadioGroup.GONE);
 						TextView question = (TextView) getView().findViewById(R.id.question);
@@ -69,6 +69,8 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 						Button submitAnswerButton = (Button) getView().findViewById(R.id.submit_answer_button);
 						submitAnswerButton.setText("Next");
 						QuestionController.getInstance(getView().getContext()).getNextQuestion(QuestionsFragment.this, NEW_QUESTION);
+						if(noMoreQuestions)
+							toastSomething("Sorry, there are no more questions.");
 					}
 					else{
 						isSubmit=true;
@@ -87,7 +89,6 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 			}
 		});
 		
-		RadioGroup answers = (RadioGroup) getView().findViewById(R.id.answers);
 		
 	    answers.setOnCheckedChangeListener(new OnCheckedChangeListener() 
 	    {
@@ -137,32 +138,37 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 	public void onJsonFinished(Object object, String type) {
 		
 		if(type.equals(NEW_QUESTION)){
-				if(object!=null){
-					RadioGroup answers = (RadioGroup) getView().findViewById(R.id.answers);
-					answers.setVisibility(RadioGroup.VISIBLE);
-					noMoreQuestions=false;
-				}
-			Button submitAnswerButton = (Button) getView().findViewById(R.id.submit_answer_button);
-			
-			submitAnswerButton.setEnabled(true);
-			submitAnswerButton.setVisibility(Button.VISIBLE);
-			if(object==null){
-				RadioGroup answers = (RadioGroup) getView().findViewById(R.id.answers);
-				answers.setVisibility(RadioGroup.GONE);
-				noMoreQuestions=true;
-				return;
-			}
 
 			try {
+				JSONObject job = new JSONObject((String)object);
+
+					if(job.isNull("server_message")){
+						RadioGroup answers = (RadioGroup) getView().findViewById(R.id.answers);
+						answers.setVisibility(RadioGroup.VISIBLE);
+						noMoreQuestions=false;
+					}
+				Button submitAnswerButton = (Button) getView().findViewById(R.id.submit_answer_button);
+				
+				submitAnswerButton.setEnabled(true);
+				submitAnswerButton.setVisibility(Button.VISIBLE);
+				if(!job.isNull("server_message")){
+					RadioGroup answers = (RadioGroup) getView().findViewById(R.id.answers);
+					answers.setVisibility(RadioGroup.GONE);
+					noMoreQuestions=true;
+					return;
+				}
+
 				Question q = new Question(new JSONObject((String)object));
 						
-				currentQuestion=(Question)q;
+				currentQuestion=q;
 				RadioGroup answers = (RadioGroup) getView().findViewById(R.id.answers);
+
 				correctAnswer=((RadioButton)answers.getChildAt(currentQuestion.correctAnswerIndex)).getId();
 				if(isInitial){
 					initializeQuestion(getView());
 					isInitial=false;
 				}
+
 				
 			} catch (JSONException e) {
 				e.printStackTrace();
@@ -210,7 +216,7 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 	}
 	public void toastSomething(String toastString){
 		Context context = getView().getContext();
-		int duration = Toast.LENGTH_SHORT;
+		int duration = Toast.LENGTH_LONG;
 
 		Toast toast = Toast.makeText(context, toastString, duration);
 		toast.show();
@@ -233,13 +239,17 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
  		new CountDownTimer(UPDATE_ANIMATION_TIME, UPDATE_ANIMATION_INTERVAL) {
 			long experience=0;
 			long experienceIncrement=2*currentQuestion.experience/(UPDATE_ANIMATION_TIME/UPDATE_ANIMATION_INTERVAL);
-			long maxExperience=experience+currentQuestion.experience;
+			long maxExperience=currentQuestion.experience;
 			
 		     public void onTick(long millisUntilFinished) {
 		 		if(experience<maxExperience){
 		 			experience+=experienceIncrement;
 		 			TextView expView = (TextView) getView().findViewById(R.id.hidden_experience);
 		 			expView.setText("+"+experience);
+		 		}
+		 		else{
+		 			TextView expView = (TextView) getView().findViewById(R.id.hidden_experience);
+		 			expView.setText("+"+maxExperience);
 		 		}
 		     }
 
