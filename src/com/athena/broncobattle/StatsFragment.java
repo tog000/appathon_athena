@@ -38,6 +38,9 @@ public class StatsFragment extends ListFragment implements JsonEventListener<Obj
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
+		
+		achievements = new ArrayList<Achievement>();
+		
 		View view = inflater.inflate(R.layout.stats_fragment_layout, container, false);
 
 		timer = new CountDownTimer(timerTime, timerTime / TIMER_REFRESH) {
@@ -58,19 +61,29 @@ public class StatsFragment extends ListFragment implements JsonEventListener<Obj
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 
+		
+		Toast toast = Toast.makeText(getView().getContext(), "VIEW CREATED", Toast.LENGTH_SHORT);
+		toast.show();
+		
 		User user = UserController.getInstance(getView().getContext()).currentUser;
 
 		experiencePoints = user.experience;
 
-		AchievementController.getInstance(view.getContext()).getAchievements(this, GET_ACHIEVEMENT);
-		
+		if(savedInstanceState != null && savedInstanceState.containsKey(BUNDLE_ACHIEVEMENTS)){
+			
+			achievements = (ArrayList<Achievement>) savedInstanceState.getSerializable(BUNDLE_ACHIEVEMENTS);
+			
+			Toast toast2 = Toast.makeText(getView().getContext(), "RESTORED!", Toast.LENGTH_SHORT);
+			toast2.show();
+			
+		}else{
+			AchievementController.getInstance(getView().getContext()).getAchievements(this, GET_ACHIEVEMENT);
+		}
 		
 		level = calculateLevel();
 
 		TextView levelText = (TextView) view.findViewById(R.id.level_title);
 		levelText.setText("Level " + level);
-
-
 	};
 
 	@Override
@@ -88,9 +101,10 @@ public class StatsFragment extends ListFragment implements JsonEventListener<Obj
 			
 			try {
 				
+				Toast toast = Toast.makeText(getView().getContext(), "GOT FROM JSON", Toast.LENGTH_SHORT);
+				toast.show();
+				
 				JSONArray ja = new JSONArray((String)object);
-			
-				achievements = new ArrayList<Achievement>(); 
 				
 				for(int i=0;i<ja.length();i++){
 					achievements.add(new Achievement(ja.getJSONObject(i), getView().getContext())); 
@@ -98,8 +112,7 @@ public class StatsFragment extends ListFragment implements JsonEventListener<Obj
 				
 				ArrayAdapter<Achievement> adapter = new StatsListAdapter(getActivity().getApplicationContext(), 0, 0, achievements);
 				((ListView) getView().findViewById(R.id.stats_list)).setAdapter(adapter);
-				
-				
+			
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -107,20 +120,13 @@ public class StatsFragment extends ListFragment implements JsonEventListener<Obj
 
 		}
 	}
-	
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		if(savedInstanceState.containsKey(BUNDLE_ACHIEVEMENTS)){
-			achievements = (ArrayList<Achievement>)savedInstanceState.getSerializable(BUNDLE_ACHIEVEMENTS);
-			Toast toast = Toast.makeText(getView().getContext(), "RESTORED!", Toast.LENGTH_SHORT);
-			toast.show();
-		}
-	};
 
 	@Override
 	public void onViewStateRestored(Bundle savedInstanceState) {
 		super.onViewStateRestored(savedInstanceState);
-	
+		
+		
+		
 		timer.start();
 	}
 
