@@ -61,17 +61,19 @@ public class StatsFragment extends ListFragment implements JsonEventListener<Obj
 
 		// AchievementController.getInstance(view.getContext()).getAchievements(this,
 		// GET_ACHIEVEMENT);
-
+		
+		
 		level = calculateLevel();
 
 		TextView levelText = (TextView) view.findViewById(R.id.level_title);
 		levelText.setText("Level " + level);
 
-		Achievement[] achievements = new Achievement[] { new Achievement("id1", "", "foo", "blah di blah"), new Achievement("id1", "", "foo", "blah di blah"),
-				new Achievement("id1", "", "foo", "blah di blah"), new Achievement("id1", "", "foo", "blah di blah"),
-				new Achievement("id1", "", "foo", "blah di blah"), new Achievement("id1", "", "foo", "blah di blah"),
-				new Achievement("id1", "", "foo", "blah di blah"), new Achievement("id1", "", "foo", "blah di blah"),
-				new Achievement("id1", "", "foo", "blah di blah"), new Achievement("id1", "", "foo", "blah di blah")
+		Achievement[] achievements = new Achievement[] { 
+				new Achievement("id1", "", "blue", "foo", "blah di blah"),
+				new Achievement("id1", "", "blue", "foo", "blah di blah"),
+				new Achievement("id1", "", "blue", "foo", "blah di blah"),
+				new Achievement("id1", "", "blue", "foo", "blah di blah")
+				
 
 		};
 
