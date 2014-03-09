@@ -265,7 +265,9 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 //		int scrollWidth = .getMeasuredWidth();
 //		int scrollHeight = ((ScrollView) getView().findViewById(R.id.scroll_view)).getMeasuredHeight();
 		
-		_translateAnimation = new TranslateAnimation(TranslateAnimation.ABSOLUTE, 0f, TranslateAnimation.ABSOLUTE, 0f, TranslateAnimation.ABSOLUTE,-( (float) (Math.random()*300)),
+		double randomValue = .3 + (1 - .3) * Math.random();
+		
+		_translateAnimation = new TranslateAnimation(TranslateAnimation.ABSOLUTE, 0f, TranslateAnimation.ABSOLUTE, 0f, TranslateAnimation.ABSOLUTE,-( (float) (randomValue*300)),
 				TranslateAnimation.ABSOLUTE, 0f);
 		_translateAnimation.setDuration(8000);
 		_translateAnimation.setRepeatCount(-1);
@@ -324,11 +326,12 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 
 				achievementLayout.setVisibility(View.GONE);
 				achievementLayout.setAlpha(0);
-				achievementLayout.setScaleX(2);
-				achievementLayout.setScaleY(2);
+				achievementLayout.setScaleX(0);
+				achievementLayout.setScaleY(0);
 				achievementLayout.setRotationY(100);
 				// achievementLayout.setRotation(1000);
 
+				
 				achievementView.setText(a.icon);
 				achievementView.setColor(a.color);
 				achievementView.initializeCanvas();
