@@ -18,8 +18,6 @@ public class QuestionController {
 	
 	private QuestionController(Context context){
 		mContext = context;
-		jsonReader = new AthenaJsonReader(mContext);
-		jsonWriter = new AthenaJsonWriter(mContext);
 	}
 	
 	public static QuestionController getInstance(Context context){

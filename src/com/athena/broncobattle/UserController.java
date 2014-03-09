@@ -16,8 +16,6 @@ public class UserController {
 	
 	private UserController(Context context){
 		mContext = context;
-		jsonReader = new AthenaJsonReader(context);
-		jsonWriter = new AthenaJsonWriter(context);
 		
 		String android_id = Secure.getString(context.getContentResolver(),Secure.ANDROID_ID);
 		

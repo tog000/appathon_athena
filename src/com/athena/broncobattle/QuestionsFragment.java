@@ -1,7 +1,6 @@
 package com.athena.broncobattle;
 
-import java.util.Timer;
-import java.util.TimerTask;
+import org.json.JSONObject;
 
 import org.json.JSONObject;
 
@@ -64,7 +63,7 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 				else{
 					if(noMoreQuestions){
 						toastSomething("Sorry, there are no more questions. Have a nice day!");
-						QuestionController.getInstance(getView().getContext()).getNextQuestion(this, NEW_QUESTION);
+						QuestionController.getInstance(getView().getContext()).getNextQuestion(QuestionsFragment.this, NEW_QUESTION);
 					}
 					else{
 						isSubmit=true;

@@ -30,6 +30,15 @@ class Question extends CI_Controller{
 		echo $this->question_model->add_answer();
 	}
 
+	public function get_achievements($id=NULL)
+	{
+		if($id!=NULL){
+			$response = $this->question_model->get_achievements();
+			echo json_encode($response);
+		}
+		return NULL;
+	}
+
 	public function view($id)
 	{
 		echo "view";
