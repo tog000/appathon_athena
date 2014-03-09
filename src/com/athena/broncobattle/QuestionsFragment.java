@@ -149,6 +149,8 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 			submitAnswerButton.setVisibility(Button.VISIBLE);
 			if(object==null){
 				noMoreQuestions=true;
+				submitAnswerButton.setText("Next");
+				isSubmit=false;
 				return;
 			}
 			Question q=new Question((JSONObject)object);
