@@ -89,12 +89,16 @@ class Question_model extends CI_Model {
 
 			if($this->input->post('correct')==1){
 				return self::compute_achievements($this->input->post('user_id'));
+				//$achievements = $this->db->get('achievement')->result();
+				//return $achievements[array_rand($achievements)];
 			}
 
 		}
 	}
 
 	public function compute_achievements($user_id){
+
+		// Based on right answers
 
 		$query = $this->db->query('SELECT count(id_question) as total FROM `user_question_answer` where correct=1 and id_user="'.$user_id.'" group by id_user');
 
@@ -122,6 +126,19 @@ class Question_model extends CI_Model {
 			}
 		}
 
+		if(count($result)>8){
+
+			$random = rand(4,10);
+			if($random > 7){
+				$achievement_id = $random;
+			}
+
+		}
+
+		$this->db->from('achievement');
+		$this->db->where('id',$achievement_id);
+		$achievements = $this->db->get()->result();
+
 		if($achievement_id!=-1){
 
 			$this->db->from('user_achievement');
@@ -137,8 +154,6 @@ class Question_model extends CI_Model {
 			$this->db->where_not_in('id',$ids);
 			$this->db->where('id',$achievement_id);
 			$achievements = $this->db->get()->result();
-
-
 
 			if(count($achievements)>0){
 

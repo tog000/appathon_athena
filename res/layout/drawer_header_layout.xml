@@ -7,13 +7,12 @@
         android:id="@+id/drawer_header_icon"
         android:layout_width="240dip"
         android:layout_height="240dip"
-        android:src="@drawable/mars" />
+        />
 
     <TextView
         android:id="@+id/drawer_user_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Question???"
         android:textAppearance="?android:attr/textAppearanceLarge" 
         android:layout_alignRight="@id/drawer_header_icon"
         android:layout_alignLeft="@id/drawer_header_icon"

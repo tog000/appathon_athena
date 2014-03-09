@@ -39,8 +39,7 @@ public class LeaderboardListAdapter extends ArrayAdapter<User> {
 		TextView nameTextView = (TextView) rowView.findViewById(R.id.user_name);
 		nameTextView.setText(user.name);
 
-		TextView experienceTextView = (TextView) rowView
-				.findViewById(R.id.level);
+		TextView experienceTextView = (TextView) rowView.findViewById(R.id.level);
 		experienceTextView.setText(String.format("Level: %d Experience: %d", user.getLevel(), user.experience));
 
 		ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);

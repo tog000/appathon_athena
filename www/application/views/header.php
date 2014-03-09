@@ -17,7 +17,3 @@
     <![endif]-->
   </head>
   <body>
-
-
-
-  asdf
