@@ -28,7 +28,7 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 	boolean isSubmit=true;
 	private Question currentQuestion;
 	private boolean isInitial=true;
-	private final int UPDATE_ANIMATION_TIME=5000;
+	private final int UPDATE_ANIMATION_TIME=2500;
 	private final int UPDATE_ANIMATION_INTERVAL=20;
 	boolean noMoreQuestions=false;
 	
@@ -45,14 +45,12 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 	
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
-		correctAnswer = ((RadioButton) getView().findViewById(R.id.answer_three)).getId();
-		isInitial=true;
-		QuestionController.getInstance(view.getContext()).getNextQuestion(this,NEW_QUESTION);
-		
-
 		Button submitAnswerButton = (Button) view.findViewById(R.id.submit_answer_button);
 		submitAnswerButton.setEnabled(false);
 		submitAnswerButton.setVisibility(Button.INVISIBLE);
+		
+		isInitial=true;
+		QuestionController.getInstance(view.getContext()).getNextQuestion(this,NEW_QUESTION);
 
 		submitAnswerButton.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -149,9 +147,9 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 			submitAnswerButton.setEnabled(true);
 			submitAnswerButton.setVisibility(Button.VISIBLE);
 			if(object==null){
+				RadioGroup answers = (RadioGroup) getView().findViewById(R.id.answers);
+				answers.setVisibility(RadioGroup.GONE);
 				noMoreQuestions=true;
-				submitAnswerButton.setText("Next");
-				isSubmit=false;
 				return;
 			}
 
