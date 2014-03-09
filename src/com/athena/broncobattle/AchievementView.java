@@ -22,8 +22,8 @@ import android.view.View;
 public class AchievementView extends View implements ValueAnimator.AnimatorUpdateListener{
 
     private Paint basePaint, iconPaint,gradientPaint,borderPaint,blurredPaint;
-    private String text;
-    private int color;
+    private String text = "";
+    private int color = Color.BLACK;
     private RadialGradient gradient;
     private Path glow, shine;
     private Bitmap bitmap;
@@ -89,6 +89,8 @@ public class AchievementView extends View implements ValueAnimator.AnimatorUpdat
         mRunner.addUpdateListener(this);
 
         mRunner.start();
+        
+        
 
     }
 
