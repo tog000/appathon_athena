@@ -13,10 +13,17 @@ import android.widget.ProgressBar;
 public class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
 	ImageView bmImage;
 	ProgressBar progressBar;
-
+	View view;
+	int id;
+	ImageEventListener imageListener;
+	
 	public ImageDownloader(ImageView bmImage, ProgressBar progressBar) {
 		this.bmImage = bmImage;
 		this.progressBar = progressBar;
+	}
+	
+	public void setImageEventListener(ImageEventListener imageListener) {
+		this.imageListener = imageListener;
 	}
 
 	@Override
@@ -39,11 +46,14 @@ public class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
 	@Override
 	protected void onPostExecute(Bitmap result) {
 		super.onPostExecute(result);
-		if (progressBar!= null){
-		progressBar.setVisibility(View.INVISIBLE);
+		if (progressBar != null) {
+			progressBar.setVisibility(View.INVISIBLE);
 		}
 		bmImage.setImageBitmap(result);
 		bmImage.setVisibility(View.VISIBLE);
+		if (imageListener != null) {
+			imageListener.onImageLoaded(bmImage);
+		}
 	}
 
 }

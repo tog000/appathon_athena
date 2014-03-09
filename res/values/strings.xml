@@ -16,7 +16,7 @@
 
 <resources>
 
-    <string name="app_name">Main Menu</string>
+    <string name="app_name">Bronco Battle</string>
 
     <string-array name="drawer_array">
         <item>Questions</item>
