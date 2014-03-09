@@ -3,11 +3,7 @@ package com.athena.broncobattle;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import org.json.JSONObject;
-
-import android.app.DialogFragment;
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -18,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
@@ -189,15 +186,23 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 				Achievement a = new Achievement(new JSONObject((String)object),getView().getContext());
 				
 				AchievementView achView = ((AchievementView) getView().findViewById(R.id.achievement_dialog_icon));
+				
+//				achView.setVisibility(View.INVISIBLE);
+				
 				achView.setText(a.icon);
 				achView.setColor(a.color);
+				achView.initializeCanvas();
 				achView.invalidate();
+//				achView.setVisibility(View.VISIBLE);
 				
 				TextView title = ((TextView) getView().findViewById(R.id.achievement_dialog_name));
 				title.setText(a.name);
 				
 				TextView description = ((TextView) getView().findViewById(R.id.achievement_dialog_description));
 				description.setText(a.description);
+				
+				LinearLayout achLayout = ((LinearLayout) getView().findViewById(R.id.achievement_layout));
+				achLayout.setVisibility(View.VISIBLE);
 				
 				
 			} catch (JSONException e) {
@@ -237,6 +242,11 @@ public class QuestionsFragment extends Fragment implements JsonEventListener<Obj
 				}
 				answer.setEnabled(false);
 			}
+			
+			LinearLayout achLayout = ((LinearLayout) getView().findViewById(R.id.achievement_layout));
+			
+			achLayout.setVisibility(View.INVISIBLE);
+			
 			QuestionController.getInstance(v.getContext()).questionAnswered(currentQuestion, selectedIndex, this, SAVE_ANSWER);
 
 //			Button nextQuestionButton = (Button) getView().findViewById(R.id.next_question_button);

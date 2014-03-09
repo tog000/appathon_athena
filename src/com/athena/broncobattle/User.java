@@ -22,6 +22,9 @@ public class User {
 	long experience;
 	LinkedList<Achievement> achievements = new LinkedList<Achievement>();
 	
+	public static final int experienceFuntionX = 100;
+	public static final double experienceFunctionY = 1.2;
+	
 	public static final String JSON_ID = "id";
 	public static final String JSON_NAME = "name";
 	public static final String JSON_AVATAR = "avatar";
@@ -61,6 +64,25 @@ public class User {
 			e.printStackTrace();
 		}
 		return json.toString();
+	}
+	
+	public int getLevel() {
+		int rval = 0;
+		
+		long experiencePoints = experience;
+		long nextLevelThreshold = 0;
+
+		for (int loopLevel = 1;; loopLevel++) {
+			nextLevelThreshold = (int) (experienceFuntionX * Math.pow(loopLevel, experienceFunctionY));
+			if (nextLevelThreshold < experiencePoints) {
+				rval = loopLevel;
+				experiencePoints -= nextLevelThreshold;
+				continue;
+			}
+			break;
+		}
+
+		return rval;
 	}
 	
 }

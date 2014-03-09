@@ -198,10 +198,10 @@ public class MainActivity extends Activity {
 			 * startActivity(intent); } else { Toast.makeText(this,
 			 * R.string.app_not_available, Toast.LENGTH_LONG).show(); }
 			 */
-			DialogFragment dialog = new AchievementFragment();
-			FragmentManager fragmentManager = getFragmentManager();
-
-			dialog.show(fragmentManager, "dialog");
+//			DialogFragment dialog = new AchievementFragment();
+//			FragmentManager fragmentManager = getFragmentManager();
+//
+//			dialog.show(fragmentManager, "dialog");
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

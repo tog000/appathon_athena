@@ -94,7 +94,7 @@ public class AchievementView extends View implements ValueAnimator.AnimatorUpdat
 
     }
 
-    private void initializeCanvas(){
+    public void initializeCanvas(){
         gradient = new RadialGradient(width/3,width/3,width/2,Util.lightenColor(color,0.4f),color, Shader.TileMode.MIRROR);
 
         glow = new Path();

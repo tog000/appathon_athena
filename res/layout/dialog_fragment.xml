@@ -4,47 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal|top"
-        android:gravity="center"
-        android:text="Well Done, You got an Achievement!"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <ProgressBar
-        android:id="@+id/progressBar1"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal|top"
-        android:max="100" />
-
-    <com.athena.broncobattle.AchievementView
-        android:id="@+id/achievement_dialog_icon1"
-        android:layout_width="64dip"
-        android:layout_height="64dip"
-        android:layout_gravity="center"
-        android:layout_marginRight="12dip" />
-
-    <TextView
-        android:id="@+id/achievement_dialog_name1"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal|top"
-                android:gravity="center"
-        android:text="@string/achievement_name_text"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/achievement_dialog_description1"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal|top"
-                android:gravity="center"
-        android:text="@string/achievement_dialog_description_text"
-        android:textSize="14sp" />
+    
 
 </LinearLayout>

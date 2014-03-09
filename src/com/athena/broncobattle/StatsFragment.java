@@ -28,8 +28,7 @@ public class StatsFragment extends ListFragment implements JsonEventListener<Obj
 	int timerTime = 750;
 	int TIMER_REFRESH = 60; // 60 Hz
 
-	private final int experienceFuntionX = 100;
-	private final double experienceFunctionY = 1.2;
+
 
 	private static final String GET_ACHIEVEMENT = "getAchievement";
 	private static final String BUNDLE_ACHIEVEMENTS = "bundleAchievement";
@@ -134,7 +133,7 @@ public class StatsFragment extends ListFragment implements JsonEventListener<Obj
 		int rval = 0;
 
 		for (int loopLevel = 1;; loopLevel++) {
-			nextLevelThreshold = (int) (experienceFuntionX * Math.pow(loopLevel, experienceFunctionY));
+			nextLevelThreshold = (int) (User.experienceFuntionX * Math.pow(loopLevel, User.experienceFunctionY));
 			if (nextLevelThreshold < experiencePoints) {
 				rval = loopLevel;
 				experiencePoints -= nextLevelThreshold;
