@@ -26,9 +26,9 @@
     
         
      <array name="nav_drawer_icons">
-        <item>@drawable/ic_launcher</item>
-        <item>@drawable/ic_launcher</item>
-        <item>@drawable/ic_launcher</item>
+        <item>@drawable/question</item>
+        <item>@drawable/leader</item>
+        <item>@drawable/star</item>
     </array>
     
     <string-array name="planets_array">
