@@ -55,7 +55,7 @@ public class MainActivity extends Activity {
 
 	private Fragment[] fragments;
 
-	public static final String HOST = "http://132.178.174.53";
+	public static final String HOST = "http://162.243.93.212/codeigniter/";
 
 	private final int NUM_FRAGMENTS = 3;
 
@@ -98,7 +98,7 @@ public class MainActivity extends Activity {
 
 		// enable ActionBar app icon to behave as action to toggle nav drawer
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-		getActionBar().setHomeButtonEnabled(true);
+//		getActionBar().setHomeButtonEnabled(true);
 
 		// ActionBarDrawerToggle ties together the the proper interactions
 		// between the sliding drawer and the action bar app icon
@@ -147,7 +147,7 @@ public class MainActivity extends Activity {
 		// If the nav drawer is open, hide action items related to the content
 		// view
 		boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
-		menu.findItem(R.id.action_websearch).setVisible(!drawerOpen);
+//		menu.findItem(R.id.action_websearch).setVisible(!drawerOpen);
 		return super.onPrepareOptionsMenu(menu);		
 	}
 
@@ -159,26 +159,26 @@ public class MainActivity extends Activity {
 			return true;
 		}
 
-		// Handle action buttons
-		switch (item.getItemId()) {
-		case R.id.action_websearch:
-			/*
-			 * // create intent to perform web search for this planet Intent
-			 * intent = new Intent(Intent.ACTION_WEB_SEARCH);
-			 * intent.putExtra(SearchManager.QUERY, getActionBar().getTitle());
-			 * // catch event that there's no activity to handle intent if
-			 * (intent.resolveActivity(getPackageManager()) != null) {
-			 * startActivity(intent); } else { Toast.makeText(this,
-			 * R.string.app_not_available, Toast.LENGTH_LONG).show(); }
-			 */
-//			DialogFragment dialog = new AchievementFragment();
-//			FragmentManager fragmentManager = getFragmentManager();
-//
-//			dialog.show(fragmentManager, "dialog");
-			return true;
-		default:
+//		// Handle action buttons
+//		switch (item.getItemId()) {
+//		case R.id.action_websearch:
+//			/*
+//			 * // create intent to perform web search for this planet Intent
+//			 * intent = new Intent(Intent.ACTION_WEB_SEARCH);
+//			 * intent.putExtra(SearchManager.QUERY, getActionBar().getTitle());
+//			 * // catch event that there's no activity to handle intent if
+//			 * (intent.resolveActivity(getPackageManager()) != null) {
+//			 * startActivity(intent); } else { Toast.makeText(this,
+//			 * R.string.app_not_available, Toast.LENGTH_LONG).show(); }
+//			 */
+////			DialogFragment dialog = new AchievementFragment();
+////			FragmentManager fragmentManager = getFragmentManager();
+////
+////			dialog.show(fragmentManager, "dialog");
+//			return true;
+//		default:
 			return super.onOptionsItemSelected(item);
-		}
+//		}
 
 	}
 

@@ -25,10 +25,11 @@ public class UserController implements JsonEventListener {
 		String android_id = Secure.getString(context.getContentResolver(),Secure.ANDROID_ID);
 		
 		String username = Util.getEmail(context);
-		
-		String[] usernameParts = Util.getEmail(context).split("@");
-		if(usernameParts.length==2){
-			username=usernameParts[0];
+		if(username!=null){
+			String[] usernameParts = Util.getEmail(context).split("@");
+			if(usernameParts.length==2){
+				username=usernameParts[0];
+			}
 		}
 		
 		currentUser = new User(android_id, username, "http://www.gravatar.com/avatar/"+android_id+"?d=retro&f=y&s=400", 0);
