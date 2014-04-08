@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import android.annotation.SuppressLint;
 import android.app.ListFragment;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -61,8 +62,8 @@ public class StatsFragment extends ListFragment implements JsonEventListener<Obj
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 
 		
-		Toast toast = Toast.makeText(getView().getContext(), "VIEW CREATED", Toast.LENGTH_SHORT);
-		toast.show();
+//		Toast toast = Toast.makeText(getView().getContext(), "VIEW CREATED", Toast.LENGTH_SHORT);
+//		toast.show();
 		
 		User user = UserController.getInstance(getView().getContext()).currentUser;
 
@@ -72,8 +73,8 @@ public class StatsFragment extends ListFragment implements JsonEventListener<Obj
 			
 			achievements = (ArrayList<Achievement>) savedInstanceState.getSerializable(BUNDLE_ACHIEVEMENTS);
 			
-			Toast toast2 = Toast.makeText(getView().getContext(), "RESTORED!", Toast.LENGTH_SHORT);
-			toast2.show();
+//			Toast toast2 = Toast.makeText(getView().getContext(), "RESTORED!", Toast.LENGTH_SHORT);
+//			toast2.show();
 			
 		}else{
 			AchievementController.getInstance(getView().getContext()).getAchievements(this, GET_ACHIEVEMENT);
@@ -90,8 +91,8 @@ public class StatsFragment extends ListFragment implements JsonEventListener<Obj
 		// TODO Auto-generated method stub
 		super.onSaveInstanceState(outState);
 		outState.putSerializable(BUNDLE_ACHIEVEMENTS, achievements);
-		Toast toast = Toast.makeText(getView().getContext(), "SAVED!", Toast.LENGTH_SHORT);
-		toast.show();
+//		Toast toast = Toast.makeText(getView().getContext(), "SAVED!", Toast.LENGTH_SHORT);
+//		toast.show();
 	}
 	
 	@Override
@@ -99,9 +100,6 @@ public class StatsFragment extends ListFragment implements JsonEventListener<Obj
 		if (type.equals(GET_ACHIEVEMENT)) {
 			
 			try {
-				
-				Toast toast = Toast.makeText(getView().getContext(), "GOT FROM JSON", Toast.LENGTH_SHORT);
-				toast.show();
 				
 				JSONArray ja = new JSONArray((String)object);
 				
@@ -127,6 +125,7 @@ public class StatsFragment extends ListFragment implements JsonEventListener<Obj
 		}
 	}
 
+	@SuppressLint("NewApi")
 	@Override
 	public void onViewStateRestored(Bundle savedInstanceState) {
 		super.onViewStateRestored(savedInstanceState);

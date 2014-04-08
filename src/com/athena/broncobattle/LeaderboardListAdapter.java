@@ -56,7 +56,7 @@ public class LeaderboardListAdapter extends ArrayAdapter<User> {
 			av.setColor(a.color);
 			av.setText(a.icon);
 			LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(40, 40);
-			params.setMarginEnd(5);
+//			params.setMarginEnd(5);
 			ll.addView(av,params);
 		}
 		
