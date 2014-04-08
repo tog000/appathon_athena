@@ -55,7 +55,7 @@ public class MainActivity extends Activity {
 
 	private Fragment[] fragments;
 
-	public static final String HOST = "http://132.178.174.53";
+	public static final String HOST = "http://162.243.93.212/codeigniter/";
 
 	private final int NUM_FRAGMENTS = 3;
 

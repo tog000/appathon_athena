@@ -3,6 +3,7 @@
  */
 package com.athena.broncobattle;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 
 import org.json.JSONArray;
@@ -10,12 +11,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 /**
  * @author Athena
  *
  */
-public class User {
+public class User implements Serializable,Parcelable{
+	private static final long serialVersionUID = 123L;
 	String id;
 	String name;
 	String avatar;
@@ -84,5 +88,25 @@ public class User {
 
 		return rval;
 	}
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeSerializable(this);
+	}
+	
+	public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
+		public User createFromParcel(Parcel in) {
+		    return (User)in.readSerializable();
+		}
+		
+		public User[] newArray(int size) {
+		    return new User[size];
+		}
+	};
 	
 }

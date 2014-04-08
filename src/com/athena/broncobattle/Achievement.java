@@ -15,6 +15,7 @@ import android.content.Context;
  *
  */
 public class Achievement implements Serializable{
+	private static final long serialVersionUID = 123L;
 	String id;
 	String icon;
 	String name;
